@@ -45,10 +45,6 @@ const apolloClient = new ApolloClient({
 Vue.use(VeeValidate);
 Vue.use(VueApollo);
 
-// setup fake backend
-// import { configureFakeBackend } from './_helpers';
-// configureFakeBackend();
-
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient
 });
