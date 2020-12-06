@@ -3,40 +3,6 @@
     <h2>Cadastro</h2>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label for="firstName">Nome</label>
-        <input
-          type="text"
-          v-model="user.firstName"
-          v-validate="'required'"
-          name="firstName"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && errors.has('firstName') }"
-        />
-        <div
-          v-if="submitted && errors.has('firstName')"
-          class="invalid-feedback"
-        >
-          {{ errors.first("firstName") }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="lastName">Sobrenome</label>
-        <input
-          type="text"
-          v-model="user.lastName"
-          v-validate="'required'"
-          name="lastName"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && errors.has('lastName') }"
-        />
-        <div
-          v-if="submitted && errors.has('lastName')"
-          class="invalid-feedback"
-        >
-          {{ errors.first("lastName") }}
-        </div>
-      </div>
-      <div class="form-group">
         <label for="username">CPF</label>
         <input
           type="text"
@@ -71,15 +37,6 @@
         </div>
       </div>
       <div class="form-group">
-        <input
-          type="checkbox"
-          v-model="user.requestBrokerStatus"
-          name="requestBrokerStatus"
-          class="form-check-input"
-        />
-        <label for="requestBrokerStatus">Solicitar status de Corretor</label>
-      </div>
-      <div class="form-group">
         <button class="btn btn-primary" :disabled="status.registering">
           Cadastrar
         </button>
@@ -102,11 +59,8 @@ export default {
   data() {
     return {
       user: {
-        firstName: "",
-        lastName: "",
         username: "",
         password: "",
-        requestBrokerStatus: false,
         email: "renato@gmail.com",
       },
       submitted: false,
