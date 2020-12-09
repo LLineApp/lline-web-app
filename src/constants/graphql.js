@@ -201,3 +201,13 @@ export const SIGNIN_USER_MUTATION = gql`
     }
   }
 `
+export const TOKEN_AUTH_MUTATION = gql`
+  mutation TokenAuthMutation($username: String!, $password: String!) {
+    tokenAuth(
+      username: $username,
+      password: $password
+    ) {
+      token
+    }
+  }
+`

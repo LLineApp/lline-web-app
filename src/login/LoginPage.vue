@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>LLine</h2>
+    <h2>Bem vindo ao LLine</h2>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label for="username">Usuário</label>
+        <label for="username">Informe o seu CPF</label>
         <input
           type="text"
           v-model="username"
@@ -46,6 +46,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { userService } from "../_services/user.service";
 
 export default {
   data() {
@@ -55,12 +58,11 @@ export default {
       submitted: false,
     };
   },
+  apollo: {},
   computed: {
     ...mapState("account", ["status"]),
   },
   created() {
-    // reset login status
-    // teste Tiago
     this.logout();
   },
   methods: {
@@ -69,7 +71,34 @@ export default {
       this.submitted = true;
       const { username, password } = this;
       if (username && password) {
-        this.login({ username, password });
+        const { result } = this.$apollo
+          .mutate({
+            mutation: TOKEN_AUTH_MUTATION,
+            variables: {
+              username,
+              password,
+            },
+          })
+          .then((data) => {
+            if (data.data.tokenAuth.token) {
+              localStorage.setItem("user", data.data.tokenAuth);
+              this.$router.push("/");
+            }
+          })
+          .catch((error) => {
+            const message = error.graphQLErrors[0].message;
+            const options = {
+              position: "top-center",
+              duration: 4000,
+              fullWidth: true,
+              closeOnSwipe: true,
+            };
+
+            this.$toasted.error(message, options);
+
+            this.username = "";
+            this.password = "";
+          });
       }
     },
   },
