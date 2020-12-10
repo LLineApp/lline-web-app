@@ -9,6 +9,9 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo, { ApolloProvider } from 'vue-apollo';
 import Toasted from 'vue-toasted';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+//  import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.config.productionTip = false;
 
@@ -43,6 +46,8 @@ const apolloClient = new ApolloClient({
 Vue.use(VeeValidate);
 Vue.use(VueApollo);
 Vue.use(Toasted);
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient
