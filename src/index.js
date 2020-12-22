@@ -1,21 +1,22 @@
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
-
 import { store } from './_store';
 import { router } from './_helpers';
 import App from './app/App';
-
 import { createProvider } from 'vue-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
 import VueApollo, { ApolloProvider } from 'vue-apollo';
+import Toasted from 'vue-toasted';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+//  import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.config.productionTip = false;
 
 const httpLink = new HttpLink({
-    uri: 'https://evening-cliffs-51162.herokuapp.com/graphql/',
+    uri: 'https://lline-auth.herokuapp.com/graphql/',
     useGETForQueries: false,
     credentials: 'include',
     headers: {
@@ -44,6 +45,9 @@ const apolloClient = new ApolloClient({
 
 Vue.use(VeeValidate);
 Vue.use(VueApollo);
+Vue.use(Toasted);
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient
