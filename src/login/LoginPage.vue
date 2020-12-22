@@ -55,20 +55,20 @@ import { userService } from "../_services/user.service";
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       submitted: false,
     };
   },
   apollo: {},
   computed: {
-    ...mapState("account", ["status"]),
+    ...mapState('account', ['status']),
   },
   created() {
     this.logout();
   },
   methods: {
-    ...mapActions("account", ["login", "logout"]),
+    ...mapActions('account', ['login', 'logout']),
     handleSubmit(e) {
       this.submitted = true;
       const { username, password } = this;
@@ -83,14 +83,14 @@ export default {
           })
           .then((data) => {
             if (data.data.tokenAuth.token) {
-              localStorage.setItem("user", data.data.tokenAuth);
-              this.$router.push("/");
+              localStorage.setItem('user', JSON.stringify(data.data.tokenAuth));
+              this.$router.push('/');
             }
           })
           .catch((error) => {
             const message = error.graphQLErrors[0].message;
             const options = {
-              position: "top-center",
+              position: 'top-center',
               duration: 4000,
               fullWidth: true,
               closeOnSwipe: true,
@@ -98,8 +98,8 @@ export default {
 
             this.$toasted.error(message, options);
 
-            this.username = "";
-            this.password = "";
+            this.username = '';
+            this.password = '';
           });
       }
     },

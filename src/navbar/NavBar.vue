@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="canShow">
     <b-navbar toggleable="lg" fixed="top">
       <b-navbar-brand href="#">NavBar</b-navbar-brand>
 
@@ -16,10 +16,10 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>User</em>
+              <em>{{ userFirstName }}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="#">Perfil</b-dropdown-item>
+            <b-dropdown-item to="/login">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -29,8 +29,19 @@
 
 <script>
 export default {
+  data() {
+    return {
+      userFirstName: '',
+      canShow: true,
+    };
+  },
   computed: {},
-  created() {},
+  mounted() {
+    this.userFirstName = 'Usuário';
+    this.canShow = localStorage.getItem('user');
+  },
+  created() {
+  },
   methods: {},
 };
 </script>

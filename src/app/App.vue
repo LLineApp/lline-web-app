@@ -1,6 +1,6 @@
 <template>
   <div class="jumbotron">
-      <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -21,7 +21,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      // clear alert on location change
       this.clearAlert();
     },
   },
