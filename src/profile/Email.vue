@@ -3,7 +3,7 @@
     <label for="fullName">Nome completo</label>
     <input
       type="text"
-      v-model="quizData.fullName"
+      v-model="profileData.fullName"
       v-validate="'required'"
       name="fullName"
       class="form-control"
@@ -15,7 +15,7 @@
     <label for="email">E-mail</label>
     <input
       type="text"
-      v-model="quizData.email"
+      v-model="profileData.email"
       v-validate="'required'"
       name="email"
       class="form-control"
@@ -26,13 +26,13 @@
     </div>
     <input
       type="checkbox"
-      v-model="quizData.requestBrokerStatus"
+      v-model="profileData.requestBrokerStatus"
       name="requestBrokerStatus"
       class="form-check-input"
     />
     <label for="requestBrokerStatus">Solicitar status de Assessor</label>
     <br />
-    <button class="btn btn-primary" v-on:click="$emit('done', quizData)">
+    <button class="btn btn-primary" v-on:click="$emit('done', profileData)">
       Cadastrar
     </button>
     <img
@@ -50,7 +50,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 export default {
   data() {
     return {
-      quizData: {
+      profileData: {
         fullName: "",
         email: "",
         requestBrokerStatus: false,

@@ -24,22 +24,22 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 export default {
   data() {
     return {
-      quizData: {
+      profileData: {
         accepted: false,
       },
     };
   },
   methods: {
     handleAccept(e) {
-      this.quizData.accepted = true;
+      this.profileData.accepted = true;
       this.setData();
     },
     handleDontAccept(e) {
-      this.quizData.accepted = false;
+      this.profileData.accepted = false;
       this.setData();
     },
     setData() {
-      sessionStorage.setItem("quizData", JSON.stringify(this.quizData));
+      sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
 };
