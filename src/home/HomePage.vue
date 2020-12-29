@@ -12,9 +12,6 @@ import NavBar from "../navbar/NavBar";
 import Profile from "../profile/Profile";
 
 export default {
-  computed: {},
   components: { NavBar, Profile },
-  created() {},
-  methods: {},
 };
 </script>
