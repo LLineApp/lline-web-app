@@ -23,6 +23,7 @@ module.exports = {
         template: './src/index.html'
     })],
     devServer: {
+        host: '0.0.0.0',
         historyApiFallback: true
     },
     externals: {
