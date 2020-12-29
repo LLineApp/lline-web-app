@@ -3,18 +3,15 @@
     <NavBar />
     <h1>Bem vindo!</h1>
     <p>Agora você faz parte do LLine</p>
-    <Quiz />
+    <Profile />
   </div>
 </template>
 
 <script>
 import NavBar from "../navbar/NavBar";
-import Quiz from "../quiz/Quiz";
+import Profile from "../profile/Profile";
 
 export default {
-  computed: {},
-  components: { NavBar, Quiz },
-  created() {},
-  methods: {},
+  components: { NavBar, Profile },
 };
 </script>
