@@ -8,7 +8,7 @@
     ></Intro>
     <Email
       v-else-if="this.profileData.email == ''"
-      v-on:done="setProfileData(profileData)"
+      v-on:done="feedProfileData"
       v-on:stopped="profileData.email = ''"
     >
     </Email>
@@ -29,10 +29,22 @@ export default {
       },
     };
   },
+  created() {
+    const data = JSON.parse(sessionStorage.getItem("profileData"));
+    if (data) {
+      this.profileData = data;
+    }
+  },
   components: { Intro, Email },
-  computed: {
-    setProfileData(profileData) {
-      this.profileData = profileData;
+  watch: {
+    profileData: function () {
+      sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
+    },
+  },
+  methods: {
+    feedProfileData(portionProfileData) {
+      const data = { ...this.profileData, ...portionProfileData };
+      this.profileData = data;
     },
   },
 };
