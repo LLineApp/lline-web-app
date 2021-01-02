@@ -41,7 +41,13 @@
     <label for="phoneInput"
       >Informe aqui todos os seus números de telefone com DDD, um por um</label
     >
-    <input type="text" v-model="phoneInput" v-on:keyup.enter="addPhone()" name="phoneInput" class="form-control" />
+    <input
+      type="text"
+      v-model="phoneInput"
+      v-on:keyup.enter="addPhone()"
+      name="phoneInput"
+      class="form-control"
+    />
     <button class="btn btn-info" v-on:click="addPhone()">Adicionar</button>
 
     <b-form-group
@@ -110,7 +116,7 @@ export default {
       if (this.phoneInput) {
         const phoneParsed = parsePhoneNumber(this.phoneInput, "BR");
         this.profileData.phones.push(phoneParsed.formatNational());
-        this.phoneInput = '';
+        this.phoneInput = "";
       }
     },
   },
