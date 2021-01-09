@@ -74,40 +74,11 @@ export const CREATE_LINK_MUTATION = gql`
 `
 
 export const CREATE_USER = gql`
-  mutation ($username: String!, $email: String!, $password: String!) {
-    createUser (username: $username, email: $email, password: $password) {
+  mutation ($cpf: String!, $password: String!) {
+    createUser (cpf: $cpf, password: $password) {
       user {
         id
-        username
-        email
-        firstName
-        lastName
-      }
-    }
-  }
-`;
-
-export const CREATE_USER_MUTATION = gql`
-  mutation CreateUserMutation($name: String!, $email: String!, $password: String!) {
-    createUser(
-      name: $name,
-      authProvider: {
-        email: {
-          email: $email,
-          password: $password
-        }
-      }
-    ) {
-      id
-    }
-
-    signinUser(email: {
-      email: $email,
-      password: $password
-    }) {
-      token
-      user {
-        id
+        cpf
       }
     }
   }
@@ -202,9 +173,9 @@ export const SIGNIN_USER_MUTATION = gql`
   }
 `
 export const TOKEN_AUTH_MUTATION = gql`
-  mutation TokenAuthMutation($username: String!, $password: String!) {
+  mutation TokenAuthMutation($cpf: String!, $password: String!) {
     tokenAuth(
-      username: $username,
+      cpf: $cpf,
       password: $password
     ) {
       token

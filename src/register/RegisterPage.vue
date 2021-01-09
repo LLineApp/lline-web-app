@@ -4,20 +4,17 @@
       <h2>Cadastro</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="username">CPF</label>
+          <label for="cpf">CPF</label>
           <input
             type="text"
-            v-model="user.username"
+            v-model="user.cpf"
             v-validate="'required'"
-            name="username"
+            name="cpf"
             class="form-control"
-            :class="{ 'is-invalid': submitted && errors.has('username') }"
+            :class="{ 'is-invalid': submitted && errors.has('cpf') }"
           />
-          <div
-            v-if="submitted && errors.has('username')"
-            class="invalid-feedback"
-          >
-            {{ errors.first("username") }}
+          <div v-if="submitted && errors.has('cpf')" class="invalid-feedback">
+            {{ errors.first("cpf") }}
           </div>
         </div>
         <div class="form-group">
@@ -61,9 +58,8 @@ export default {
   data() {
     return {
       user: {
-        username: "",
+        cpf: "",
         password: "",
-        email: "renato@gmail.com",
       },
       submitted: false,
     };
@@ -84,8 +80,7 @@ export default {
             .mutate({
               mutation: CREATE_USER,
               variables: {
-                username: this.user.username,
-                email: this.user.email,
+                cpf: this.user.cpf,
                 password: this.user.password,
               },
             })
