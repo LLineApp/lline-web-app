@@ -7,10 +7,10 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ dispatch, commit }, { username, password }) {
-        commit('loginRequest', { username });
+    login({ dispatch, commit }, { cpf, password }) {
+        commit('loginRequest', { cpf });
     
-        userService.login(username, password)
+        userService.login(cpf, password)
             .then(
                 user => {
                     commit('loginSuccess', user);

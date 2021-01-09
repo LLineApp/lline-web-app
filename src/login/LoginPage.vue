@@ -4,15 +4,15 @@
       <h2>Bem vindo ao LLine</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="username">Informe o seu CPF</label>
+          <label for="cpf">Informe o seu CPF</label>
           <input
             type="text"
-            v-model="username"
-            name="username"
+            v-model="cpf"
+            name="cpf"
             class="form-control"
-            :class="{ 'is-invalid': submitted && !username }"
+            :class="{ 'is-invalid': submitted && !cpf }"
           />
-          <div v-show="submitted && !username" class="invalid-feedback">
+          <div v-show="submitted && !cpf" class="invalid-feedback">
             Um nome de usuário é requerido
           </div>
         </div>
@@ -55,7 +55,7 @@ import { userService } from "../_services/user.service";
 export default {
   data() {
     return {
-      username: '',
+      cpf: '',
       password: '',
       submitted: false,
     };
@@ -71,13 +71,13 @@ export default {
     ...mapActions('account', ['login', 'logout']),
     handleSubmit(e) {
       this.submitted = true;
-      const { username, password } = this;
-      if (username && password) {
+      const { cpf, password } = this;
+      if (cpf && password) {
         const { result } = this.$apollo
           .mutate({
             mutation: TOKEN_AUTH_MUTATION,
             variables: {
-              username,
+              cpf,
               password,
             },
           })
@@ -98,7 +98,7 @@ export default {
 
             this.$toasted.error(message, options);
 
-            this.username = '';
+            this.cpf = '';
             this.password = '';
           });
       }
