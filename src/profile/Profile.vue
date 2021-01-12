@@ -5,13 +5,17 @@
       v-if="!this.profileData.accepted"
       v-on:didAccept="profileData.accepted = true"
       v-on:didNotAccept="profileData.accepted = false"
-    ></Intro>
+    />
     <Email
       v-else-if="this.profileData.email == ''"
       v-on:done="feedProfileData"
       v-on:stopped="profileData.email = ''"
-    >
-    </Email>
+    />
+    <Parents
+      v-else-if="!this.profileDataHasProp('parents')"
+      v-on:done="feedProfileData"
+      v-on:stopped="profileData.email = ''"
+    />
   </div>
 </template>
 
@@ -19,6 +23,7 @@
 <script>
 import Email from "../profile/Email";
 import Intro from "../profile/Intro";
+import Parents from "../profile/Parents";
 
 export default {
   data() {
@@ -35,16 +40,25 @@ export default {
       this.profileData = data;
     }
   },
-  components: { Intro, Email },
+  components: { Intro, Email, Parents },
   watch: {
     profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
+  computed: {
+  },
   methods: {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
+    },
+    profileDataHasProp(prop) {
+      if (this.profileData.hasOwnProperty(prop)) {
+        return Object.keys(this.profileData[prop]).length != 0;
+      } else {
+        return false;
+      }
     },
   },
 };
