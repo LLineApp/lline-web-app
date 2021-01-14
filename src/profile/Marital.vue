@@ -21,6 +21,7 @@
         type="number"
         step="1"
         placeholder="0"
+        :formatter="formatter"
       ></b-form-input>
     </b-form-group>
     <b-form-group
@@ -93,6 +94,11 @@ export default {
         status = "em união estável";
       }
       return "Vocês estão " + status + " há quantos anos?";
+    },
+  },
+  methods: {
+    formatter(value) {
+      return parseInt(value);
     },
   },
 };
