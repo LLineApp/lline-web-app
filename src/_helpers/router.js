@@ -20,14 +20,10 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register'];
-  console.log('publicPages', publicPages);
   const authRequired = !publicPages.includes(to.path);
-  console.log('authRequired', authRequired);
   const loggedIn = localStorage.getItem('user');
-  console.log('loggedIn', loggedIn);
 
   if (authRequired && !loggedIn) {
-    console.log('/login');
     return next('/login');
   }
   next();

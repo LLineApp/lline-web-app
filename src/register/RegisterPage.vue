@@ -73,7 +73,6 @@ export default {
       this.submitted = true;
       this.$validator.validate().then((valid) => {
         if (valid) {
-          console.log(CREATE_USER);
           this.$apollo
             .mutate({
               mutation: CREATE_USER,

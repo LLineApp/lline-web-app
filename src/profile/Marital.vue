@@ -83,10 +83,6 @@ export default {
   computed: {
     ...mapState("account", ["status"]),
     hasSpouse: function () {
-      console.log(this.profileData.marital.status);
-      console.log(
-        ["Casado(a)", "União estável"].includes(this.profileData.marital.status)
-      );
       return ["Casado(a)", "União estável"].includes(
         this.profileData.marital.status
       );
