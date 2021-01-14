@@ -18,10 +18,12 @@
       <b-form-input
         id="howManyYears-input"
         v-model.number="profileData.marital.howManyYears"
+        number=true
         type="number"
         step="1"
+        min="0"
+        max="100"
         placeholder="0"
-        :formatter="formatter"
       ></b-form-input>
     </b-form-group>
     <b-form-group
