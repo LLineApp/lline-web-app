@@ -1,11 +1,31 @@
 <template>
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <h2>Bem vindo ao LLine</h2>
+  <div>
+    <div id="background">
+      <img
+        id="background-color"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1610925105/background-color02_lemrbm.png"
+        alt=""
+      />
+      <img
+        id="background-black"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1610924686/background-black_s3jxgd.png"
+        alt=""
+      />
+    </div>
+    <div id="div-logo">
+      <img
+        id="background-logo"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1610898399/logo_d7p0fy.png"
+        alt=""
+      />
+    </div>
+    <div id="data-div">
+      <h2 id="welcome-message">Bem vindo ao LLine</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label for="cpf">Informe o seu CPF</label>
           <input
+            id="input-cpf"
             type="text"
             v-model="cpf"
             name="cpf"
@@ -19,6 +39,7 @@
         <div class="form-group">
           <label htmlFor="password">Senha</label>
           <input
+            id="input-password"
             type="password"
             v-model="password"
             name="password"
@@ -30,14 +51,18 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary" :disabled="status.loggingIn">
+          <button
+            id="login-button"
+            class="btn btn-primary"
+            :disabled="status.loggingIn"
+          >
             Entrar
           </button>
           <img
             v-show="status.loggingIn"
             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
           />
-          <router-link to="/register" class="btn btn-link"
+          <router-link id="register-button" to="/register" class="btn btn-link"
             >Ainda não estou cadastrado</router-link
           >
         </div>
@@ -55,20 +80,20 @@ import { userService } from "../_services/user.service";
 export default {
   data() {
     return {
-      cpf: '',
-      password: '',
+      cpf: "",
+      password: "",
       submitted: false,
     };
   },
   apollo: {},
   computed: {
-    ...mapState('account', ['status']),
+    ...mapState("account", ["status"]),
   },
   created() {
     this.logout();
   },
   methods: {
-    ...mapActions('account', ['login', 'logout']),
+    ...mapActions("account", ["login", "logout"]),
     handleSubmit(e) {
       this.submitted = true;
       const { cpf, password } = this;
@@ -83,14 +108,14 @@ export default {
           })
           .then((data) => {
             if (data.data.tokenAuth.token) {
-              localStorage.setItem('user', JSON.stringify(data.data.tokenAuth));
-              this.$router.push('/');
+              localStorage.setItem("user", JSON.stringify(data.data.tokenAuth));
+              this.$router.push("/");
             }
           })
           .catch((error) => {
             const message = error.graphQLErrors[0].message;
             const options = {
-              position: 'top-center',
+              position: "top-center",
               duration: 4000,
               fullWidth: true,
               closeOnSwipe: true,
@@ -98,11 +123,63 @@ export default {
 
             this.$toasted.error(message, options);
 
-            this.cpf = '';
-            this.password = '';
+            this.cpf = "";
+            this.password = "";
           });
       }
     },
   },
 };
 </script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+#background,
+#background-color {
+  position: absolute;
+  width: 100%;
+}
+#background-black {
+  width: 69%;
+  position: relative;
+}
+#div-logo {
+  width: 100%;
+  float: left;
+  padding: 2%;
+}
+#background-logo {
+  position: relative;
+  width: 20%;
+}
+#data-div {
+  position: relative;
+  width: 35%;
+  float: left;
+  padding: 2%;
+}
+#input-cpf,
+#input-password {
+  width: 81%;
+}
+#welcome-message,
+#login-button,
+label,
+#register-button {
+  font-family: "Raleway", sans-serif;
+  color: white;
+}
+#welcome-message {
+  font-size: 20pt;
+}
+#login-button {
+  font-size: 15pt;
+}
+label {
+  font-size: 10pt;
+}
+#register-button {
+  font-size: 12pt;
+}
+</style>
