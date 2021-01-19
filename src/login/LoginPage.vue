@@ -28,7 +28,6 @@
             id="input-cpf"
             type="text"
             v-model="cpf"
-            name="cpf"
             class="form-control"
             :class="{ 'is-invalid': submitted && !cpf }"
           />
@@ -42,7 +41,6 @@
             id="input-password"
             type="password"
             v-model="password"
-            name="password"
             class="form-control"
             :class="{ 'is-invalid': submitted && !password }"
           />
@@ -147,21 +145,23 @@ export default {
 #div-logo {
   width: 100%;
   float: left;
-  padding: 2%;
-}
+  padding-left: 7%;
+  padding-top: 7%;
+  }
 #background-logo {
   position: relative;
-  width: 20%;
+  width: 23%;
 }
 #data-div {
   position: relative;
-  width: 35%;
+  width: 100%;
   float: left;
-  padding: 2%;
+  padding: 7%;
+  padding-top: 3%;
 }
 #input-cpf,
 #input-password {
-  width: 81%;
+  width: 25%;
 }
 #welcome-message,
 #login-button,
@@ -180,6 +180,7 @@ label {
   font-size: 10pt;
 }
 #register-button {
-  font-size: 12pt;
+  padding-left: 1%;
+  font-size: 11pt;
 }
 </style>
