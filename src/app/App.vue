@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron">
+  <div>
     <router-view />
   </div>
 </template>
