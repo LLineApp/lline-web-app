@@ -1,15 +1,34 @@
 <template>
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <h2>Cadastro</h2>
+  <div>
+    <div id="background">
+      <img
+        id="background-color-2"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1611189148/background-color03_lnx2ot.png"
+        alt=""
+      />
+      <img
+        id="background-black-2"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1611189017/background-black03_fubn4n.png"
+        alt=""
+      />
+    </div>
+    <div id="div-logo">
+      <img
+        id="background-logo"
+        src="https://res.cloudinary.com/tiagogbt/image/upload/v1610898399/logo_d7p0fy.png"
+        alt=""
+      />
+    </div>
+     <div id="data-div">
+      <h2 id="register-message">Cadastro</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label for="cpf">CPF</label>
           <input
+            id="input-cpf"
             type="text"
             v-model="user.cpf"
             v-validate="'required'"
-            name="cpf"
             class="form-control"
             :class="{ 'is-invalid': submitted && errors.has('cpf') }"
           />
@@ -20,10 +39,10 @@
         <div class="form-group">
           <label htmlFor="password">Senha</label>
           <input
+            id="input-password"
             type="password"
             v-model="user.password"
             v-validate="{ required: true, min: 6 }"
-            name="password"
             class="form-control"
             :class="{ 'is-invalid': submitted && errors.has('password') }"
           />
@@ -35,11 +54,11 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary" :disabled="status.registering">
+          <button id="submit-register-button" class="btn btn-primary" :disabled="status.registering">
             Cadastrar
           </button>
           <img v-show="status.registering" src="REGISTERING" />
-          <router-link to="/login" class="btn btn-link">Cancelar</router-link>
+          <router-link id="cancel-button" to="/login" class="btn btn-link">Cancelar</router-link>
         </div>
       </form>
     </div>
@@ -90,3 +109,58 @@ export default {
   },
 };
 </script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+#background,
+#background-color-2 {
+  position: absolute;
+  width: 100%;
+}
+#background-black-2 {
+  width: 59%;
+  position: relative;
+}
+#div-logo {
+  width: 100%;
+  float: left;
+  padding-left: 7%;
+  padding-top: 7%;
+  }
+#background-logo {
+  position: relative;
+  width: 23%;
+}
+#data-div {
+  position: relative;
+  width: 100%;
+  float: left;
+  padding: 7%;
+  padding-top: 3%;
+}
+#input-cpf,
+#input-password {
+  width: 25%;
+}
+#register-message,
+#cancel-button,
+label,
+#submit-register-button {
+  font-family: "Raleway", sans-serif;
+  color: white;
+}
+#register-message {
+  font-size: 20pt;
+}
+#submit-register-button {
+  font-size: 15pt;
+}
+label {
+  font-size: 10pt;
+}
+#cancel-button {
+  padding-left: 1%;
+  font-size: 11pt;
+}
+</style>
