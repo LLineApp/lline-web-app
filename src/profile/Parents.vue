@@ -93,11 +93,7 @@ export default {
         { text: "Não", value: false },
         { text: "Sim", value: true },
       ],
-      whichParents: [
-        { text: "Pai", value: "father" },
-        { text: "Mãe", value: "mother" },
-        { text: "Ambos", value: "both" },
-      ],
+      whichParents: [ "Pai", "Mãe", "Ambos"],
     };
   },
   computed: {
