@@ -7,7 +7,6 @@
         id="areThemSupportedByYou-radio-slots"
         v-model="profileData.parents.areThemSupportedByYou"
         :options="yesNo"
-        name="radio-options-slots"
       >
       </b-form-radio-group>
     </b-form-group>
@@ -21,8 +20,9 @@
         id="howMuchYouSuportThem"
         v-model.number="profileData.parents.howMuchYouSuportThem"
         type="number"
-        step="0.01"
+        step="1"
         placeholder="0.00"
+        :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
     <b-form-group label="Há possiblidade de herança?">
@@ -30,7 +30,6 @@
         id="isThereAPossibilityOfInheritance-radio-slots"
         v-model="profileData.parents.isThereAPossibilityOfInheritance"
         :options="yesNo"
-        name="radio-options-slots"
       >
       </b-form-radio-group>
     </b-form-group>
@@ -58,8 +57,9 @@
         id="whatIsTheEstimatedValue"
         v-model.number="profileData.parents.whatIsTheEstimatedValue"
         type="number"
-        step="0.01"
+        step="1"
         placeholder="0.00"
+        :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
 
@@ -99,6 +99,10 @@ export default {
   computed: {
     ...mapState("account", ["status"]),
   },
-  methods: {},
+  methods: {
+    formatNumericField(value) {
+      return parseFloat(value);
+    },
+  },
 };
 </script> 

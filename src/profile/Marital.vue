@@ -24,6 +24,7 @@
         min="0"
         max="100"
         placeholder="0"
+        :formatter="formatToInt"
       ></b-form-input>
     </b-form-group>
     <b-form-group
@@ -99,7 +100,7 @@ export default {
     },
   },
   methods: {
-    formatter(value) {
+    formatToInt(value) {
       return parseInt(value);
     },
   },
