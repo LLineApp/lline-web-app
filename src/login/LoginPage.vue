@@ -32,7 +32,7 @@
             :class="{ 'is-invalid': submitted && !cpf }"
           />
           <div v-show="submitted && !cpf" class="invalid-feedback">
-            Um nome de usuário é requerido
+            Informe seu CPF
           </div>
         </div>
         <div class="form-group">
@@ -45,7 +45,7 @@
             :class="{ 'is-invalid': submitted && !password }"
           />
           <div v-show="submitted && !password" class="invalid-feedback">
-            Uma senha é requerida
+            Informe sua Senha
           </div>
         </div>
         <div class="form-group">
