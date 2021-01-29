@@ -24,7 +24,12 @@
     <Children
       v-else-if="!this.profileDataHasProp('children')"
       v-on:done="feedProfileData"
-      v-on:stopped="profileData.email = ''"
+      v-on:stopped="delete profileData.children"
+    />
+    <ProfessionalSituation
+      v-else-if="!this.profileDataHasProp('occupation')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.occupation"
     />
   </div>
 </template>
@@ -36,6 +41,7 @@ import Intro from "../profile/Intro";
 import Parents from "../profile/Parents";
 import Marital from "../profile/Marital";
 import Children from "../profile/Children";
+import ProfessionalSituation from "../profile/ProfessionalSituation";
 
 export default {
   data() {
@@ -52,7 +58,7 @@ export default {
       this.profileData = data;
     }
   },
-  components: { Intro, Email, Parents, Marital, Children },
+  components: { Intro, Email, Parents, Marital, Children, ProfessionalSituation },
   watch: {
     profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
