@@ -82,6 +82,7 @@
         type="number"
         step="1"
         placeholder="0,00"
+        no-wheel=true
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -104,6 +105,7 @@
         type="number"
         step="1"
         placeholder="0,00"
+        no-wheel=true
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -119,6 +121,7 @@
         type="number"
         step="1"
         placeholder="0,00"
+        no-wheel=true
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -134,6 +137,7 @@
         type="number"
         step="1"
         placeholder="0,00"
+        no-wheel=true
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
