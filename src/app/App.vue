@@ -1,10 +1,12 @@
 <template>
   <div>
     <router-view />
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from '../footer/Footer.vue';
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -24,5 +26,6 @@ export default {
       this.clearAlert();
     },
   },
+  components: { Footer },
 };
 </script>
