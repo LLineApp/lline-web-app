@@ -26,6 +26,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="profileData.email = ''"
     />
+    <InvestorExperiences
+      v-else-if="!this.profileDataHasProp('investorExperiences')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.investorExperiences"
+    />
   </div>
 </template>
 
@@ -36,6 +41,7 @@ import Intro from "../profile/Intro";
 import Parents from "../profile/Parents";
 import Marital from "../profile/Marital";
 import Children from "../profile/Children";
+import InvestorExperiences from "../profile/InvestorExperiences";
 
 export default {
   data() {
@@ -52,7 +58,7 @@ export default {
       this.profileData = data;
     }
   },
-  components: { Intro, Email, Parents, Marital, Children },
+  components: { Intro, Email, Parents, Marital, Children, InvestorExperiences },
   watch: {
     profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
