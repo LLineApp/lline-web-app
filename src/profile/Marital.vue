@@ -35,7 +35,7 @@
     >
       <b-form-input
         id="spouseName-input"
-        v-model.number="profileData.marital.spouseName"
+        v-model="profileData.marital.spouseName"
       ></b-form-input>
     </b-form-group>
     <b-form-group
