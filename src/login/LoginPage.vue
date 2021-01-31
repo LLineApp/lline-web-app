@@ -66,6 +66,7 @@
         </div>
       </form>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -74,6 +75,7 @@ import { mapState, mapActions } from "vuex";
 import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { userService } from "../_services/user.service";
+import Footer from "../footer/Footer";
 
 export default {
   data() {
@@ -127,6 +129,7 @@ export default {
       }
     },
   },
+  components: { Footer },
 };
 </script>
 
@@ -141,13 +144,14 @@ export default {
 #background-black {
   width: 69%;
   position: relative;
+  transform: translate(-1px,-1px);
 }
 #div-logo {
   width: 100%;
   float: left;
   padding-left: 7%;
   padding-top: 7%;
-  }
+}
 #background-logo {
   position: relative;
   width: 23%;
