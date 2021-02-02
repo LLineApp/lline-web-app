@@ -3,14 +3,13 @@
     <p>Sobre sua vida familiar - Casamento</p>
     <b-form-group label="Qual o seu estado civil?">
       <b-form-select
-        id="status"
+        id="status-select"
         v-model="profileData.marital.status"
         :options="maritalStatuses"
-      >
-      </b-form-select>
+      />
     </b-form-group>
     <b-form-group
-      id="howManyYears-form-group"
+      id="howManyYears-group"
       :label="this.howManyYearsLabel"
       label-for="howManyYears-input"
       v-if="this.hasSpouse"
@@ -23,12 +22,13 @@
         step="1"
         min="0"
         max="100"
+        no-wheel
         placeholder="0"
         :formatter="formatToInt"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group
-      id="spouseName-form-group"
+      id="spouseName-group"
       label="Qual o nome do seu cônjuge?"
       label-for="spouseName-input"
       v-if="this.hasSpouse"
@@ -36,10 +36,10 @@
       <b-form-input
         id="spouseName-input"
         v-model="profileData.marital.spouseName"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group
-      id="spouseOccupation-form-group"
+      id="spouseOccupation-group"
       label="Qual a ocupação do seu cônjuge?"
       label-for="spouseOccupation-input"
       v-if="this.hasSpouse"
@@ -47,9 +47,8 @@
       <b-form-input
         id="spouseOccupation-input"
         v-model.number="profileData.marital.spouseOccupation"
-      ></b-form-input>
+      />
     </b-form-group>
-
     <b-button variant="success" v-on:click="$emit('done', profileData)">
       Cadastrar
     </b-button>

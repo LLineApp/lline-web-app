@@ -53,7 +53,6 @@ export default {
   methods: {
     addChild() {
       const newKey = this.profileData.children.length;
-      console.log(newKey);
       const newChild = {
         key: newKey,
         fullName: "",
@@ -70,19 +69,14 @@ export default {
           break;
         }
       }
-      console.log(JSON.stringify(this.profileData));
     },
     removeChild(childData) {
       var remainingChildren = this.profileData.children.filter(function (
-        value,
-        index,
-        arr
+        value
       ) {
         return value != childData;
       });
       this.profileData.children = remainingChildren;
-
-      console.log(JSON.stringify(this.profileData));
     },
   },
 };

@@ -15,7 +15,7 @@
         type="number"
         step="1"
         placeholder="0.00"
-        no-wheel="true"
+        no-wheel
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -37,7 +37,7 @@
         type="number"
         step="1"
         placeholder="0.00"
-        no-wheel="true"
+        no-wheel
         :formatter="formatNumericField"
       />
     </b-form-group>
