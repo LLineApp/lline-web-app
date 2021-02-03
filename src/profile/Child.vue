@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>{{ this.childData.key }}</p>
     <b-form-group
       id="fullName-group"
       label="Nome completo"
@@ -11,7 +10,7 @@
         id="fullName-input"
         ref="fullName"
         v-model="childData.fullName"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group
       id="birthDate-group"
@@ -22,7 +21,7 @@
         type="date"
         id="birthDate-input"
         v-model="childData.birthDate"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group
       id="occupationTraining-group"
@@ -33,7 +32,7 @@
         type="text"
         id="occupationTraining-input"
         v-model="childData.occupationTraining"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group
       id="additionalInfo-group"
@@ -45,7 +44,7 @@
         id="additionalInfo-input"
         v-model="childData.additionalInfo"
         placeholder=" Está na faculdade, em intercâmbio, na escola, é casado(a) ou emancipado(a), tem filhos?"
-      ></b-form-textarea>
+      />
     </b-form-group>
     <b-button
       type="button"
@@ -78,4 +77,4 @@ export default {
     },
   },
 };
-</script> 
+</script>

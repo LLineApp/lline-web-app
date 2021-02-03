@@ -4,65 +4,62 @@
 
     <b-form-group label="Seus pais são dependentes de você?">
       <b-form-radio-group
-        id="areThemSupportedByYou-radio-slots"
+        id="areThemSupportedByYou-radio"
         v-model="profileData.parents.areThemSupportedByYou"
         :options="yesNo"
-      >
-      </b-form-radio-group>
+      />
     </b-form-group>
     <b-form-group
-      id="howMuchYouSuportThem"
+      id="howMuchYouSuportThem-group"
       label="Você colabora com quanto?"
-      label-for="howMuchYouSuportThem"
+      label-for="howMuchYouSuportThem-input"
       v-if="this.profileData.parents.areThemSupportedByYou"
     >
       <b-form-input
-        id="howMuchYouSuportThem"
+        id="howMuchYouSuportThem-input"
         v-model.number="profileData.parents.howMuchYouSuportThem"
         type="number"
         step="1"
         placeholder="0.00"
+        no-wheel
         :formatter="formatNumericField"
-      ></b-form-input>
+      />
     </b-form-group>
     <b-form-group label="Há possiblidade de herança?">
       <b-form-radio-group
-        id="isThereAPossibilityOfInheritance-radio-slots"
+        id="isThereAPossibilityOfInheritance-radio"
         v-model="profileData.parents.isThereAPossibilityOfInheritance"
         :options="yesNo"
-      >
-      </b-form-radio-group>
+      />
     </b-form-group>
-
     <b-form-group
-      id="ofWhom"
+      id="ofWhom-group"
       label="De quem?"
-      label-for="ofWhom"
+      label-for="ofWhom-select"
       v-if="this.profileData.parents.isThereAPossibilityOfInheritance"
     >
       <b-form-select
-        id="ofWhom"
+        id="ofWhom-select"
         v-model="profileData.parents.ofWhom"
         :options="whichParents"
-      ></b-form-select>
+      />
     </b-form-group>
-
     <b-form-group
-      id="whatIsTheEstimatedValue"
+      id="whatIsTheEstimatedValue-group"
       label="Qual o valor estimado?"
-      label-for="whatIsTheEstimatedValue"
+      label-for="whatIsTheEstimatedValue-input"
       v-if="this.profileData.parents.isThereAPossibilityOfInheritance"
     >
       <b-form-input
-        id="whatIsTheEstimatedValue"
+        id="whatIsTheEstimatedValue-input"
         v-model.number="profileData.parents.whatIsTheEstimatedValue"
         type="number"
         step="1"
         placeholder="0.00"
+        no-wheel
         :formatter="formatNumericField"
-      ></b-form-input>
+      />
     </b-form-group>
-
     <b-button variant="success" v-on:click="$emit('done', profileData)">
       Cadastrar
     </b-button>
