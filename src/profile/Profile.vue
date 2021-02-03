@@ -51,6 +51,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.insurances"
     />
+    <PersonalPrivateSecurities
+      v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.personalPrivateSecurities"
+    />
   </div>
 </template>
 
@@ -65,6 +70,7 @@ import ImmovableProperties from "../profile/ImmovableProperties";
 import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
+import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
 
 export default {
   data() {
@@ -92,6 +98,7 @@ export default {
     FinancialSituation,
     InvestorExperiences,
     Insurances,
+    PersonalPrivateSecurities,
   },
   watch: {
     profileData: function() {
