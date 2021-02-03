@@ -36,6 +36,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.immovableProperties"
     />
+    <FinancialSituation
+      v-else-if="!this.profileDataHasProp('monthlyExpenses')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.monthlyExpenses"
+    />
     <InvestorExperiences
       v-else-if="!this.profileDataHasProp('investorExperiences')"
       v-on:done="feedProfileData"
@@ -57,6 +62,7 @@ import Marital from "../profile/Marital";
 import Children from "../profile/Children";
 import ProfessionalSituation from "../profile/ProfessionalSituation";
 import ImmovableProperties from "../profile/ImmovableProperties";
+import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
 
@@ -83,6 +89,7 @@ export default {
     Children,
     ProfessionalSituation,
     ImmovableProperties,
+    FinancialSituation,
     InvestorExperiences,
     Insurances,
   },
