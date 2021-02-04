@@ -63,10 +63,12 @@
     />
     <InvestmentPortfolios
       v-else-if="!this.profileDataHasProp('investmentPortfolios')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.investmentPortfolios"
+    />
     <FixedIncomeSecurities
       v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
       v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.investmentPortfolios"
       v-on:stopped="delete profileData.fixedIncomeSecurities"
     />
   </div>
