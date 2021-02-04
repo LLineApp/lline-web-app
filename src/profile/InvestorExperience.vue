@@ -14,7 +14,7 @@
         v-model.number="investorExperienceData.value"
         type="number"
         step="1"
-        no-wheel=true
+        no-wheel
         placeholder="0.00"
         :formatter="formatNumericField"
       />
