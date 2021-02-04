@@ -36,6 +36,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.immovableProperties"
     />
+    <Health
+      v-else-if="!this.profileDataHasProp('health')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.health"
+    />
     <FinancialSituation
       v-else-if="!this.profileDataHasProp('monthlyExpenses')"
       v-on:done="feedProfileData"
@@ -56,9 +61,12 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.personalPrivateSecurities"
     />
+    <InvestmentPortfolios
+      v-else-if="!this.profileDataHasProp('investmentPortfolios')"
     <FixedIncomeSecurities
       v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
       v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.investmentPortfolios"
       v-on:stopped="delete profileData.fixedIncomeSecurities"
     />
   </div>
@@ -76,7 +84,9 @@ import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
 import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
+import Health from "../profile/Health";
 import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
+import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 
 export default {
   data() {
@@ -105,7 +115,9 @@ export default {
     InvestorExperiences,
     Insurances,
     PersonalPrivateSecurities,
+    Health,
     FixedIncomeSecurities,
+    InvestmentPortfolios,
   },
   watch: {
     profileData: function() {
