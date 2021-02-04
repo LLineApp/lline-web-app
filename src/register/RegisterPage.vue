@@ -19,7 +19,7 @@
         alt=""
       />
     </div>
-     <div id="data-div">
+    <div id="data-div">
       <h2 id="register-message">Cadastro</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
@@ -54,14 +54,21 @@
           </div>
         </div>
         <div class="form-group">
-          <button id="submit-register-button" class="btn btn-primary" :disabled="status.registering">
+          <button
+            id="submit-register-button"
+            class="btn btn-primary"
+            :disabled="status.registering"
+          >
             Cadastrar
           </button>
           <img v-show="status.registering" src="REGISTERING" />
-          <router-link id="cancel-button" to="/login" class="btn btn-link">Cancelar</router-link>
+          <router-link id="cancel-button" to="/login" class="btn btn-link"
+            >Cancelar</router-link
+          >
         </div>
       </form>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -70,6 +77,7 @@ import { mapState, mapActions } from "vuex";
 import { CREATE_USER } from "../constants/graphql";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
+import Footer from "../footer/Footer";
 
 export default {
   data() {
@@ -107,6 +115,7 @@ export default {
       });
     },
   },
+  components: { Footer },
 };
 </script>
 
@@ -121,13 +130,14 @@ export default {
 #background-black-2 {
   width: 59%;
   position: relative;
+  transform: translate(-1px,-1px);
 }
 #div-logo {
   width: 100%;
   float: left;
   padding-left: 7%;
   padding-top: 7%;
-  }
+}
 #background-logo {
   position: relative;
   width: 23%;
