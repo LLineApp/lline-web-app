@@ -76,6 +76,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.fixedIncomeSecurities"
     />
+    <AdditionalInformations
+      v-else-if="!this.profileDataHasProp('additionalInformations')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.additionalInformations"
+    />
   </div>
 </template>
 
@@ -95,6 +100,7 @@ import PlansAndProjects from "../profile/PlansAndProjects";
 import Health from "../profile/Health";
 import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
+import AdditionalInformations from "../profile/AdditionalInformations";
 
 export default {
   data() {
@@ -127,6 +133,7 @@ export default {
     Health,
     FixedIncomeSecurities,
     InvestmentPortfolios,
+    AdditionalInformations,
   },
   watch: {
     profileData: function() {
