@@ -61,6 +61,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.personalPrivateSecurities"
     />
+    <PlansAndProjects
+      v-else-if="!this.profileDataHasProp('plansAndProjects')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.plansAndProjects"
+    />
     <InvestmentPortfolios
       v-else-if="!this.profileDataHasProp('investmentPortfolios')"
       v-on:done="feedProfileData"
@@ -86,6 +91,7 @@ import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
 import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
+import PlansAndProjects from "../profile/PlansAndProjects";
 import Health from "../profile/Health";
 import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
@@ -117,6 +123,7 @@ export default {
     InvestorExperiences,
     Insurances,
     PersonalPrivateSecurities,
+    PlansAndProjects,
     Health,
     FixedIncomeSecurities,
     InvestmentPortfolios,
