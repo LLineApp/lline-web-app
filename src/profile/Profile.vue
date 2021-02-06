@@ -76,6 +76,11 @@
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.fixedIncomeSecurities"
     />
+    <Knowledge
+      v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.currentInvestmentProcess"
+    />
     <AdditionalInformations
       v-else-if="!this.profileDataHasProp('additionalInformations')"
       v-on:done="feedProfileData"
@@ -100,6 +105,7 @@ import PlansAndProjects from "../profile/PlansAndProjects";
 import Health from "../profile/Health";
 import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
+import Knowledge from './Knowledge.vue';
 import AdditionalInformations from "../profile/AdditionalInformations";
 
 export default {
@@ -133,6 +139,7 @@ export default {
     Health,
     FixedIncomeSecurities,
     InvestmentPortfolios,
+    Knowledge,
     AdditionalInformations,
   },
   watch: {
