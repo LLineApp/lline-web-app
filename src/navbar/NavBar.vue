@@ -77,6 +77,11 @@ export default {
   color: black;
 }
 
+#dropdown:hover{
+  background-color: black;
+  color: turquoise;
+}
+
 .topnav .icon {
   display: none;
 }
@@ -155,6 +160,7 @@ export default {
   #dropdown{
     position: absolute;
     right: 0;
+    color: black;
   }
 }
 </style>
