@@ -17,11 +17,15 @@
       </li>
     </ul>
 
-    <b-button variant="success" v-on:click="$emit('done', profileData)">
+    <b-button
+      variant="success"
+      v-if="showButtons"
+      v-on:click="$emit('done', profileData)"
+    >
       Cadastrar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-on:click="$emit('stop')">Parar</b-button>
+    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ import { REGISTERING } from "../constants/base64";
 import FixedIncomeSecurity from "../profile/FixedIncomeSecurity";
 
 export default {
+  props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
@@ -47,6 +52,11 @@ export default {
     };
   },
   components: { FixedIncomeSecurity },
+  created(){
+    if(this.recordedData){
+      Object.assign(this.profileData, this.recordedData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },

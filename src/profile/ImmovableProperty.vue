@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p> {{this.immovablePropertyData.key}}</p>
     <b-form-group
       id="description-group"
       label="Descrição"
@@ -101,7 +102,9 @@ export default {
   },
 
   mounted() {
-    this.focusInput();
+    if (!this.immovablePropertyData.description) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {

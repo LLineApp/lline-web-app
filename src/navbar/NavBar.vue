@@ -18,7 +18,7 @@
             <template #button-content>
               <em>{{ userFirstName }}</em>
             </template>
-            <b-dropdown-item href="#">Perfil</b-dropdown-item>
+            <b-dropdown-item href="profile">Perfil</b-dropdown-item>
             <b-dropdown-item to="/login">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
