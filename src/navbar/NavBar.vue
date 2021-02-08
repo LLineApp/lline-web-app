@@ -4,7 +4,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <div class="topnav" id="myTopnav">
+    <div class="topnav" id="main-top-nav">
       <a href="#" class="active">Home</a>
       <a href="#">Link</a>
       <a href="#">Link</a>
@@ -14,11 +14,16 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#link1">Profile</a>
-          <a href="/login">Sair <i class="fa fa-sign-out"></i></a>
+          <a href="#link1"><i class="fa fa-user"></i> Perfil</a>
+          <a href="/login"><i class="fa fa-sign-out"></i> Sair</a>
         </div>
       </div>
-      <a id="dropdown" href="javascript:void(0);" class="icon" @click="myFunction()">
+      <a
+        id="dropdown"
+        href="javascript:void(0);"
+        class="icon"
+        @click="responsiveSwitch()"
+      >
         <i class="fa fa-bars"></i>
       </a>
     </div>
@@ -40,12 +45,12 @@ export default {
   },
   created() {},
   methods: {
-    myFunction: function () {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className = "topnav responsive";
+    responsiveSwitch: function () {
+      var topNavBar = document.getElementById("main-top-nav");
+      if (topNavBar.className === "topnav") {
+        topNavBar.className = "topnav responsive";
       } else {
-        x.className = "topnav";
+        topNavBar.className = "topnav";
       }
     },
   },
@@ -77,7 +82,7 @@ export default {
   color: black;
 }
 
-#dropdown:hover{
+#dropdown:hover {
   background-color: black;
   color: turquoise;
 }
@@ -85,8 +90,6 @@ export default {
 .topnav .icon {
   display: none;
 }
-
-/*Drop down shit*/
 
 .dropdown {
   float: right;
@@ -119,6 +122,7 @@ export default {
   text-decoration: none;
   display: block;
   text-align: left;
+  font-family: "Raleway", sans-serif;
 }
 
 .dropdown:hover .dropdown-content {
@@ -131,7 +135,7 @@ export default {
   .topnav a:not(:first-child) {
     display: none;
   }
-  .topnav a:first-child{
+  .topnav a:first-child {
     width: 100%;
     text-align: center;
   }
@@ -147,17 +151,19 @@ export default {
     right: 0;
     top: 0;
   }
-  
-  .topnav.responsive a, .topnav.responsive #user-name-div {
+
+  .topnav.responsive a,
+  .topnav.responsive #user-name-div {
     float: none;
     display: block;
     text-align: center;
   }
 
-  .topnav.responsive #user-name-btn, .topnav.responsive .dropdown-content{
+  .topnav.responsive #user-name-btn,
+  .topnav.responsive .dropdown-content {
     width: 100%;
   }
-  #dropdown{
+  #dropdown {
     position: absolute;
     right: 0;
     color: black;
