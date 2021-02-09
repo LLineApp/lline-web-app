@@ -17,8 +17,7 @@
       <b-form-input
         id="howManyYears-input"
         v-model.number="profileData.marital.howManyYears"
-        number=true
-        type="number"
+        number
         step="1"
         min="0"
         max="100"
@@ -49,11 +48,15 @@
         v-model.number="profileData.marital.spouseOccupation"
       />
     </b-form-group>
-    <b-button variant="success" v-on:click="$emit('done', profileData)">
+    <b-button
+      variant="success"
+      v-if="showButtons"
+      v-on:click="$emit('done', profileData)"
+    >
       Cadastrar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-on:click="$emit('stop')">Parar</b-button>
+    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
   </div>
 </template>
 
@@ -63,6 +66,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 
 export default {
+  props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
@@ -83,14 +87,19 @@ export default {
       ],
     };
   },
+  created() {
+    if (this.recordedData) {
+      Object.assign(this.profileData, this.recordedData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
-    hasSpouse: function () {
+    hasSpouse: function() {
       return ["Casado(a)", "União estável"].includes(
         this.profileData.marital.status
       );
     },
-    howManyYearsLabel: function () {
+    howManyYearsLabel: function() {
       let status = "casados";
       if (this.profileData.marital.status == "União estável") {
         status = "em união estável";
@@ -104,4 +113,4 @@ export default {
     },
   },
 };
-</script> 
+</script>

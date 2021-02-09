@@ -25,7 +25,7 @@
         v-model.number="fixedIncomeSecurityData.tx"
         type="number"
         step="1"
-        placeholder="0,00"
+        placeholder="0.00"
         no-wheel
         :formatter="formatNumericField"
       />
@@ -51,7 +51,9 @@
 export default {
   props: ["fixedIncomeSecurityData"],
   mounted() {
-    this.focusInput();
+    if (!this.fixedIncomeSecurityData.type) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {

@@ -14,7 +14,7 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#link1"><i class="fa fa-user"></i> Perfil</a>
+          <a href="/profile"><i class="fa fa-user"></i> Perfil</a>
           <a href="/login"><i class="fa fa-sign-out"></i> Sair</a>
         </div>
       </div>

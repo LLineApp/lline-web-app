@@ -55,7 +55,9 @@ export default {
     };
   },
   mounted() {
-    this.focusInput();
+    if (!this.investorExperienceData.type) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {

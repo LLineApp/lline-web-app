@@ -14,11 +14,17 @@
 
 <script>
 export default {
-  props: ["label", "placeholder", "fieldName"],
+  props: ["label", "placeholder", "fieldName", "text"],
   data() {
     return {
       inputMemo: null,
     };
   },
+  created() {
+    if (this.text) {
+      this.inputMemo = this.text;
+    }
+  },
+
 };
 </script>

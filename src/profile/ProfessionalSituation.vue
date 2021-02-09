@@ -27,7 +27,7 @@
       label="Quais os telefones da empresa (separados por vírgula)?"
       label-for="phones-input"
     >
-      <b-form-input id="phones-input" v-model="profileData.phones" />
+      <b-form-input id="phones-input" v-model="profileData.businessphones" />
     </b-form-group>
     <b-form-group
       id="businessEmail-form-group"
@@ -102,7 +102,7 @@
       <b-form-input
         id="privateSecurityYourValue-input"
         v-model.number="profileData.privateSecurityYourValue"
-        type="number"
+        number
         step="1"
         placeholder="0,00"
         no-wheel
@@ -141,11 +141,15 @@
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
-    <b-button variant="success" v-on:click="$emit('done', profileData)">
+    <b-button
+      variant="success"
+      v-if="showButtons"
+      v-on:click="$emit('done', profileData)"
+    >
       Cadastrar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-on:click="$emit('stop')">Parar</b-button>
+    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
   </div>
 </template>
 
@@ -155,13 +159,14 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 
 export default {
+  props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
         occupation: "",
         role: "",
         companyName: "",
-        phones: "",
+        businessphones: "",
         businessEmail: "",
         businessKind: "",
         businessField: "",
@@ -181,6 +186,11 @@ export default {
       incomeTaxDeclarationType: ["Simples", "Completa"],
     };
   },
+  created() {
+    if (this.recordedData) {
+      Object.assign(this.profileData, this.recordedData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },
@@ -189,7 +199,7 @@ export default {
       return parseFloat(value);
     },
     formatLowerCase(value) {
-      return value.lowerCase();
+      return value.toLowerCase();
     },
   },
 };
