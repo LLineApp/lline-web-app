@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-group id="bank-group" label="banco" label-for="bank-input">
+    <b-form-group id="bank-group" label="Banco" label-for="bank-input">
       <b-form-input
         type="text"
         id="bank-input"
@@ -84,7 +84,9 @@ export default {
     };
   },
   mounted() {
-    this.focusInput();
+    if (!this.personalPrivateSecurityData.bank) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {

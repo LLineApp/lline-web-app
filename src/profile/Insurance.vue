@@ -90,11 +90,13 @@ export default {
     };
   },
   mounted() {
-    this.focusInput();
+    if (!this.insuranceData.type) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {
-      // this.$refs.type.focus();
+      this.$refs.type.focus();
     },
     formatNumericField(value) {
       return parseFloat(value);

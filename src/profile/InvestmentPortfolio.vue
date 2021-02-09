@@ -51,7 +51,9 @@
 export default {
   props: ["investmentPortfolioData"],
   mounted() {
-    this.focusInput();
+    if (!this.investmentPortfolioData.type) {
+      this.focusInput();
+    }
   },
   methods: {
     focusInput() {

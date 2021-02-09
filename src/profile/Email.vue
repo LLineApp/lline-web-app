@@ -73,14 +73,24 @@
     />
     <label for="requestBrokerStatus">Solicitar status de Assessor</label>
     <br />
-    <button class="btn btn-primary" v-on:click="$emit('done', profileData)">
+    <button
+      class="btn btn-primary"
+      v-if="showButtons"
+      v-on:click="$emit('done', profileData)"
+    >
       Cadastrar
     </button>
     <img
       v-show="status.registering"
       src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
     />
-    <button class="btn btn-secondary" v-on:click="$emit('stop')">Parar</button>
+    <button
+      class="btn btn-secondary"
+      v-if="showButtons"
+      v-on:click="$emit('stop')"
+    >
+      Parar
+    </button>
   </div>
 </template>
 
@@ -90,6 +100,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { parsePhoneNumber } from "libphonenumber-js";
 
 export default {
+  props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
@@ -104,14 +115,19 @@ export default {
       phoneInput: "",
     };
   },
+  created() {
+    if (this.recordedData) {
+      Object.assign(this.profileData, this.recordedData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
-    formatDate(value, event) {
+    formatDate(value) {
       return moment(value).format("DD/MM/YYYY");
     },
   },
   methods: {
-    addPhone(value, event) {
+    addPhone() {
       this.phoneInput = this.phoneInput.replace(/\D+/g, "");
       if (this.phoneInput) {
         const phoneParsed = parsePhoneNumber(this.phoneInput, "BR");
@@ -121,4 +137,4 @@ export default {
     },
   },
 };
-</script> 
+</script>
