@@ -125,6 +125,7 @@ import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 
 export default {
+  name: "profile",
   data() {
     return {
       profileData: {
