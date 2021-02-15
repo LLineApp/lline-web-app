@@ -32,14 +32,9 @@ export default {
   methods: {
     handleAccept(e) {
       this.profileData.accepted = true;
-      this.setData();
     },
     handleDontAccept(e) {
       this.profileData.accepted = false;
-      this.setData();
-    },
-    setData() {
-      sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
 };

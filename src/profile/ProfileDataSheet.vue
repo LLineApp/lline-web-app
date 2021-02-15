@@ -39,6 +39,7 @@ import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
+import { getProfile } from "../../datasource/profile";
 
 export default {
   data() {
@@ -50,10 +51,9 @@ export default {
     };
   },
   created() {
-    const data = JSON.parse(sessionStorage.getItem("profileData"));
-    if (data) {
-      this.profileData = data;
-    }
+    const data = getProfile();
+    this.profileData = data;
+    console.log(JSON.stringify(data.fullname));
   },
   components: {
     NavBar,
