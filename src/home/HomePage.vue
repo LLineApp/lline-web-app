@@ -15,7 +15,6 @@ export default {
   name: "home",
   components: { NavBar, Profile },
 };
-
 </script>
 
 <style scoped>
@@ -28,11 +27,10 @@ export default {
   padding-top: 5%;
   color: #26fed5;
 }
-#welcome-h1{
+#welcome-h1 {
   font-size: 48pt;
 }
-#welcome-p{
+#welcome-p {
   font-size: 24pt;
 }
-</style>>
-
+</style>
