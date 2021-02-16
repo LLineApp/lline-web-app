@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :key="key">
     <NavBar />
     <p>Estes são os seus dados</p>
     <Email v-bind:recordedData="profileData" />
@@ -44,16 +44,30 @@ import { getProfile } from "../../datasource/profile";
 export default {
   data() {
     return {
+      key: 0,
       profileData: {
-        accepted: false,
-        email: "",
+        accepted: true,
       },
     };
   },
   created() {
-    const data = getProfile();
-    this.profileData = data;
-    console.log(JSON.stringify(data.fullname));
+    getProfile()
+      .then((data) => {
+        this.profileData = data.data.getProfile[0];
+        console.log(JSON.stringify(this.profileData));
+        this.key += 1;
+      })
+      .catch((error) => {
+        const message = error.graphQLErrors[0].message;
+        const options = {
+          position: "top-center",
+          duration: 4000,
+          fullWidth: true,
+          closeOnSwipe: true,
+        };
+
+        this.$toasted.error(message, options);
+      });
   },
   components: {
     NavBar,

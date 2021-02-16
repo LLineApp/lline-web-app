@@ -35,9 +35,10 @@ export default {
     };
   },
   components: { Memo },
-  created() {
-    if (this.recordedData.health) {
-      this.profileData.health = this.recordedData.health;
+  mounted() {
+    if (this.recordedData) {
+      Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
   },
   computed: {

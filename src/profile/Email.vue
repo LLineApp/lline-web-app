@@ -12,31 +12,31 @@
     <div v-if="submitted && errors.has('email')" class="invalid-feedback">
       {{ errors.first("email") }}
     </div>
-    <label for="fullName">Nome completo</label>
+    <label for="fullname">Nome completo</label>
     <input
       type="text"
-      v-model="profileData.fullName"
+      v-model="profileData.fullname"
       v-validate="'required'"
-      name="fullName"
+      name="fullname"
       class="form-control"
-      :class="{ 'is-invalid': submitted && errors.has('fullName') }"
+      :class="{ 'is-invalid': submitted && errors.has('fullname') }"
     />
-    <div v-if="submitted && errors.has('fullName')" class="invalid-feedback">
-      {{ errors.first("fullName") }}
+    <div v-if="submitted && errors.has('fullname')" class="invalid-feedback">
+      {{ errors.first("fullname") }}
     </div>
 
-    <label for="birthDate">Data de nascimento</label>
+    <label for="birthdate">Data de nascimento</label>
     <input
       type="date"
-      v-model="profileData.birthDate"
+      v-model="profileData.birthdate"
       v-validate="'required'"
-      name="birthDate"
+      name="birthdate"
       class="form-control"
       formatter="formatDate"
-      :class="{ 'is-invalid': submitted && errors.has('birthDate') }"
+      :class="{ 'is-invalid': submitted && errors.has('birthdate') }"
     />
-    <div v-if="submitted && errors.has('birthDate')" class="invalid-feedback">
-      {{ errors.first("birthDate") }}
+    <div v-if="submitted && errors.has('birthdate')" class="invalid-feedback">
+      {{ errors.first("birthdate") }}
     </div>
     <label for="phoneInput"
       >Informe aqui todos os seus números de telefone com DDD, um por um</label
@@ -104,9 +104,9 @@ export default {
   data() {
     return {
       profileData: {
-        fullName: "",
+        fullname: "",
         email: "",
-        birthDate: null,
+        birthdate: null,
         phones: [],
         preferredPhone: "",
         requestBrokerStatus: false,
@@ -115,9 +115,10 @@ export default {
       phoneInput: "",
     };
   },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
   },
   computed: {
