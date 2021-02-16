@@ -67,6 +67,7 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 export default {
+  name: "child",
   props: ["childData"],
   mounted() {
     if (!this.childData.fullName) {

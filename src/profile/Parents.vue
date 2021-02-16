@@ -78,6 +78,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 
 export default {
+  name: "parents",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -98,8 +99,8 @@ export default {
       whichParents: ["Pai", "Mãe", "Ambos"],
     };
   },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

@@ -26,6 +26,7 @@ import { REGISTERING } from "../constants/base64";
 import Memo from "../inputs/Memo";
 
 export default {
+  name: "plansAndProjects",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -35,8 +36,8 @@ export default {
     };
   },
   components: { Memo },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

@@ -33,6 +33,7 @@ import { REGISTERING } from "../constants/base64";
 import Insurance from "../profile/Insurance";
 
 export default {
+  name: "insurances",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -51,8 +52,8 @@ export default {
     };
   },
   components: { Insurance },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

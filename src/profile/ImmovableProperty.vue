@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p> {{this.immovablePropertyData.key}}</p>
+    <p>{{ this.immovablePropertyData.key }}</p>
     <b-form-group
       id="description-group"
       label="Descrição"
@@ -91,6 +91,7 @@
 
 <script>
 export default {
+  name: "immovableProperty",
   props: ["immovablePropertyData"],
   data() {
     return {

@@ -45,6 +45,7 @@ import { REGISTERING } from "../constants/base64";
 import Money from "../inputs/Money";
 
 export default {
+  name: "financialSituation",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -58,8 +59,8 @@ export default {
     };
   },
   components: { Money },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

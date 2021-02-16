@@ -35,6 +35,7 @@ import { REGISTERING } from "../constants/base64";
 import Child from "../profile/Child";
 
 export default {
+  name: "children",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -52,8 +53,8 @@ export default {
     };
   },
   components: { Child },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

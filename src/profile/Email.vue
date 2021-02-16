@@ -100,6 +100,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { parsePhoneNumber } from "libphonenumber-js";
 
 export default {
+  name: "email",
   props: ["recordedData", "showButtons"],
   data() {
     return {
