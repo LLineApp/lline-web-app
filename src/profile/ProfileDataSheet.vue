@@ -18,6 +18,7 @@
     <FixedIncomeSecurities v-bind:recordedData="profileData" />
     <Knowledge v-bind:recordedData="profileData" />
     <AdditionalInformations v-bind:recordedData="profileData" />
+    <FinancialAdvisor v-bind:recordedData="profileData" />
   </div>
 </template>
 
@@ -39,6 +40,7 @@ import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
+import FinancialAdvisor from "../profile/FinancialAdvisor";
 
 export default {
   name: "profileDataSheet",
@@ -74,6 +76,7 @@ export default {
     InvestmentPortfolios,
     Knowledge,
     AdditionalInformations,
+    FinancialAdvisor,
   },
   watch: {
     profileData: function() {

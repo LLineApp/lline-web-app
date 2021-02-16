@@ -102,6 +102,12 @@
       v-on:stopped="delete profileData.additionalInformations"
       v-bind:showButtons="true"
     />
+    <FinancialAdvisor
+      v-else-if="!this.profileDataHasProp('financialAdvisor')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.financialAdvisor"
+      v-bind:showButtons="true"
+    />
   </div>
 </template>
 
@@ -123,6 +129,7 @@ import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
+import FinancialAdvisor from "../profile/FinancialAdvisor";
 
 export default {
   name: "profile",
@@ -158,6 +165,7 @@ export default {
     InvestmentPortfolios,
     Knowledge,
     AdditionalInformations,
+    FinancialAdvisor,
   },
   watch: {
     profileData: function() {
