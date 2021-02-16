@@ -22,6 +22,7 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 export default {
+  name: "intro",
   data() {
     return {
       profileData: {
@@ -43,4 +44,4 @@ export default {
     },
   },
 };
-</script> 
+</script>

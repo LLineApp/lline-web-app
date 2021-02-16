@@ -37,6 +37,7 @@ import { REGISTERING } from "../constants/base64";
 import ImmovableProperty from "../profile/ImmovableProperty";
 
 export default {
+  name: "immovableProperties",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -56,8 +57,8 @@ export default {
     };
   },
   components: { ImmovableProperty },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

@@ -36,6 +36,7 @@ import { REGISTERING } from "../constants/base64";
 import InvestmentPortfolio from "../profile/InvestmentPortfolio";
 
 export default {
+  name: "investmentPortfolios",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -52,8 +53,8 @@ export default {
     };
   },
   components: { InvestmentPortfolio },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

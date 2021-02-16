@@ -38,6 +38,7 @@ import { REGISTERING } from "../constants/base64";
 import InvestorExperience from "../profile/InvestorExperience";
 
 export default {
+  name: "investorExperiences",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -53,8 +54,8 @@ export default {
     };
   },
   components: { InvestorExperience },
-  created(){
-    if(this.recordedData){
+  created() {
+    if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
   },

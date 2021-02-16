@@ -26,6 +26,7 @@ import { REGISTERING } from "../constants/base64";
 import Memo from "../inputs/Memo";
 
 export default {
+  name: "health",
   props: ["recordedData", "showButtons"],
   data() {
     return {

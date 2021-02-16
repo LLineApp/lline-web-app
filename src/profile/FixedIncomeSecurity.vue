@@ -49,6 +49,7 @@
 
 <script>
 export default {
+  name: "fixedIncomeSecurity",
   props: ["fixedIncomeSecurityData"],
   mounted() {
     if (!this.fixedIncomeSecurityData.type) {

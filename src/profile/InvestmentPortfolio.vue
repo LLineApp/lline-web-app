@@ -49,6 +49,7 @@
 
 <script>
 export default {
+  name: "investmentPortfolio",
   props: ["investmentPortfolioData"],
   mounted() {
     if (!this.investmentPortfolioData.type) {
