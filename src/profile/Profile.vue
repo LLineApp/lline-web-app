@@ -19,9 +19,9 @@
       v-bind:showButtons="true"
     />
     <Marital
-      v-else-if="!this.profileDataHasProp('marital')"
+      v-else-if="!this.profileDataHasProp('maritalStatus')"
       v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.marital"
+      v-on:stopped="delete profileData.maritalStatus"
       v-bind:showButtons="true"
     />
     <Children

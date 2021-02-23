@@ -2,8 +2,10 @@
   <div>
     <p>Conhecimento</p>
     <Memo
+      :key=this.profileData.currentInvestmentProcess
       label="Como é o seu processo de investimento hoje?"
       fieldName="currentInvestmentProcess"
+      :text=this.profileData.currentInvestmentProcess
       v-on:apply="applyValue"
       placeholder=""
     />
@@ -22,8 +24,10 @@
       />
     </b-form-group>
     <Memo
+      :key=this.profileData.haveFinancialConcerns
       label="Você tem alguma preocupação financeira?"
       fieldName="haveFinancialConcerns"
+      :text=this.profileData.haveFinancialConcerns
       v-on:apply="applyValue"
       placeholder=""
     />
@@ -53,7 +57,7 @@ export default {
         currentInvestmentProcess: "",
         followEconomicNews: null,
         acceptsInfoAboutCourses: null,
-        haveFinancialConcerns: "",
+        haveFinancialConcerns: null,
       },
       yesNo: [
         { text: "Não", value: false },

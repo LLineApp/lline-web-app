@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Previdência Privadas</p>
+    <p>Previdências Privadas</p>
     <b-button variant="light" v-on:click="addPersonalPrivateSecurity()"
       ><span aria-hidden="true">&#43;</span></b-button
     >
@@ -44,8 +44,8 @@ export default {
           {
             key: 0,
             bank: "",
-            enterprise: "",
-            cooperative: "",
+            enterprise: false,
+            cooperative: false,
             survival: "",
             table: "",
             balance: null,
@@ -56,10 +56,13 @@ export default {
   },
   components: { PersonalPrivateSecurity },
   mounted() {
-    if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
-      this.$forceUpdate();
+    if (this.recordedData.personalPrivateSecurities) {
+      Object.assign(
+        this.profileData.personalPrivateSecurities,
+        this.recordedData.personalPrivateSecurities
+      );
     }
+      this.$forceUpdate();
   },
   computed: {
     ...mapState("account", ["status"]),

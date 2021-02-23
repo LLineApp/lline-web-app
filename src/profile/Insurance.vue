@@ -2,10 +2,10 @@
   <div>
     <b-form-group label="Tipo">
       <b-form-select
-        id="type-select"
-        v-model="insuranceData.type"
+        id="kind-select"
+        v-model="insuranceData.kind"
         :options="insuranceType"
-        ref="type"
+        ref="kind"
       />
     </b-form-group>
     <b-form-group id="value-group" label="Valor" label-for="value-input">
@@ -90,13 +90,13 @@ export default {
     };
   },
   mounted() {
-    if (!this.insuranceData.type) {
+    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.type.focus();
+      this.$refs.kind.focus();
     },
     formatNumericField(value) {
       return parseFloat(value);

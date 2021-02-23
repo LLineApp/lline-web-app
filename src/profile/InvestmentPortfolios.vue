@@ -43,7 +43,7 @@ export default {
         investmentPortfolios: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             tx: null,
           },
@@ -66,7 +66,7 @@ export default {
       const newKey = this.profileData.investmentPortfolios.length;
       const newInvestmentPortfolio = {
         key: newKey,
-        type: "",
+        kind: "",
         value: null,
         tx: null,
       };

@@ -27,7 +27,7 @@
       label="Quais os telefones da empresa (separados por vírgula)?"
       label-for="phones-input"
     >
-      <b-form-input id="phones-input" v-model="profileData.businessphones" />
+      <b-form-input id="phones-input" v-model="profileData.businessPhones" />
     </b-form-group>
     <b-form-group
       id="businessEmail-form-group"
@@ -166,7 +166,7 @@ export default {
         occupation: "",
         role: "",
         companyName: "",
-        businessphones: "",
+        businessPhones: "",
         businessEmail: "",
         businessKind: "",
         businessField: "",

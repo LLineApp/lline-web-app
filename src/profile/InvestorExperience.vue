@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-form-group id="type-group" label="Tipo" label-for="type-select">
+    <b-form-group id="kind-group" label="Tipo" label-for="kind-select">
       <b-form-select
-        id="type-select"
-        v-model="investorExperienceData.type"
+        id="kind-select"
+        v-model="investorExperienceData.kind"
         :options="investorExperienceOptions"
-        ref="type"
+        ref="kind"
       />
     </b-form-group>
     <b-form-group id="value-group" label="Valor" label-for="value-input">
@@ -55,13 +55,13 @@ export default {
     };
   },
   mounted() {
-    if (!this.investorExperienceData.type) {
+    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.type.focus();
+      this.$refs.kind.focus();
     },
     formatNumericField(value) {
       return parseFloat(value);

@@ -40,7 +40,7 @@ export default {
         insurances: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             monthlyFee: true,
             coverage: null,

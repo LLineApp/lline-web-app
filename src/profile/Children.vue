@@ -42,8 +42,8 @@ export default {
         children: [
           {
             key: 0,
-            fullName: "",
-            birthDate: null,
+            fullname: "",
+            birthdate: null,
             occupationTraining: "",
             additionalInfo: "",
           },
@@ -53,8 +53,8 @@ export default {
   },
   components: { Child },
   mounted(){
-    if(this.recordedData){
-      Object.assign(this.profileData, this.recordedData);
+    if(this.recordedData.children){
+      Object.assign(this.profileData.children, this.recordedData.children);
       this.$forceUpdate();
     }
   },
@@ -66,8 +66,8 @@ export default {
       const newKey = this.profileData.children.length;
       const newChild = {
         key: newKey,
-        fullName: "",
-        birthDate: null,
+        fullname: "",
+        birthdate: null,
         occupationTraining: "",
         additionalInfo: "",
       };

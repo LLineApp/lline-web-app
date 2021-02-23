@@ -45,7 +45,7 @@ export default {
         investorExperiences: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
           },
         ],
@@ -67,7 +67,7 @@ export default {
       const newKey = this.profileData.investorExperiences.length;
       const newInvestorExperience = {
         key: 0,
-        type: "",
+        kind: "",
         value: null,
       };
       this.profileData.investorExperiences.push(newInvestorExperience);

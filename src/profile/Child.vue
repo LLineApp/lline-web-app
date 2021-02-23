@@ -1,26 +1,26 @@
 <template>
   <div>
     <b-form-group
-      id="fullName-group"
+      id="fullname-group"
       label="Nome completo"
-      label-for="fullName-input"
+      label-for="fullname-input"
     >
       <b-form-input
         type="text"
-        id="fullName-input"
-        ref="fullName"
-        v-model="childData.fullName"
+        id="fullname-input"
+        ref="fullname"
+        v-model="childData.fullname"
       />
     </b-form-group>
     <b-form-group
-      id="birthDate-group"
+      id="birthdate-group"
       label="Data de nascimento"
-      label-for="birthDate-input"
+      label-for="birthdate-input"
     >
       <b-form-input
         type="date"
-        id="birthDate-input"
-        v-model="childData.birthDate"
+        id="birthdate-input"
+        v-model="childData.birthdate"
       />
     </b-form-group>
     <b-form-group
@@ -69,13 +69,13 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 export default {
   props: ["childData"],
   mounted() {
-    if (!this.childData.fullName) {
+    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.fullName.focus();
+      this.$refs.fullname.focus();
     },
   },
 };

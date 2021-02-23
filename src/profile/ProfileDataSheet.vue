@@ -29,19 +29,20 @@ import Marital from "../profile/Marital";
 import Children from "../profile/Children";
 import ProfessionalSituation from "../profile/ProfessionalSituation";
 import ImmovableProperties from "../profile/ImmovableProperties";
+import Health from "../profile/Health";
 import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
 import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
 import PlansAndProjects from "../profile/PlansAndProjects";
-import Health from "../profile/Health";
-import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
+import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import { getProfile } from "../../datasource/profile";
 
 export default {
+  name: "ProfileDataSheet",
   data() {
     return {
       key: 0,
@@ -54,7 +55,6 @@ export default {
     getProfile()
       .then((data) => {
         this.profileData = data.data.getProfile[0];
-        console.log(JSON.stringify(this.profileData));
         this.key += 1;
       })
       .catch((error) => {
@@ -77,14 +77,14 @@ export default {
     Children,
     ProfessionalSituation,
     ImmovableProperties,
+    Health,
     FinancialSituation,
     InvestorExperiences,
     Insurances,
     PersonalPrivateSecurities,
     PlansAndProjects,
-    Health,
-    FixedIncomeSecurities,
     InvestmentPortfolios,
+    FixedIncomeSecurities,
     Knowledge,
     AdditionalInformations,
   },
@@ -96,3 +96,9 @@ export default {
   methods: {},
 };
 </script>
+
+<style>
+ul {
+  list-style-type: none;
+}
+</style>

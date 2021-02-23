@@ -1,9 +1,10 @@
 <template>
   <div>
     <Memo
+      :key=this.profileData.health
       label="Me fale sobre a sua saúde"
       fieldName="health"
-      :text="profileData.health"
+      :text=this.profileData.health
       v-on:apply="applyValue"
       placeholder="Informe aqui se você tem alguma doença seja ela crônica ou não, sequelas de acidentes, acidentes cardíacos ou neurológicos (como AVC ou infarto), debilidades motoras ou sensitivas (como problemas de fala, visão ou audição)"
     />
@@ -36,8 +37,8 @@ export default {
   },
   components: { Memo },
   mounted() {
-    if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+    if (this.recordedData.health) {
+      this.profileData.health = this.recordedData.health;
       this.$forceUpdate();
     }
   },

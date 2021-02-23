@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-form-group id="type-group" label="Que tipo?" label-for="type-input">
+    <b-form-group id="kind-group" label="Que tipo?" label-for="kind-input">
       <b-form-input
         type="text"
-        id="type-input"
-        ref="type"
-        v-model="fixedIncomeSecurityData.type"
+        id="kind-input"
+        ref="kind"
+        v-model="fixedIncomeSecurityData.kind"
       />
     </b-form-group>
     <b-form-group id="value-group" label="Qual o valor?" label-for="valueValue">
@@ -51,13 +51,13 @@
 export default {
   props: ["fixedIncomeSecurityData"],
   mounted() {
-    if (!this.fixedIncomeSecurityData.type) {
+    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.type.focus();
+      this.$refs.kind.focus();
     },
     formatNumericField(value) {
       return parseFloat(value);

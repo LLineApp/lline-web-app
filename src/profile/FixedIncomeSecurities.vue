@@ -43,7 +43,7 @@ export default {
         fixedIncomeSecurities: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             tx: null,
           },
@@ -66,7 +66,7 @@ export default {
       const newKey = this.profileData.fixedIncomeSecurities.length;
       const newFixedIncomeSecurity = {
         key: newKey,
-        type: "",
+        kind: "",
         value: null,
         tx: null,
       };

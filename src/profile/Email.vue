@@ -38,30 +38,29 @@
     <div v-if="submitted && errors.has('birthdate')" class="invalid-feedback">
       {{ errors.first("birthdate") }}
     </div>
-    <label for="phoneInput"
+    <label v-if="showButtons" for="phoneInput"
       >Informe aqui todos os seus números de telefone com DDD, um por um</label
     >
     <input
+      v-if="showButtons"
       type="text"
       v-model="phoneInput"
       v-on:keyup.enter="addPhone()"
       name="phoneInput"
       class="form-control"
     />
-    <button class="btn btn-info" v-on:click="addPhone()">Adicionar</button>
+    <button v-if="showButtons" class="btn btn-info" v-on:click="addPhone()">
+      Adicionar
+    </button>
 
-    <b-form-group
-      label="Informe qual é o seu telefone preferencial"
-      v-slot="{ ariaDescribedby }"
-    >
+    <b-form-group :label="phoneListLabel" v-slot="{ ariaDescribedby }">
       <b-form-radio-group
         id="phone-radio-slots"
-        v-model="profileData.preferredPhone"
+        v-model="profileData.preferredContact"
         :options="profileData.phones"
         :aria-describedby="ariaDescribedby"
         name="radio-options-slots"
-      >
-      </b-form-radio-group>
+      />
     </b-form-group>
 
     <br />
@@ -108,16 +107,21 @@ export default {
         email: "",
         birthdate: null,
         phones: [],
-        preferredPhone: "",
+        preferredContact: "",
         requestBrokerStatus: false,
       },
       submitted: false,
       phoneInput: "",
+      phoneListLabel: "Telefones",
     };
   },
   mounted() {
+    if (this.showButtons) {
+      this.phoneListLabel = "Informe qual é o seu telefone preferencial";
+    }
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      console.log(this.profileData.preferredContact);
       this.$forceUpdate();
     }
   },

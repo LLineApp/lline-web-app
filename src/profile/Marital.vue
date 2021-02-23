@@ -4,19 +4,19 @@
     <b-form-group label="Qual o seu estado civil?">
       <b-form-select
         id="status-select"
-        v-model="profileData.marital.status"
+        v-model="profileData.maritalStatus"
         :options="maritalStatuses"
       />
     </b-form-group>
     <b-form-group
       id="howManyYears-group"
       :label="this.howManyYearsLabel"
-      label-for="howManyYears-input"
+      label-for="maritalHowManyYears-input"
       v-if="this.hasSpouse"
     >
       <b-form-input
-        id="howManyYears-input"
-        v-model.number="profileData.marital.howManyYears"
+        id="maritalHowManyYears-input"
+        v-model.number="profileData.maritalHowManyYears"
         number
         step="1"
         min="0"
@@ -34,7 +34,7 @@
     >
       <b-form-input
         id="spouseName-input"
-        v-model="profileData.marital.spouseName"
+        v-model="profileData.spouseName"
       />
     </b-form-group>
     <b-form-group
@@ -45,7 +45,7 @@
     >
       <b-form-input
         id="spouseOccupation-input"
-        v-model.number="profileData.marital.spouseOccupation"
+        v-model="profileData.spouseOccupation"
       />
     </b-form-group>
     <b-button
@@ -70,12 +70,10 @@ export default {
   data() {
     return {
       profileData: {
-        marital: {
-          status: "",
-          howManyYears: 0,
-          spouseName: "",
-          spouseOccupation: "",
-        },
+        maritalStatus: "",
+        maritalHowManyYears: 0,
+        spouseName: "",
+        spouseOccupation: "",
       },
       maritalStatuses: [
         "Solteiro(a)",
@@ -97,12 +95,12 @@ export default {
     ...mapState("account", ["status"]),
     hasSpouse: function() {
       return ["Casado(a)", "União estável"].includes(
-        this.profileData.marital.status
+        this.profileData.maritalStatus
       );
     },
     howManyYearsLabel: function() {
       let status = "casados";
-      if (this.profileData.marital.status == "União estável") {
+      if (this.profileData.maritalStatus == "União estável") {
         status = "em união estável";
       }
       return "Vocês estão " + status + " há quantos anos?";
