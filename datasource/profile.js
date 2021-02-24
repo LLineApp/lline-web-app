@@ -3,18 +3,32 @@ import { connectToBackend, authURI, profileURI } from "./backendConnect";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-export function setProfile(profileData) {
-  this.$apollo
-    .mutate({
-      mutation: SET_PROFILE,
-      variables: {
-        token: user.token,
-        profileData: profileData,
-      },
-    })
-    .then((data) => {
-      console.log(result);
-    });
+export async function setProfile(profileInput) {
+  const data = sanitize(profileInput);
+  const conn = connectToBackend(profileURI);
+
+  return await conn.mutate({
+    mutation: SET_PROFILE,
+    variables: {
+      token: user.token,
+      profileData: data,
+    },
+  });
+}
+
+function sanitize(data) {
+  delete data["requestBrokerStatus"];
+  for (var item in data) {
+    if (Array.isArray(data[item])) {
+      const sanitizedItem = [];
+      data[item].forEach((element) => {
+        delete element["key"];
+        sanitizedItem.push(element);
+      });
+      data[item] = sanitizedItem;
+    }
+  }
+  return data;
 }
 
 export async function getProfile() {

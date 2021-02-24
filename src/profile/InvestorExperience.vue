@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-group id="kind-group" label="Tipo" label-for="kind-select">
+    <b-form-group label="Tipo">
       <b-form-select
         id="kind-select"
         v-model="investorExperienceData.kind"
@@ -55,7 +55,7 @@ export default {
     };
   },
   mounted() {
-    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
+    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {
       this.focusInput();
     }
   },

@@ -88,12 +88,6 @@ export default {
     Knowledge,
     AdditionalInformations,
   },
-  watch: {
-    profileData: function() {
-      sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
-    },
-  },
-  methods: {},
 };
 </script>
 

@@ -2,6 +2,7 @@
   <div class="container">
     <p>Formulário de dados</p>
     <Intro
+      :key="this.key"
       v-if="!this.profileData.accepted"
       v-on:didAccept="profileData.accepted = true"
       v-on:didNotAccept="profileData.accepted = false"
@@ -13,9 +14,11 @@
       v-bind:showButtons="true"
     />
     <Parents
-      v-else-if="!this.profileDataHasProp('parents')"
+      v-else-if="
+        !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
+      "
       v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.parents"
+      v-on:stopped="delete profileData.parentsAreThemSupportedByYou"
       v-bind:showButtons="true"
     />
     <Marital
@@ -49,7 +52,7 @@
       v-bind:showButtons="true"
     />
     <FinancialSituation
-      v-else-if="!this.profileDataHasProp('monthlyExpenses')"
+      v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.monthlyExpenses"
       v-bind:showButtons="true"
@@ -97,7 +100,7 @@
       v-bind:showButtons="true"
     />
     <AdditionalInformations
-      v-else-if="!this.profileDataHasProp('additionalInformations')"
+      v-else-if="!this.profileData.hasOwnProperty('additionalInformations')"
       v-on:done="feedProfileData"
       v-on:stopped="delete profileData.additionalInformations"
       v-bind:showButtons="true"
@@ -123,10 +126,12 @@ import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
+import { getProfile, setProfile } from "../../datasource/profile";
 
 export default {
   data() {
     return {
+      key: 0,
       profileData: {
         accepted: false,
         email: "",
@@ -134,10 +139,31 @@ export default {
     };
   },
   created() {
-    const data = JSON.parse(sessionStorage.getItem("profileData"));
-    if (data) {
-      this.profileData = data;
-    }
+    getProfile()
+      .then((data) => {
+        if (data.data.getProfile[0]) {
+          const rawData = data.data.getProfile[0];
+          for (var key in rawData) {
+            if(rawData[key] != null) {
+              this.profileData[key] = rawData[key];
+            }
+          }
+          this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
+          delete this.profileData["cpf"];
+          this.key += 1;
+        }
+      })
+      .catch((error) => {
+        const message = error.graphQLErrors[0].message;
+        const options = {
+          position: "top-center",
+          duration: 4000,
+          fullWidth: true,
+          closeOnSwipe: true,
+        };
+
+        this.$toasted.error(message, options);
+      });
   },
   components: {
     Intro,
@@ -167,7 +193,10 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
+
+      setProfile(portionProfileData);
     },
+
     profileDataHasProp(prop) {
       if (this.profileData.hasOwnProperty(prop)) {
         return Object.keys(this.profileData[prop]).length != 0;
@@ -178,3 +207,9 @@ export default {
   },
 };
 </script>
+
+<style>
+ul {
+  list-style-type: none;
+}
+</style>

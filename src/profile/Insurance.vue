@@ -4,7 +4,7 @@
       <b-form-select
         id="kind-select"
         v-model="insuranceData.kind"
-        :options="insuranceType"
+        :options="insuranceOptions"
         ref="kind"
       />
     </b-form-group>
@@ -76,7 +76,7 @@ export default {
   props: ["insuranceData"],
   data() {
     return {
-      insuranceType: [
+      insuranceOptions: [
         "Vida",
         "RC",
         "DIT",

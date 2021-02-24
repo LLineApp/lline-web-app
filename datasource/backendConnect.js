@@ -12,6 +12,7 @@ export function connectToBackend(backendUri) {
     uri: backendUri,
     useGETForQueries: false,
     credentials: "include",
+    // method: "POST",
     headers: {
       Accept: "application/json",
       "content-type": "application/json",

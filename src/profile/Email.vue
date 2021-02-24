@@ -121,7 +121,6 @@ export default {
     }
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
-      console.log(this.profileData.preferredContact);
       this.$forceUpdate();
     }
   },

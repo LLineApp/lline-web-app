@@ -53,7 +53,7 @@ export default {
   },
   components: { Child },
   mounted(){
-    if(this.recordedData.children){
+    if(this.recordedData && this.recordedData.children){
       Object.assign(this.profileData.children, this.recordedData.children);
       this.$forceUpdate();
     }

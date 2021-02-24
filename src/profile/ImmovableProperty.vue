@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p> {{this.immovablePropertyData.key}}</p>
     <b-form-group
       id="description-group"
       label="Descrição"

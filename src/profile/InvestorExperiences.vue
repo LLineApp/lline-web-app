@@ -66,7 +66,7 @@ export default {
     addInvestorExperience() {
       const newKey = this.profileData.investorExperiences.length;
       const newInvestorExperience = {
-        key: 0,
+        key: newKey,
         kind: "",
         value: null,
       };
