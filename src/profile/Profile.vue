@@ -1,113 +1,173 @@
 <template>
-  <div class="container">
-    <p>Formulário de dados</p>
-    <Intro
-      v-if="!this.profileData.accepted"
-      v-on:didAccept="profileData.accepted = true"
-      v-on:didNotAccept="profileData.accepted = false"
-    />
-    <Email
-      v-else-if="this.profileData.email == ''"
-      v-on:done="feedProfileData"
-      v-on:stopped="profileData.email = ''"
-      v-bind:showButtons="true"
-    />
-    <Parents
-      v-else-if="!this.profileDataHasProp('parents')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.parents"
-      v-bind:showButtons="true"
-    />
-    <Marital
-      v-else-if="!this.profileDataHasProp('marital')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.marital"
-      v-bind:showButtons="true"
-    />
-    <Children
-      v-else-if="!this.profileDataHasProp('children')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.children"
-      v-bind:showButtons="true"
-    />
-    <ProfessionalSituation
-      v-else-if="!this.profileDataHasProp('occupation')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.occupation"
-      v-bind:showButtons="true"
-    />
-    <ImmovableProperties
-      v-else-if="!this.profileDataHasProp('immovableProperties')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.immovableProperties"
-      v-bind:showButtons="true"
-    />
-    <Health
-      v-else-if="!this.profileDataHasProp('health')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.health"
-      v-bind:showButtons="true"
-    />
-    <FinancialSituation
-      v-else-if="!this.profileDataHasProp('monthlyExpenses')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.monthlyExpenses"
-      v-bind:showButtons="true"
-    />
-    <InvestorExperiences
-      v-else-if="!this.profileDataHasProp('investorExperiences')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.investorExperiences"
-      v-bind:showButtons="true"
-    />
-    <Insurances
-      v-else-if="!this.profileDataHasProp('insurances')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.insurances"
-      v-bind:showButtons="true"
-    />
-    <PersonalPrivateSecurities
-      v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.personalPrivateSecurities"
-      v-bind:showButtons="true"
-    />
-    <PlansAndProjects
-      v-else-if="!this.profileDataHasProp('plansAndProjects')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.plansAndProjects"
-      v-bind:showButtons="true"
-    />
-    <InvestmentPortfolios
-      v-else-if="!this.profileDataHasProp('investmentPortfolios')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.investmentPortfolios"
-      v-bind:showButtons="true"
-    />
-    <FixedIncomeSecurities
-      v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.fixedIncomeSecurities"
-      v-bind:showButtons="true"
-    />
-    <Knowledge
-      v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.currentInvestmentProcess"
-      v-bind:showButtons="true"
-    />
-    <AdditionalInformations
-      v-else-if="!this.profileDataHasProp('additionalInformations')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.additionalInformations"
-      v-bind:showButtons="true"
-    />
-    <FinancialAdvisor
-      v-else-if="!this.profileDataHasProp('financialAdvisor')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.financialAdvisor"
-      v-bind:showButtons="true"
-    />
+  <div id="main">
+    <div id="welcome-div">
+      <h1 id="welcome-h1">Bem vindo!</h1>
+      <p id="welcome-p">Agora você faz parte da LLine</p>
+    </div>
+    <div id="side-menu-div" v-if="this.profileData.accepted">
+      <ul class="nav flex-column" id="side-menu">
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Dados Pessoais</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Parentesco</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Matrimonial</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Filhos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Situação Profisional</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Bens Imoveis</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Saude</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Situação Financeira</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Experiencia em Investimentos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Seguros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Seguros Pessoais</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Planos e Projetos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Carteira de Investimentos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Titulos de Renda Fixa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Conhecimentos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Informações Adicionais</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Acessor Financeiro</a>
+        </li>
+      </ul>
+    </div>
+    <div id="dados-div">
+      <Intro
+        v-if="!this.profileData.accepted"
+        v-on:didAccept="profileData.accepted = true"
+        v-on:didNotAccept="profileData.accepted = false"
+      />
+      <Email
+        v-else-if="this.profileData.email == ''"
+        v-on:done="feedProfileData"
+        v-on:stopped="profileData.email = ''"
+        v-bind:showButtons="true"
+      />
+      <Parents
+        v-else-if="!this.profileDataHasProp('parents')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.parents"
+        v-bind:showButtons="true"
+      />
+      <Marital
+        v-else-if="!this.profileDataHasProp('marital')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.marital"
+        v-bind:showButtons="true"
+      />
+      <Children
+        v-else-if="!this.profileDataHasProp('children')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.children"
+        v-bind:showButtons="true"
+      />
+      <ProfessionalSituation
+        v-else-if="!this.profileDataHasProp('occupation')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.occupation"
+        v-bind:showButtons="true"
+      />
+      <ImmovableProperties
+        v-else-if="!this.profileDataHasProp('immovableProperties')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.immovableProperties"
+        v-bind:showButtons="true"
+      />
+      <Health
+        v-else-if="!this.profileDataHasProp('health')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.health"
+        v-bind:showButtons="true"
+      />
+      <FinancialSituation
+        v-else-if="!this.profileDataHasProp('monthlyExpenses')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.monthlyExpenses"
+        v-bind:showButtons="true"
+      />
+      <InvestorExperiences
+        v-else-if="!this.profileDataHasProp('investorExperiences')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.investorExperiences"
+        v-bind:showButtons="true"
+      />
+      <Insurances
+        v-else-if="!this.profileDataHasProp('insurances')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.insurances"
+        v-bind:showButtons="true"
+      />
+      <PersonalPrivateSecurities
+        v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.personalPrivateSecurities"
+        v-bind:showButtons="true"
+      />
+      <PlansAndProjects
+        v-else-if="!this.profileDataHasProp('plansAndProjects')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.plansAndProjects"
+        v-bind:showButtons="true"
+      />
+      <InvestmentPortfolios
+        v-else-if="!this.profileDataHasProp('investmentPortfolios')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.investmentPortfolios"
+        v-bind:showButtons="true"
+      />
+      <FixedIncomeSecurities
+        v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.fixedIncomeSecurities"
+        v-bind:showButtons="true"
+      />
+      <Knowledge
+        v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.currentInvestmentProcess"
+        v-bind:showButtons="true"
+      />
+      <AdditionalInformations
+        v-else-if="!this.profileDataHasProp('additionalInformations')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.additionalInformations"
+        v-bind:showButtons="true"
+      />
+      <FinancialAdvisor
+        v-else-if="!this.profileDataHasProp('financialAdvisor')"
+        v-on:done="feedProfileData"
+        v-on:stopped="delete profileData.financialAdvisor"
+        v-bind:showButtons="true"
+      />
+    </div>
   </div>
 </template>
 
@@ -141,6 +201,20 @@ export default {
       },
     };
   },
+  mounted() {
+    this.createSideMenu();
+  },
+  updated() {
+    var wDiv = document.getElementById('welcome-div');
+    var dDiv = document.getElementById('dados-div');
+    if(this.profileData.accepted){
+    wDiv.style.width = "70%";
+    dDiv.style.width = "70%";
+    }else{
+    wdiv.style.width = "100%";
+    dDiv.style.width = "100%";
+    }
+  },
   created() {
     const data = JSON.parse(sessionStorage.getItem("profileData"));
     if (data) {
@@ -168,7 +242,7 @@ export default {
     FinancialAdvisor,
   },
   watch: {
-    profileData: function() {
+    profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
@@ -187,3 +261,49 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+#main {
+  width: 100%;
+  padding-inline: 5%;
+}
+#side-menu-div {
+  width: 30%;
+  float: left;
+  padding-top: 4%;
+}
+#dados-div {
+  width: 100%;
+  float: right;
+}
+#welcome-div {
+  width: 100%;
+  float: right;
+}
+.a.active {
+  background-color: #26fed5;
+  color: black;
+}
+.a {
+  font-size: 16pt;
+  font-family: "Raleway", sans-serif;
+}
+.a.disabled {
+  color: #26fed5;
+}
+#welcome-h1,
+#welcome-p {
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  padding-top: 2%;
+  color: black;
+}
+#welcome-h1 {
+  font-size: 60pt;
+}
+#welcome-p {
+  font-size: 30pt;
+  padding-bottom: 2%;
+}
+</style>
