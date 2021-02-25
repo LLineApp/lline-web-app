@@ -111,6 +111,12 @@
       v-on:stopped="delete profileData.financialAdvisor"
       v-bind:showButtons="true"
     />
+    <FinancialAdvisor
+      v-else-if="!this.profileDataHasProp('financialAdvisor')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.financialAdvisor"
+      v-bind:showButtons="true"
+    />
   </div>
 </template>
 

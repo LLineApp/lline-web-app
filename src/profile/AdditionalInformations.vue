@@ -38,7 +38,7 @@ export default {
   },
   components: { Memo },
   mounted() {
-    if(this.recordedData){
+    if (this.recordedData) {
       this.profileData.additionalInfo = this.recordedData.additionalInfo;
       this.$forceUpdate();
     }
