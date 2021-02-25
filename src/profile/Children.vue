@@ -35,6 +35,7 @@ import { REGISTERING } from "../constants/base64";
 import Child from "../profile/Child";
 
 export default {
+  name: "children",
   props: ["recordedData", "showButtons"],
   data() {
     return {

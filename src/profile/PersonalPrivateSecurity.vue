@@ -72,6 +72,7 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 export default {
+  name: "personalPrivateSecurity",
   props: ["personalPrivateSecurityData"],
   data() {
     return {
@@ -84,7 +85,7 @@ export default {
     };
   },
   mounted() {
-    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

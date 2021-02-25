@@ -27,6 +27,7 @@ import { REGISTERING } from "../constants/base64";
 import Memo from "../inputs/Memo";
 
 export default {
+  name: "additionalInformations",
   props: ["recordedData", "showButtons"],
   data() {
     return {
@@ -36,9 +37,10 @@ export default {
     };
   },
   components: { Memo },
-  created(){
-    if(this.recordedData.additionalInfo){
+  mounted() {
+    if(this.recordedData){
       this.profileData.additionalInfo = this.recordedData.additionalInfo;
+      this.$forceUpdate();
     }
   },
   computed: {

@@ -100,9 +100,15 @@
       v-bind:showButtons="true"
     />
     <AdditionalInformations
-      v-else-if="!this.profileData.hasOwnProperty('additionalInformations')"
+      v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
       v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.additionalInformations"
+      v-on:stopped="delete profileData.additionalInfo"
+      v-bind:showButtons="true"
+    />
+    <FinancialAdvisor
+      v-else-if="!this.profileDataHasProp('financialAdvisor')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.financialAdvisor"
       v-bind:showButtons="true"
     />
   </div>
@@ -126,9 +132,11 @@ import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
+import FinancialAdvisor from "../profile/FinancialAdvisor";
 import { getProfile, setProfile } from "../../datasource/profile";
 
 export default {
+  name: "profile",
   data() {
     return {
       key: 0,
@@ -183,6 +191,7 @@ export default {
     InvestmentPortfolios,
     Knowledge,
     AdditionalInformations,
+    FinancialAdvisor,
   },
   watch: {
     profileData: function() {

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <img
+      id="background"
+      src="https://res.cloudinary.com/tiagogbt/image/upload/v1613332779/background-back-gradient_hwoosu.png"
+      alt=""
+    />
     <router-view />
   </div>
 </template>
@@ -26,3 +31,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#background {
+  position: fixed;
+  z-index: -1;
+  transform: translate(-1px, -1px);
+}
+</style>

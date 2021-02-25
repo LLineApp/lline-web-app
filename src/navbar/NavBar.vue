@@ -5,9 +5,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <div class="topnav" id="main-top-nav">
-      <a href="#" class="active">Home</a>
-      <a href="#">Link</a>
-      <a href="#">Link</a>
+      <a href="/home" id="home" class="a">Home</a>
+      <a href="/profile" id="profileDataSheet" class="a">Profile</a>
+      <a href="#" class="a">Link</a>
       <div id="user-name-div" class="dropdown">
         <button id="user-name-btn" class="dropbtn">
           {{ userFirstName }}
@@ -39,9 +39,11 @@ export default {
     };
   },
   computed: {},
+
   mounted() {
     this.userFirstName = "Usuário";
     this.canShow = localStorage.getItem("user");
+    this.setActive();
   },
   created() {},
   methods: {
@@ -52,6 +54,10 @@ export default {
       } else {
         topNavBar.className = "topnav";
       }
+    },
+    setActive: function () {
+      var aElementReference = document.getElementById(this.$parent.$options.name);
+      aElementReference.className += " active";
     },
   },
 };
@@ -78,13 +84,13 @@ export default {
 .topnav a:hover,
 .dropdown:hover .dropbtn,
 .topnav a.active {
-  background-color: turquoise;
+  background-color: #26fed5;
   color: black;
 }
 
 #dropdown:hover {
   background-color: black;
-  color: turquoise;
+  color: #26fed5;
 }
 
 .topnav .icon {

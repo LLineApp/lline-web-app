@@ -37,6 +37,7 @@ import { REGISTERING } from "../constants/base64";
 import ImmovableProperty from "../profile/ImmovableProperty";
 
 export default {
+  name: "immovableProperties",
   props: ["recordedData", "showButtons"],
   data() {
     return {

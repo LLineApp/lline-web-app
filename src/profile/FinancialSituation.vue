@@ -55,6 +55,7 @@ import { REGISTERING } from "../constants/base64";
 import Money from "../inputs/Money";
 
 export default {
+  name: "financialSituation",
   props: ["recordedData", "showButtons"],
   data() {
     return {

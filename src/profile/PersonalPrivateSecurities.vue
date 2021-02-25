@@ -36,6 +36,7 @@ import { REGISTERING } from "../constants/base64";
 import PersonalPrivateSecurity from "../profile/PersonalPrivateSecurity";
 
 export default {
+  name: "personalPrivateSecurities",
   props: ["recordedData", "showButtons"],
   data() {
     return {

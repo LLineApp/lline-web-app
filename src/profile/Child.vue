@@ -67,9 +67,10 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 export default {
+  name: "child",
   props: ["childData"],
   mounted() {
-    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

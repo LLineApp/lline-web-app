@@ -4,6 +4,7 @@ import { connectToBackend, authURI, profileURI } from "./backendConnect";
 const user = JSON.parse(localStorage.getItem("user"));
 
 export async function setProfile(profileInput) {
+  console.log(JSON.stringify(profileInput));
   const data = sanitize(profileInput);
   const conn = connectToBackend(profileURI);
 

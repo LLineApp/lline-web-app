@@ -49,9 +49,10 @@
 
 <script>
 export default {
+  name: "investmentPortfolio",
   props: ["investmentPortfolioData"],
   mounted() {
-    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

@@ -38,6 +38,7 @@ import { REGISTERING } from "../constants/base64";
 import InvestorExperience from "../profile/InvestorExperience";
 
 export default {
+  name: "investorExperiences",
   props: ["recordedData", "showButtons"],
   data() {
     return {

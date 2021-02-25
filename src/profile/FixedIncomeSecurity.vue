@@ -49,9 +49,10 @@
 
 <script>
 export default {
+  name: "fixedIncomeSecurity",
   props: ["fixedIncomeSecurityData"],
   mounted() {
-    if (this.$parent.$parent.$options.name != "ProfileDataSheet") {  
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

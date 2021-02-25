@@ -36,6 +36,7 @@ import { REGISTERING } from "../constants/base64";
 import FixedIncomeSecurity from "../profile/FixedIncomeSecurity";
 
 export default {
+  name: "fixedIncomeSecurities",
   props: ["recordedData", "showButtons"],
   data() {
     return {

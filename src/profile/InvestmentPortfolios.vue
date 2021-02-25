@@ -36,6 +36,7 @@ import { REGISTERING } from "../constants/base64";
 import InvestmentPortfolio from "../profile/InvestmentPortfolio";
 
 export default {
+  name: "investmentPortfolios",
   props: ["recordedData", "showButtons"],
   data() {
     return {

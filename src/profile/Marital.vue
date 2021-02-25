@@ -66,6 +66,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 
 export default {
+  name: "marital",
   props: ["recordedData", "showButtons"],
   data() {
     return {
