@@ -191,6 +191,7 @@ export default {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
+    this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),

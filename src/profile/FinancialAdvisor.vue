@@ -83,6 +83,7 @@ export default {
         this.profileData.financialAdvisor.fullName
       );
     }
+    this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),

@@ -4,61 +4,7 @@
       <h1 id="welcome-h1">Bem vindo!</h1>
       <p id="welcome-p">Agora você faz parte da LLine</p>
     </div>
-    <div id="side-menu-div" v-if="this.profileData.accepted">
-      <ul class="nav flex-column" id="side-menu">
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Dados Pessoais</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Parentesco</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Matrimonial</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Filhos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Situação Profisional</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Bens Imoveis</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Saude</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Situação Financeira</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Experiencia em Investimentos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Seguros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Seguros Pessoais</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Planos e Projetos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Carteira de Investimentos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Titulos de Renda Fixa</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Conhecimentos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Informações Adicionais</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Acessor Financeiro</a>
-        </li>
-      </ul>
-    </div>
+    <SideMenu v-if="this.profileData.accepted" v-bind:activeComponentName="activeComponentName"/>
     <div id="dados-div">
       <Intro
         v-if="!this.profileData.accepted"
@@ -69,102 +15,119 @@
         v-else-if="this.profileData.email == ''"
         v-on:done="feedProfileData"
         v-on:stopped="profileData.email = ''"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Parents
         v-else-if="!this.profileDataHasProp('parents')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.parents"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Marital
         v-else-if="!this.profileDataHasProp('marital')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.marital"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Children
         v-else-if="!this.profileDataHasProp('children')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.children"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ProfessionalSituation
         v-else-if="!this.profileDataHasProp('occupation')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.occupation"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ImmovableProperties
         v-else-if="!this.profileDataHasProp('immovableProperties')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.immovableProperties"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Health
         v-else-if="!this.profileDataHasProp('health')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.health"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialSituation
         v-else-if="!this.profileDataHasProp('monthlyExpenses')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.monthlyExpenses"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestorExperiences
         v-else-if="!this.profileDataHasProp('investorExperiences')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.investorExperiences"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Insurances
         v-else-if="!this.profileDataHasProp('insurances')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.insurances"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PersonalPrivateSecurities
         v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.personalPrivateSecurities"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PlansAndProjects
         v-else-if="!this.profileDataHasProp('plansAndProjects')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.plansAndProjects"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestmentPortfolios
         v-else-if="!this.profileDataHasProp('investmentPortfolios')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.investmentPortfolios"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FixedIncomeSecurities
         v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.fixedIncomeSecurities"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Knowledge
         v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.currentInvestmentProcess"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <AdditionalInformations
         v-else-if="!this.profileDataHasProp('additionalInformations')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.additionalInformations"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialAdvisor
         v-else-if="!this.profileDataHasProp('financialAdvisor')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
+        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
     </div>
@@ -190,6 +153,7 @@ import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import FinancialAdvisor from "../profile/FinancialAdvisor";
+import SideMenu from "../profile/SideMenu";
 
 export default {
   name: "profile",
@@ -199,20 +163,18 @@ export default {
         accepted: false,
         email: "",
       },
+      activeComponentName:"",
     };
   },
-  mounted() {
-    this.createSideMenu();
-  },
   updated() {
-    var wDiv = document.getElementById('welcome-div');
-    var dDiv = document.getElementById('dados-div');
-    if(this.profileData.accepted){
-    wDiv.style.width = "70%";
-    dDiv.style.width = "70%";
-    }else{
-    wdiv.style.width = "100%";
-    dDiv.style.width = "100%";
+    var wDiv = document.getElementById("welcome-div");
+    var dDiv = document.getElementById("dados-div");
+    if (this.profileData.accepted) {
+      wDiv.style.width = "70%";
+      dDiv.style.width = "70%";
+    } else {
+      wdiv.style.width = "100%";
+      dDiv.style.width = "100%";
     }
   },
   created() {
@@ -240,9 +202,10 @@ export default {
     Knowledge,
     AdditionalInformations,
     FinancialAdvisor,
+    SideMenu,
   },
   watch: {
-    profileData: function () {
+    profileData: function() {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
@@ -258,6 +221,9 @@ export default {
         return false;
       }
     },
+    setActiveComponent(name) {
+      this.activeComponentName = name;
+    }
   },
 };
 </script>

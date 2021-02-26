@@ -40,6 +40,7 @@ export default {
     if (this.recordedData.health) {
       this.profileData.health = this.recordedData.health;
     }
+    this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),
