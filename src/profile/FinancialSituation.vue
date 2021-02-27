@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main">
     <p>Sobre sua situação financeira</p>
     <Money
       label="Qual sua despesa mensal?"
@@ -27,14 +27,17 @@
       v-on:apply="applyValue"
     />
     <b-button
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
-      Cadastrar
+      Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 
@@ -75,3 +78,45 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+p {
+  font-size: 20pt;
+}
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 15pt;
+}
+#stop,
+#success {
+  margin-right: 1%;
+  font-size: 17pt;
+}
+#stop {
+  background-color: red;
+  border-color: red;
+  color: black;
+}
+#main {
+  margin-bottom: 5%;
+}
+button,
+#success {
+  padding: 1%, 2%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+button:hover,
+#success:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#stop:hover {
+  color: red;
+  background-color: black;
+  border-color: black;
+}
+</style>
