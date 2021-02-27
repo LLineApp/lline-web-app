@@ -80,28 +80,17 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
-#main {
-  width: 100%;
-  padding-inline: 5%;
-}
+
 #side-menu-div {
-  width: 30%;
+  width: 20%;
   float: left;
   padding-top: 4%;
-}
-#dados-div {
-  width: 100%;
-  float: right;
-}
-#welcome-div {
-  width: 100%;
-  float: right;
 }
 .a {
   font-size: 16pt;
   font-family: "Raleway", sans-serif;
 }
-.nav-link{
-  padding: .4rem;
+.nav-link {
+  padding: 0.4rem;
 }
 </style>

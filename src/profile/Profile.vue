@@ -170,8 +170,8 @@ export default {
     var wDiv = document.getElementById("welcome-div");
     var dDiv = document.getElementById("dados-div");
     if (this.profileData.accepted) {
-      wDiv.style.width = "70%";
-      dDiv.style.width = "70%";
+      wDiv.style.width = "80%";
+      dDiv.style.width = "80%";
     } else {
       wdiv.style.width = "100%";
       dDiv.style.width = "100%";
@@ -234,11 +234,6 @@ export default {
   width: 100%;
   padding-inline: 5%;
 }
-#side-menu-div {
-  width: 30%;
-  float: left;
-  padding-top: 4%;
-}
 #dados-div {
   width: 100%;
   float: right;
@@ -251,11 +246,11 @@ export default {
 #welcome-p {
   font-family: "Raleway", sans-serif;
   text-align: center;
-  padding-top: 2%;
   color: black;
 }
 #welcome-h1 {
   font-size: 60pt;
+  padding-top: 4%;
 }
 #welcome-p {
   font-size: 30pt;
