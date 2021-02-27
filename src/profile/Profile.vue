@@ -247,17 +247,6 @@ export default {
   width: 100%;
   float: right;
 }
-.a.active {
-  background-color: #26fed5;
-  color: black;
-}
-.a {
-  font-size: 16pt;
-  font-family: "Raleway", sans-serif;
-}
-.a.disabled {
-  color: #26fed5;
-}
 #welcome-h1,
 #welcome-p {
   font-family: "Raleway", sans-serif;
