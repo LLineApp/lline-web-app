@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main">
     <p>Sobre sua situação profissional</p>
     <b-form-group
       id="occupation-form-group"
@@ -142,14 +142,17 @@
       ></b-form-input>
     </b-form-group>
     <b-button
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
-      Cadastrar
+      Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 
@@ -206,3 +209,28 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+p {
+  font-family: "Raleway", sans-serif;
+  font-size: 17pt;
+}
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 15pt;
+}
+#stop,
+#success {
+  margin-right: 4%;
+  font-size: 17pt;
+}
+#success {
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+#main {
+  margin-bottom: 10%;
+}
+</style>
