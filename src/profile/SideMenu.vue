@@ -66,11 +66,11 @@ export default {
     };
   },
   watch: {
-    activeComponentName: function() {
+    activeComponentName: function () {
       this.sideMenuItems.forEach((sideMenuItem) => {
         sideMenuItem.style = "font-weight: normal;";
         if (sideMenuItem.name == this.activeComponentName) {
-          sideMenuItem.style = "font-weight: bold; color: red";
+          sideMenuItem.style = "font-weight: bold; color: #26fed5";
         }
       });
     },
@@ -97,29 +97,11 @@ export default {
   width: 100%;
   float: right;
 }
-.a.active {
-  background-color: #26fed5;
-  color: black;
-}
 .a {
   font-size: 16pt;
   font-family: "Raleway", sans-serif;
 }
-.a.disabled {
-  color: #26fed5;
-}
-#welcome-h1,
-#welcome-p {
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  padding-top: 2%;
-  color: black;
-}
-#welcome-h1 {
-  font-size: 60pt;
-}
-#welcome-p {
-  font-size: 30pt;
-  padding-bottom: 2%;
+.nav-link{
+  padding: .4rem;
 }
 </style>
