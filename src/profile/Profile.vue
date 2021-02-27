@@ -1,9 +1,5 @@
 <template>
   <div id="main">
-    <div id="welcome-div">
-      <h1 id="welcome-h1">Bem vindo!</h1>
-      <p id="welcome-p">Agora você faz parte da LLine</p>
-    </div>
     <SideMenu v-if="this.profileData.accepted" v-bind:activeComponentName="activeComponentName"/>
     <div id="dados-div">
       <Intro
@@ -167,13 +163,10 @@ export default {
     };
   },
   updated() {
-    var wDiv = document.getElementById("welcome-div");
     var dDiv = document.getElementById("dados-div");
     if (this.profileData.accepted) {
-      wDiv.style.width = "80%";
       dDiv.style.width = "80%";
     } else {
-      wdiv.style.width = "100%";
       dDiv.style.width = "100%";
     }
   },
@@ -237,23 +230,6 @@ export default {
 #dados-div {
   width: 100%;
   float: right;
-}
-#welcome-div {
-  width: 100%;
-  float: right;
-}
-#welcome-h1,
-#welcome-p {
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  color: black;
-}
-#welcome-h1 {
-  font-size: 60pt;
-  padding-top: 4%;
-}
-#welcome-p {
-  font-size: 30pt;
-  padding-bottom: 2%;
+  padding-top: 5%;
 }
 </style>
