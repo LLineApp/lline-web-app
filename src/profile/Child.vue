@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="child">
     <b-form-group
       id="fullName-group"
       label="Nome completo"
@@ -46,20 +46,21 @@
         placeholder=" Está na faculdade, em intercâmbio, na escola, é casado(a) ou emancipado(a), tem filhos?"
       />
     </b-form-group>
+
     <b-button
       type="button"
-      class="close"
       aria-label="Close"
       v-on:click="$emit('apply', childData)"
-      ><span aria-hidden="true">&#10003;</span></b-button
-    >
+      aria-hidden="true"
+      ><i class="fa fa-check"></i
+    ></b-button>
     <b-button
       type="button"
-      class="close"
       aria-label="Close"
       v-on:click="$emit('remove', childData)"
-      ><span aria-hidden="true">&times;</span></b-button
-    >
+      aria-hidden="true"
+      ><i class="fa fa-times"></i
+    ></b-button>
   </div>
 </template>
 
@@ -81,3 +82,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+button {
+  padding: 1%, 2%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+button:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#child {
+  padding-bottom: 1.5%;
+  padding-top: 1%;
+  border-bottom: 1px solid black;
+}
+</style>
