@@ -151,7 +151,7 @@ button:hover,
   border-color: black;
 }
 #success {
-  margin-left: 4.5%;
+  margin-left: 3.5%;
   padding: 2%, 2%;
 }
 </style>
