@@ -121,8 +121,8 @@ h1 {
   font-size: 17pt;
 }
 #stop {
-  background-color: red;
-  border-color: red;
+  background-color: gray;
+  border-color: gray;
   color: black;
 }
 #main {
