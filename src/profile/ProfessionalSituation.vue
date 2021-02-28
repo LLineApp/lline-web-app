@@ -214,8 +214,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
 p {
-  font-family: "Raleway", sans-serif;
-  font-size: 17pt;
+  font-size: 20pt;
 }
 * {
   font-family: "Raleway", sans-serif;
@@ -223,14 +222,36 @@ p {
 }
 #stop,
 #success {
-  margin-right: 4%;
+  margin-right: 1%;
   font-size: 17pt;
 }
+#stop {
+  background-color: gray;
+  border-color: gray;
+  color: black;
+}
+#main {
+  margin-bottom: 5%;
+}
+button,
 #success {
+  padding: 1%, 2%;
+  color: black;
   background-color: #26fed5;
   border-color: #26fed5;
 }
-#main {
-  margin-bottom: 10%;
+button:hover,
+#success:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#stop:hover {
+  color: red;
+  background-color: black;
+  border-color: black;
+}
+#success {
+  padding: 2%, 2%;
 }
 </style>
