@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <h1>Previdência Privadas</h1>
+    <h1>Previdências Privadas</h1>
     <p>
       Clique
       <b-button
@@ -10,7 +10,7 @@
         aria-hidden="true"
         ><i class="fa fa-plus"></i
       ></b-button>
-      para adicionar outro seguro privado
+      para adicionar outra previdência privada
     </p>
 
     <ul id="personalPrivateSecurities">

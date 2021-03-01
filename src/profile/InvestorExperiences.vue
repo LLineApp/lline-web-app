@@ -1,9 +1,5 @@
 <template>
   <div id="main">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <h1>Experiências como investidor</h1>
     <p>
       Clique

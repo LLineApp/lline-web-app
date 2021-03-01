@@ -31,7 +31,7 @@
       />
     </b-form-group>
     <b-form-group
-      label="Você gostaria de receber alguma acessoria financeira profisional?"
+      label="Você gostaria de receber alguma assessoria financeira profisional?"
     >
       <b-form-radio-group
         id="doYouAcceptAFinancialAdvisorContact-radio"

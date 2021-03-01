@@ -9,7 +9,7 @@
         aria-hidden="true"
         ><i class="fa fa-plus"></i
       ></b-button>
-      para adicionar mais um item a sua carteira
+      para adicionar mais um item à sua carteira
     </p>
     <ul id="investmentPortfolios">
       <li

@@ -6,7 +6,7 @@
       <b-button type="button" v-on:click="addChild()" aria-hidden="true"
         ><i class="fa fa-plus"></i
       ></b-button>
-      para adicionar mais um filho
+      para adicionar mais um(a) filho(a)
     </p>
 
     <ul id="children">

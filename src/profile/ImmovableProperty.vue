@@ -1,6 +1,5 @@
 <template>
   <div id="property">
-    <p>{{ this.immovablePropertyData.description }}</p>
     <b-form-group
       id="description-group"
       label="Descrição"

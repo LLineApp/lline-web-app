@@ -10,7 +10,7 @@
         aria-hidden="true"
         ><i class="fa fa-plus"></i
       ></b-button>
-      para adicioar outro seguro
+      para adicionar outro seguro
     </p>
     <ul id="insurances">
       <li v-for="insurance in this.profileData.insurances" :key="insurance.key">

@@ -1,5 +1,5 @@
 <template>
-  <div id="ppSecurity">
+  <div id="personalPrivateSecurity">
     <b-form-group id="bank-group" label="Banco" label-for="bank-input">
       <b-form-input
         type="text"
@@ -113,7 +113,7 @@ button:hover {
   background-color: black;
   border-color: black;
 }
-#ppSecurity {
+#personalPrivateSecurity {
   padding-bottom: 1%;
   border-bottom: 1px solid black;
 }
