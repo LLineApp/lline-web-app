@@ -1,54 +1,61 @@
 <template>
   <div>
-    <label for="email">E-mail</label>
-    <input
-      type="text"
-      v-model="profileData.email"
-      v-validate="'required'"
-      name="email"
-      class="form-control"
-      :class="{ 'is-invalid': submitted && errors.has('email') }"
-    />
-    <div v-if="submitted && errors.has('email')" class="invalid-feedback">
-      {{ errors.first("email") }}
-    </div>
-    <label for="fullName">Nome completo</label>
-    <input
-      type="text"
-      v-model="profileData.fullName"
-      v-validate="'required'"
-      name="fullName"
-      class="form-control"
-      :class="{ 'is-invalid': submitted && errors.has('fullName') }"
-    />
-    <div v-if="submitted && errors.has('fullName')" class="invalid-feedback">
-      {{ errors.first("fullName") }}
-    </div>
-
-    <label for="birthDate">Data de nascimento</label>
-    <input
-      type="date"
-      v-model="profileData.birthDate"
-      v-validate="'required'"
-      name="birthDate"
-      class="form-control"
-      formatter="formatDate"
-      :class="{ 'is-invalid': submitted && errors.has('birthDate') }"
-    />
-    <div v-if="submitted && errors.has('birthDate')" class="invalid-feedback">
-      {{ errors.first("birthDate") }}
-    </div>
-    <label for="phoneInput"
-      >Informe aqui todos os seus números de telefone com DDD, um por um</label
+    <b-form-group
+      id="email-group"
+      label="E-mail"
+      label-for="email-input"
+      :state="validateEmail"
     >
-    <input
-      type="text"
-      v-model="phoneInput"
-      v-on:keyup.enter="addPhone()"
-      name="phoneInput"
-      class="form-control"
-    />
-    <button class="btn btn-info" v-on:click="addPhone()">Adicionar</button>
+      <b-form-input
+        id="email-input"
+        v-model="profileData.email"
+        :state="validateEmail"
+        :formatter="formatEmail"
+      />
+    </b-form-group>
+
+    <b-form-group
+      id="fullname-group"
+      label="Nome completo"
+      label-for="fullname-input"
+    >
+      <b-form-input
+        id="fullname-input"
+        v-model="profileData.fullname"
+        :state="this.profileData.fullname.length > 2 ? true : false"
+      />
+    </b-form-group>
+
+    <b-form-group
+      id="birthdate-group"
+      label="Data de nascimento"
+      label-for="birthdate-input"
+    >
+      <b-form-input
+        id="birthdate-input"
+        type="date"
+        v-model="profileData.birthdate"
+      />
+    </b-form-group>
+
+    <b-form-group
+      id="phone-group"
+      label="Informe aqui todos os seus números de telefone com DDD, um por um"
+      label-for="phone-input"
+    >
+      <b-input-group>
+        <b-form-input
+          id="phone-input"
+          name="phoneInput"
+          type="text"
+          v-model="phoneInput"
+          v-on:keyup.enter="addPhone()"
+        />
+        <b-input-group-append>
+          <b-button variant="info" v-on:click="addPhone()">Adicionar</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-form-group>
 
     <b-form-group
       label="Informe qual é o seu telefone preferencial"
@@ -64,33 +71,30 @@
       </b-form-radio-group>
     </b-form-group>
 
-    <br />
-    <input
-      type="checkbox"
-      v-model="profileData.requestBrokerStatus"
-      name="requestBrokerStatus"
-      class="form-check-input"
-    />
-    <label for="requestBrokerStatus">Solicitar status de Assessor</label>
-    <br />
-    <button
-      class="btn btn-primary"
+    <b-form-group
+      id="requestBrokerStatus-group"
+      label=""
+      label-for="requestBrokerStatus-input"
+    >
+      <b-form-checkbox
+        id="requestBrokerStatus-input"
+        name="requestBrokerStatus"
+        v-model="profileData.requestBrokerStatus"
+      >
+        Solicitar status de Assessor
+      </b-form-checkbox>
+    </b-form-group>
+
+    <b-button
+      variant="primary"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
-      Cadastrar
-    </button>
-    <img
-      v-show="status.registering"
-      src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-    />
-    <button
-      class="btn btn-secondary"
-      v-if="showButtons"
-      v-on:click="$emit('stop')"
-    >
+      Confirmar
+    </b-button>
+    <b-button variant="secondary" v-if="showButtons" v-on:click="$emit('stop')">
       Parar
-    </button>
+    </b-button>
   </div>
 </template>
 
@@ -105,9 +109,9 @@ export default {
   data() {
     return {
       profileData: {
-        fullName: "",
+        fullname: "",
         email: "",
-        birthDate: null,
+        birthdate: null,
         phones: [],
         preferredPhone: "",
         requestBrokerStatus: false,
@@ -126,6 +130,10 @@ export default {
     formatDate(value) {
       return moment(value).format("DD/MM/YYYY");
     },
+    validateEmail() {
+      const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      return re.test(String(this.profileData.email).toLowerCase());
+    },
   },
   methods: {
     addPhone() {
@@ -135,6 +143,11 @@ export default {
         this.profileData.phones.push(phoneParsed.formatNational());
         this.phoneInput = "";
       }
+    },
+    formatEmail(value) {
+      return String(value)
+        .toLowerCase()
+        .trim();
     },
   },
 };
