@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="main">
+    <p>Dados Pessoais</p>
     <b-form-group
       id="email-group"
       label="E-mail"
@@ -52,7 +53,9 @@
           v-on:keyup.enter="addPhone()"
         />
         <b-input-group-append>
-          <b-button variant="info" v-on:click="addPhone()">Adicionar</b-button>
+          <b-button id="add" variant="info" v-on:click="addPhone()"
+            >Adicionar</b-button
+          >
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
@@ -86,13 +89,19 @@
     </b-form-group>
 
     <b-button
+      id="success"
       variant="primary"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
       Confirmar
     </b-button>
-    <b-button variant="secondary" v-if="showButtons" v-on:click="$emit('stop')">
+    <b-button
+      id="stop"
+      variant="secondary"
+      v-if="showButtons"
+      v-on:click="$emit('stop')"
+    >
       Parar
     </b-button>
   </div>
@@ -124,7 +133,7 @@ export default {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
     }
-    this.$emit('setActiveComponent', this.$options.name);
+    this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),
@@ -146,10 +155,52 @@ export default {
       }
     },
     formatEmail(value) {
-      return String(value)
-        .toLowerCase()
-        .trim();
+      return String(value).toLowerCase().trim();
     },
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 15pt;
+}
+p {
+  font-size: 20pt;
+}
+
+#stop,
+#success {
+  margin-right: 1%;
+  font-size: 17pt;
+}
+#stop {
+  background-color: gray;
+  border-color: gray;
+  color: black;
+}
+#main {
+  margin-bottom: 5%;
+}
+#success,
+#add {
+  padding: 1%, 2%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+#success:hover,
+#add:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#stop:hover {
+  color: red;
+  background-color: black;
+  border-color: black;
+}
+</style>
