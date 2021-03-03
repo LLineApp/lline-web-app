@@ -2,7 +2,7 @@
   <div>
     <img
       id="background"
-      src="https://res.cloudinary.com/tiagogbt/image/upload/v1613332779/background-back-gradient_hwoosu.png"
+      src="https://res.cloudinary.com/tiagogbt/image/upload/v1613605064/background-white-gradient_ac6ayb.png"
       alt=""
     />
     <router-view />
