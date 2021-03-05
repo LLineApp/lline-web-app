@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :key="key">
+  <div :key="key">
     <NavBar />
     <p>Estes são os seus dados</p>
     <Email v-bind:recordedData="profileData" />

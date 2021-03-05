@@ -1,9 +1,18 @@
 <template>
-  <div>
-    <p>Previdências Privadas</p>
-    <b-button variant="light" v-on:click="addPersonalPrivateSecurity()"
-      ><span aria-hidden="true">&#43;</span></b-button
-    >
+  <div id="main">
+    <h1>Previdências Privadas</h1>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        aria-label="Close"
+        v-on:click="addPersonalPrivateSecurity()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar outra previdência privada
+    </p>
+
     <ul id="personalPrivateSecurities">
       <li
         v-for="personalPrivateSecurity in this.profileData
@@ -18,14 +27,17 @@
       </li>
     </ul>
     <b-button
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
-      Cadastrar
+      Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 
@@ -63,6 +75,7 @@ export default {
         this.recordedData.personalPrivateSecurities
       );
     }
+    this.$emit("setActiveComponent", this.$options.name);
       this.$forceUpdate();
   },
   computed: {
@@ -99,7 +112,7 @@ export default {
     },
     removePersonalPrivateSecurity(personalPrivateSecurityData) {
       var remainingPersonalPrivateSecurities = this.profileData.personalPrivateSecurities.filter(
-        function(value) {
+        function (value) {
           return value != personalPrivateSecurityData;
         }
       );
@@ -108,3 +121,53 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+p {
+  font-size: 17pt;
+}
+h1 {
+  font-size: 20pt;
+}
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 15pt;
+}
+#stop,
+#success {
+  margin-right: 1%;
+  font-size: 17pt;
+}
+#stop {
+  background-color: gray;
+  border-color: gray;
+  color: black;
+}
+#main {
+  margin-bottom: 5%;
+}
+button,
+#success {
+  padding: 1%, 2%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+button:hover,
+#success:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#stop:hover {
+  color: red;
+  background-color: black;
+  border-color: black;
+}
+#success {
+  margin-left: 3.5%;
+  padding: 2%, 2%;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main">
     <Memo
       :key=this.profileData.additionalInfo
       label="Informações adicionais"
@@ -9,14 +9,15 @@
       placeholder="Mais alguma coisa que a gente precisa saber?"
     />
     <b-button
+    id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
     >
-      Cadastrar
+      Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
       this.profileData.additionalInfo = this.recordedData.additionalInfo;
       this.$forceUpdate();
     }
+    this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),
@@ -53,3 +55,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 20pt;
+}
+#stop,
+#success {
+  margin-right: 1%;
+  font-size: 17pt;
+}
+#stop {
+  background-color: gray;
+  border-color: gray;
+  color: black;
+}
+#main {
+  margin-bottom: 5%;
+}
+#success {
+  padding: 1%, 2%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
+}
+#success:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: black;
+}
+#stop:hover {
+  color: red;
+  background-color: black;
+  border-color: black;
+}
+</style>
