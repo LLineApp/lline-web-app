@@ -1,7 +1,10 @@
 <template>
   <div id="main">
     <p>{{ intro }}</p>
-    <b-form-group label="Você tem assessor financeiro credenciado?">
+    <b-form-group
+      label="Você tem assessor financeiro credenciado?"
+      v-if="!this.alreadyHasFinancialAdvisor"
+    >
       <b-form-radio-group
         id="doYouHaveFinancialAdvisor-radio"
         v-model="doYouHaveFinancialAdvisor"
@@ -10,7 +13,7 @@
     </b-form-group>
     <b-form-group
       id="financialAdvisor-group"
-      label="Qual o nome dele?"
+      :label="whatIsHisNameLabel"
       label-for="financialAdvisor-input"
       v-if="this.doYouHaveFinancialAdvisor"
     >
@@ -21,7 +24,7 @@
     </b-form-group>
     <b-form-group
       id="financialAdvisorCompany-group"
-      label="Qual a operadora?"
+      :label="whatIsHisCompanyLabel"
       label-for="financialAdvisorCompany-input"
       v-if="this.doYouHaveFinancialAdvisor"
     >
@@ -31,7 +34,8 @@
       />
     </b-form-group>
     <b-form-group
-      label="Você gostaria de receber alguma assessoria financeira profisional?"
+      label="Você gostaria de receber alguma assessoria financeira profissional?"
+      v-if="!this.alreadyHasFinancialAdvisor"
     >
       <b-form-radio-group
         id="doYouAcceptAFinancialAdvisorContact-radio"
@@ -48,7 +52,10 @@
       Concluir
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+    <b-button
+      id="stop"
+      v-if="showButtons && !this.alreadyHasFinancialAdvisor"
+      v-on:click="$emit('stop')"
       >Parar</b-button
     >
   </div>
@@ -57,6 +64,7 @@
 <script>
 import { mapState } from "vuex";
 import { REGISTERING } from "../constants/base64";
+import { getAdvisorByLink } from "../../datasource/profile";
 
 export default {
   name: "financialAdvisor",
@@ -71,8 +79,11 @@ export default {
         },
         acceptFinancialAdvisorContact: false,
       },
+      alreadyHasFinancialAdvisor: false,
       doYouHaveFinancialAdvisor: false,
       intro: "Este é o último grupo de perguntas:",
+      whatIsHisNameLabel: "Qual o nome dele?",
+      whatIsHisCompanyLabel: "Qual a operadora?",
 
       yesNo: [
         { text: "Não", value: false },
@@ -82,12 +93,54 @@ export default {
   },
   mounted() {
     if (this.recordedData) {
-      Object.assign(this.profileData.financialAdvisor, this.recordedData.financialAdvisor);
+      Object.assign(
+        this.profileData.financialAdvisor,
+        this.recordedData.financialAdvisor
+      );
       this.intro = "";
       this.doYouHaveFinancialAdvisor = Boolean(
         this.profileData.financialAdvisor.fullname
       );
       this.$forceUpdate();
+    } else {
+      const advisorsLink = localStorage.getItem("advisorsLink");
+      if (advisorsLink) {
+        getAdvisorByLink(advisorsLink)
+          .then((data) => {
+            if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
+              this.profileData.financialAdvisor.fullname =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
+              this.profileData.financialAdvisor.register =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.register;
+              this.profileData.financialAdvisor.company =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.company;
+
+              if (this.profileData.financialAdvisor.fullname) {
+                this.doYouHaveFinancialAdvisor = true;
+                this.profileData.acceptFinancialAdvisorContact = true;
+                this.alreadyHasFinancialAdvisor = true;
+                this.intro =
+                  "Que legal! Você já tem um assessor financeiro crendenciado";
+                this.whatIsHisNameLabel = "O nome dele é";
+                this.whatIsHisCompanyLabel = "A operadora é";
+              }
+
+              localStorage.removeItem("advisorsLink");
+              this.$forceUpdate();
+            }
+          })
+          .catch((error) => {
+            const message = error.graphQLErrors[0].message;
+            const options = {
+              position: "top-center",
+              duration: 4000,
+              fullWidth: true,
+              closeOnSwipe: true,
+            };
+
+            this.$toasted.error(message, options);
+          });
+      }
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

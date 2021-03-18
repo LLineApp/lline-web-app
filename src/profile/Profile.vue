@@ -1,9 +1,12 @@
 <template>
   <div id="main">
-    <SideMenu v-if="this.profileData.accepted" v-bind:activeComponentName="activeComponentName"/>
+    <SideMenu
+      v-if="this.profileData.accepted"
+      v-bind:activeComponentName="activeComponentName"
+    />
     <div id="dados-div">
       <Intro
-      :key="this.key"
+        :key="this.key"
         v-if="!this.profileData.accepted"
         v-on:didAccept="profileData.accepted = true"
         v-on:didNotAccept="profileData.accepted = false"
@@ -16,18 +19,18 @@
         v-bind:showButtons="true"
       />
       <Parents
-      v-else-if="
-        !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
-      "
+        v-else-if="
+          !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
+        "
         v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.parentsAreThemSupportedByYou"
+        v-on:stopped="delete profileData.parentsAreThemSupportedByYou"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Marital
-      v-else-if="!this.profileDataHasProp('maritalStatus')"
+        v-else-if="!this.profileDataHasProp('maritalStatus')"
         v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.maritalStatus"
+        v-on:stopped="delete profileData.maritalStatus"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
@@ -60,7 +63,7 @@
         v-bind:showButtons="true"
       />
       <FinancialSituation
-      v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
+        v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.monthlyExpenses"
         v-on:setActiveComponent="setActiveComponent"
@@ -116,23 +119,16 @@
         v-bind:showButtons="true"
       />
       <AdditionalInformations
-      v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
+        v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
         v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.additionalInfo"
-      v-bind:showButtons="true"
-        v-on:setActiveComponent="setActiveComponent"
-    />
-    <FinancialAdvisor
-      v-else-if="!this.profileDataHasProp('financialAdvisor')"
-      v-on:done="feedProfileData"
-      v-on:stopped="delete profileData.financialAdvisor"
+        v-on:stopped="delete profileData.additionalInfo"
         v-bind:showButtons="true"
+        v-on:setActiveComponent="setActiveComponent"
       />
       <FinancialAdvisor
         v-else-if="!this.profileDataHasProp('financialAdvisor')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
-        v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
     </div>
@@ -170,7 +166,7 @@ export default {
         accepted: false,
         email: "",
       },
-      activeComponentName:"",
+      activeComponentName: "",
     };
   },
   updated() {
@@ -187,7 +183,7 @@ export default {
         if (data.data.getProfile[0]) {
           const rawData = data.data.getProfile[0];
           for (var key in rawData) {
-            if(rawData[key] != null) {
+            if (rawData[key] != null) {
               this.profileData[key] = rawData[key];
             }
           }
@@ -251,7 +247,7 @@ export default {
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
-    }
+    },
   },
 };
 </script>
