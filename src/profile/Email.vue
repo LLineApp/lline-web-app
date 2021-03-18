@@ -28,6 +28,19 @@
     </b-form-group>
 
     <b-form-group
+      id="cpf-group"
+      label="CPF"
+      label-for="cpf-input"
+      :state="validateCPF"
+    >
+      <b-form-input
+        id="cpf-input"
+        v-model="profileData.cpf"
+        :state="validateCPF"
+      />
+    </b-form-group>
+
+    <b-form-group
       id="birthdate-group"
       label="Data de nascimento"
       label-for="birthdate-input"
@@ -115,6 +128,7 @@ export default {
     return {
       profileData: {
         fullname: "",
+        cpf: "",
         email: "",
         birthdate: null,
         phones: [],
@@ -144,6 +158,10 @@ export default {
     validateEmail() {
       const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       return re.test(String(this.profileData.email).toLowerCase());
+    },
+    validateCPF() {
+      const cpf = this.profileData.cpf.replace(/\D/g, '');
+      return cpf.length == 11;
     },
   },
   methods: {
