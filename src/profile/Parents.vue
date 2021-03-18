@@ -4,20 +4,20 @@
 
     <b-form-group label="Seus pais são dependentes de você?">
       <b-form-radio-group
-        id="areThemSupportedByYou-radio"
-        v-model="profileData.parents.areThemSupportedByYou"
+        id="parentsAreThemSupportedByYou-radio"
+        v-model="profileData.parentsAreThemSupportedByYou"
         :options="yesNo"
       />
     </b-form-group>
     <b-form-group
-      id="howMuchYouSuportThem-group"
+      id="parentsHowMuchYouSuportThem-group"
       label="Você colabora com quanto?"
-      label-for="howMuchYouSuportThem-input"
-      v-if="this.profileData.parents.areThemSupportedByYou"
+      label-for="parentsparentsHowMuchYouSuportThem-input"
+      v-if="this.profileData.parentsAreThemSupportedByYou"
     >
       <b-form-input
-        id="howMuchYouSuportThem-input"
-        v-model.number="profileData.parents.howMuchYouSuportThem"
+        id="parentsHowMuchYouSuportThem-input"
+        v-model.number="profileData.parentsHowMuchYouSuportThem"
         type="number"
         step="1"
         placeholder="0.00"
@@ -27,32 +27,32 @@
     </b-form-group>
     <b-form-group label="Há possiblidade de herança?">
       <b-form-radio-group
-        id="isThereAPossibilityOfInheritance-radio"
-        v-model="profileData.parents.isThereAPossibilityOfInheritance"
+        id="parentsIsThereAPossibilityOfInheritance-radio"
+        v-model="profileData.parentsIsThereAPossibilityOfInheritance"
         :options="yesNo"
       />
     </b-form-group>
     <b-form-group
-      id="ofWhom-group"
+      id="parentsOfWhom-group"
       label="De quem?"
-      label-for="ofWhom-select"
-      v-if="this.profileData.parents.isThereAPossibilityOfInheritance"
+      label-for="parentsOfWhom-select"
+      v-if="this.profileData.parentsIsThereAPossibilityOfInheritance"
     >
       <b-form-select
-        id="ofWhom-select"
-        v-model="profileData.parents.ofWhom"
+        id="parentsOfWhom-select"
+        v-model="profileData.parentsOfWhom"
         :options="whichParents"
       />
     </b-form-group>
     <b-form-group
-      id="whatIsTheEstimatedValue-group"
+      id="parentsWhatIsTheEstimatedValue-group"
       label="Qual o valor estimado?"
-      label-for="whatIsTheEstimatedValue-input"
-      v-if="this.profileData.parents.isThereAPossibilityOfInheritance"
+      label-for="parentsWhatIsTheEstimatedValue-input"
+      v-if="this.profileData.parentsIsThereAPossibilityOfInheritance"
     >
       <b-form-input
-        id="whatIsTheEstimatedValue-input"
-        v-model.number="profileData.parents.whatIsTheEstimatedValue"
+        id="parentsWhatIsTheEstimatedValue-input"
+        v-model.number="profileData.parentsWhatIsTheEstimatedValue"
         type="number"
         step="1"
         placeholder="0.00"
@@ -86,13 +86,11 @@ export default {
   data() {
     return {
       profileData: {
-        parents: {
-          areThemSupportedByYou: false,
-          howMuchYouSuportThem: 0.0,
-          isThereAPossibilityOfInheritance: false,
-          ofWhom: "",
-          whatIsTheEstimatedValue: 0.0,
-        },
+          parentsAreThemSupportedByYou: false,
+          parentsHowMuchYouSuportThem: 0.0,
+          parentsIsThereAPossibilityOfInheritance: false,
+          parentsOfWhom: "",
+          parentsWhatIsTheEstimatedValue: 0.0,
       },
       submitted: false,
       yesNo: [
@@ -102,9 +100,10 @@ export default {
       whichParents: ["Pai", "Mãe", "Ambos"],
     };
   },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

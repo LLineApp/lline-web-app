@@ -6,7 +6,7 @@
     />
     <div class="topnav" id="main-top-nav">
       <a href="/home" id="home" class="a">Home</a>
-      <a href="/profile" id="profile" class="a">Profile</a>
+      <a href="/profile" id="profileDataSheet" class="a">Profile</a>
       <a href="#" class="a">Link</a>
       <div id="user-name-div" class="dropdown">
         <button id="user-name-btn" class="dropbtn">

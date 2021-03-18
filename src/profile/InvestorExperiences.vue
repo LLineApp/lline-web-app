@@ -53,7 +53,7 @@ export default {
         investorExperiences: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
           },
         ],
@@ -61,9 +61,10 @@ export default {
     };
   },
   components: { InvestorExperience },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
@@ -74,8 +75,8 @@ export default {
     addInvestorExperience() {
       const newKey = this.profileData.investorExperiences.length;
       const newInvestorExperience = {
-        key: 0,
-        type: "",
+        key: newKey,
+        kind: "",
         value: null,
       };
       this.profileData.investorExperiences.push(newInvestorExperience);

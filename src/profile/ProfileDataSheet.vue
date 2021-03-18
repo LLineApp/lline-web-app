@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="key">
     <NavBar />
     <p>Estes são os seus dados</p>
     <Email v-bind:recordedData="profileData" />
@@ -30,33 +30,46 @@ import Marital from "../profile/Marital";
 import Children from "../profile/Children";
 import ProfessionalSituation from "../profile/ProfessionalSituation";
 import ImmovableProperties from "../profile/ImmovableProperties";
+import Health from "../profile/Health";
 import FinancialSituation from "../profile/FinancialSituation";
 import InvestorExperiences from "../profile/InvestorExperiences";
 import Insurances from "../profile/Insurances";
 import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
 import PlansAndProjects from "../profile/PlansAndProjects";
-import Health from "../profile/Health";
-import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
+import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import FinancialAdvisor from "../profile/FinancialAdvisor";
+import { getProfile } from "../../datasource/profile";
 
 export default {
   name: "profileDataSheet",
   data() {
     return {
+      key: 0,
       profileData: {
-        accepted: false,
-        email: "",
+        accepted: true,
       },
     };
   },
   created() {
-    const data = JSON.parse(sessionStorage.getItem("profileData"));
-    if (data) {
-      this.profileData = data;
-    }
+    getProfile()
+      .then((data) => {
+        this.profileData = data.data.getProfile[0];
+        this.key += 1;
+      })
+      .catch((error) => {
+        const message = error.graphQLErrors[0].message;
+        const options = {
+          position: "top-center",
+          duration: 4000,
+          fullWidth: true,
+          closeOnSwipe: true,
+        };
+
+        this.$toasted.error(message, options);
+      });
   },
   components: {
     NavBar,
@@ -66,23 +79,23 @@ export default {
     Children,
     ProfessionalSituation,
     ImmovableProperties,
+    Health,
     FinancialSituation,
     InvestorExperiences,
     Insurances,
     PersonalPrivateSecurities,
     PlansAndProjects,
-    Health,
-    FixedIncomeSecurities,
     InvestmentPortfolios,
+    FixedIncomeSecurities,
     Knowledge,
     AdditionalInformations,
     FinancialAdvisor,
   },
-  watch: {
-    profileData: function() {
-      sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
-    },
-  },
-  methods: {},
 };
 </script>
+
+<style>
+ul {
+  list-style-type: none;
+}
+</style>

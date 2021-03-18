@@ -1,26 +1,26 @@
 <template>
   <div id="child">
     <b-form-group
-      id="fullName-group"
+      id="fullname-group"
       label="Nome completo"
-      label-for="fullName-input"
+      label-for="fullname-input"
     >
       <b-form-input
         type="text"
-        id="fullName-input"
-        ref="fullName"
-        v-model="childData.fullName"
+        id="fullname-input"
+        ref="fullname"
+        v-model="childData.fullname"
       />
     </b-form-group>
     <b-form-group
-      id="birthDate-group"
+      id="birthdate-group"
       label="Data de nascimento"
-      label-for="birthDate-input"
+      label-for="birthdate-input"
     >
       <b-form-input
         type="date"
-        id="birthDate-input"
-        v-model="childData.birthDate"
+        id="birthdate-input"
+        v-model="childData.birthdate"
       />
     </b-form-group>
     <b-form-group
@@ -71,13 +71,13 @@ export default {
   name: "child",
   props: ["childData"],
   mounted() {
-    if (!this.childData.fullName) {
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.fullName.focus();
+      this.$refs.fullname.focus();
     },
   },
 };

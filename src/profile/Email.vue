@@ -60,18 +60,14 @@
       </b-input-group>
     </b-form-group>
 
-    <b-form-group
-      label="Informe qual é o seu telefone preferencial"
-      v-slot="{ ariaDescribedby }"
-    >
+    <b-form-group :label="phoneListLabel" v-slot="{ ariaDescribedby }">
       <b-form-radio-group
         id="phone-radio-slots"
-        v-model="profileData.preferredPhone"
+        v-model="profileData.preferredContact"
         :options="profileData.phones"
         :aria-describedby="ariaDescribedby"
         name="radio-options-slots"
-      >
-      </b-form-radio-group>
+      />
     </b-form-group>
 
     <b-form-group
@@ -122,16 +118,21 @@ export default {
         email: "",
         birthdate: null,
         phones: [],
-        preferredPhone: "",
+        preferredContact: "",
         requestBrokerStatus: false,
       },
       submitted: false,
       phoneInput: "",
+      phoneListLabel: "Telefones",
     };
   },
-  created() {
+  mounted() {
+    if (this.showButtons) {
+      this.phoneListLabel = "Informe qual é o seu telefone preferencial";
+    }
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

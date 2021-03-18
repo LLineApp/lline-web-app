@@ -16,7 +16,7 @@
     >
       <b-form-input
         id="financialAdvisor-input"
-        v-model="profileData.financialAdvisor.fullName"
+        v-model="profileData.financialAdvisor.fullname"
       />
     </b-form-group>
     <b-form-group
@@ -59,12 +59,14 @@ import { mapState } from "vuex";
 import { REGISTERING } from "../constants/base64";
 
 export default {
+  name: "financialAdvisor",
   props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
         financialAdvisor: {
-          fullName: "",
+          fullname: "",
+          register: "0",
           company: "",
         },
         acceptFinancialAdvisorContact: false,
@@ -78,23 +80,24 @@ export default {
       ],
     };
   },
-  created() {
+  mounted() {
     if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+      Object.assign(this.profileData.financialAdvisor, this.recordedData.financialAdvisor);
       this.intro = "";
       this.doYouHaveFinancialAdvisor = Boolean(
-        this.profileData.financialAdvisor.fullName
+        this.profileData.financialAdvisor.fullname
       );
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),
   },
-  watch() {
-    profileData.acceptFinancialAdvisorContact = Boolean(
-      this.profileData.financialAdvisor
-    );
+  watch: {
+    acceptFinancialAdvisorContact: function() {
+      return Boolean(this.profileData.financialAdvisor);
+    },
   },
 };
 </script>

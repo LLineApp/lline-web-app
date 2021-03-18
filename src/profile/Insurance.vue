@@ -2,10 +2,10 @@
   <div id="insurance">
     <b-form-group label="Tipo">
       <b-form-select
-        id="type-select"
-        v-model="insuranceData.type"
-        :options="insuranceType"
-        ref="type"
+        id="kind-select"
+        v-model="insuranceData.kind"
+        :options="insuranceOptions"
+        ref="kind"
       />
     </b-form-group>
     <b-form-group id="value-group" label="Valor" label-for="value-input">
@@ -78,7 +78,7 @@ export default {
   props: ["insuranceData"],
   data() {
     return {
-      insuranceType: [
+      insuranceOptions: [
         "Vida",
         "RC",
         "DIT",
@@ -92,13 +92,13 @@ export default {
     };
   },
   mounted() {
-    if (!this.insuranceData.type) {
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },
   methods: {
     focusInput() {
-      this.$refs.type.focus();
+      this.$refs.kind.focus();
     },
     formatNumericField(value) {
       return parseFloat(value);

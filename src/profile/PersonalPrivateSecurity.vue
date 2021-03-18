@@ -86,7 +86,7 @@ export default {
     };
   },
   mounted() {
-    if (!this.personalPrivateSecurityData.bank) {
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

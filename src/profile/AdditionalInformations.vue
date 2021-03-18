@@ -1,8 +1,10 @@
 <template>
   <div id="main">
     <Memo
+      :key=this.profileData.additionalInfo
       label="Informações adicionais"
-      fieldName="additionalInformations"
+      fieldName="additionalInfo"
+      :text=this.profileData.additionalInfo
       v-on:apply="applyValue"
       placeholder="Mais alguma coisa que a gente precisa saber?"
     />
@@ -31,14 +33,15 @@ export default {
   data() {
     return {
       profileData: {
-        additionalInformations: "",
+        additionalInfo: "",
       },
     };
   },
   components: { Memo },
-  created() {
+  mounted() {
     if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+      this.profileData.additionalInfo = this.recordedData.additionalInfo;
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

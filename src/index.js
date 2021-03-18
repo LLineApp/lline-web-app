@@ -1,47 +1,16 @@
-import Vue from 'vue';
-import VeeValidate from 'vee-validate';
-import { store } from './_store';
-import { router } from './_helpers';
-import App from './app/App';
-import { createProvider } from 'vue-apollo';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import VueApollo, { ApolloProvider } from 'vue-apollo';
-import Toasted from 'vue-toasted';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+import { store } from "./_store";
+import { router } from "./_helpers";
+import App from "./app/App";
+import VueApollo from "vue-apollo";
+import Toasted from "vue-toasted";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 //  import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap-vue/dist/bootstrap-vue.css';
+import { connectToBackend, authURI, profileURI } from "../datasource/backendConnect";
 
 Vue.config.productionTip = false;
-
-const httpLink = new HttpLink({
-    uri: 'https://lline-auth.herokuapp.com/graphql/',
-    useGETForQueries: false,
-    credentials: 'include',
-    headers: {
-        Accept: 'application/json',
-        'content-type': 'application/json',
-    },
-    fetchOptions: {
-        mode: 'cors'
-    },
-    onError: ({ networkError, graphQLErrors }) => {
-        console.log('graphQLErrors', graphQLErrors)
-        console.log('networkError', networkError)
-    }
-});
-
-const apolloClient = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache(),
-    connectToDevTools: true,
-    onError: (e) => { console.log(e) },
-    headers: {
-        Accept: 'application/json',
-        'content-type': 'application/json',
-    },
-});
 
 Vue.use(VeeValidate);
 Vue.use(VueApollo);
@@ -50,13 +19,17 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 const apolloProvider = new VueApollo({
-    defaultClient: apolloClient
+  clients: {
+    authClient: connectToBackend(authURI),
+    profileClient: connectToBackend(profileURI),
+  },
+  defaultClient: connectToBackend(authURI),
 });
 
 new Vue({
-    el: '#app',
-    router,
-    store,
-    apolloProvider,
-    render: h => h(App)
+  el: "#app",
+  router,
+  store,
+  apolloProvider,
+  render: (h) => h(App),
 });

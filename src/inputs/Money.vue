@@ -16,12 +16,17 @@
 
 <script>
 export default {
-  props: ["label", "field"],
+  props: ["label", "field", "fieldValue"],
   data() {
     return {
       inputValue: null,
     };
   },
+    mounted() {
+      if (this.fieldValue) {
+        this.inputValue = this.fieldValue;
+      }
+    },
   methods: {
     formatNumericField(value) {
       return parseFloat(value);

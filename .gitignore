@@ -42,10 +42,5 @@ dist
 
 package-lock.json
 jsconfig.json
-<<<<<<< HEAD
 snippets
 *.orig
-=======
-*.orig
-snippets
->>>>>>> origin/89-adjust-email-component

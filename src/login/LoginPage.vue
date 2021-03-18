@@ -85,7 +85,9 @@ export default {
       submitted: false,
     };
   },
-  apollo: {},
+  apollo: {
+    $client: "authClient",
+  },
   computed: {
     ...mapState("account", ["status"]),
   },
@@ -144,7 +146,7 @@ export default {
 #background-black {
   width: 69%;
   position: relative;
-  transform: translate(-1px,-1px);
+  transform: translate(-1px, -1px);
 }
 #div-logo {
   width: 100%;

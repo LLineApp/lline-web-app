@@ -1,6 +1,7 @@
 <template>
   <div id="main">
     <Memo
+      :key="profileData.plansAndProjects"
       label="Conte sobre seus planos e projetos"
       fieldName="plansAndProjects"
       :text="profileData.plansAndProjects"
@@ -39,9 +40,10 @@ export default {
     };
   },
   components: { Memo },
-  created() {
-    if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+  mounted() {
+    if (this.recordedData.plansAndProjects) {
+      this.profileData.plansAndProjects = this.recordedData.plansAndProjects;
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

@@ -2,28 +2,38 @@
   <div id="main">
     <p>Sobre sua situação financeira</p>
     <Money
+      :key=this.profileData.monthlyExpenses
       label="Qual sua despesa mensal?"
       field="monthlyExpenses"
+      :fieldValue=this.profileData.monthlyExpenses
       v-on:apply="applyValue"
     />
     <Money
+      :key=this.profileData.costsWithDependents
       label="Gastos com dependentes"
       field="costsWithDependents"
+      :fieldValue=this.profileData.costsWithDependents
       v-on:apply="applyValue"
     />
     <Money
+      :key=this.profileData.howMuchYouSave
       label="Quanto você poupa?"
       field="howMuchYouSave"
+      :fieldValue=this.profileData.howMuchYouSave
       v-on:apply="applyValue"
     />
     <Money
+      :key=this.profileData.debtLoans
       label="Tem dívidas/financiamentos?"
-      field="debtsLoans"
+      field="debtLoans"
+      :fieldValue=this.profileData.debtLoans
       v-on:apply="applyValue"
     />
     <Money
+      :key=this.profileData.partnerInCompany
       label="É sócio de empresa? (Informe o percentual, ou zero (0) caso não seja sócio)"
-      field="partnerInACompany"
+      field="partnerInCompany"
+      :fieldValue=this.profileData.partnerInCompany
       v-on:apply="applyValue"
     />
     <b-button
@@ -56,15 +66,16 @@ export default {
         monthlyExpenses: null,
         costsWithDependents: null,
         howMuchYouSave: null,
-        debtsLoans: null,
-        partnerInACompany: null,
+        debtLoans: null,
+        partnerInCompany: null,
       },
     };
   },
   components: { Money },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

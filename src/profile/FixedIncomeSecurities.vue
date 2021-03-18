@@ -53,7 +53,7 @@ export default {
         fixedIncomeSecurities: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             tx: null,
           },
@@ -62,9 +62,10 @@ export default {
     };
   },
   components: { FixedIncomeSecurity },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
@@ -76,7 +77,7 @@ export default {
       const newKey = this.profileData.fixedIncomeSecurities.length;
       const newFixedIncomeSecurity = {
         key: newKey,
-        type: "",
+        kind: "",
         value: null,
         tx: null,
       };

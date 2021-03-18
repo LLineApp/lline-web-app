@@ -57,8 +57,8 @@ export default {
           {
             key: 0,
             bank: "",
-            enterprise: "",
-            cooperative: "",
+            enterprise: false,
+            cooperative: false,
             survival: "",
             table: "",
             balance: null,
@@ -68,11 +68,15 @@ export default {
     };
   },
   components: { PersonalPrivateSecurity },
-  created() {
-    if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+  mounted() {
+    if (this.recordedData.personalPrivateSecurities) {
+      Object.assign(
+        this.profileData.personalPrivateSecurities,
+        this.recordedData.personalPrivateSecurities
+      );
     }
     this.$emit("setActiveComponent", this.$options.name);
+      this.$forceUpdate();
   },
   computed: {
     ...mapState("account", ["status"]),

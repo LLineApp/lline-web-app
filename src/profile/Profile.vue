@@ -3,6 +3,7 @@
     <SideMenu v-if="this.profileData.accepted" v-bind:activeComponentName="activeComponentName"/>
     <div id="dados-div">
       <Intro
+      :key="this.key"
         v-if="!this.profileData.accepted"
         v-on:didAccept="profileData.accepted = true"
         v-on:didNotAccept="profileData.accepted = false"
@@ -15,16 +16,18 @@
         v-bind:showButtons="true"
       />
       <Parents
-        v-else-if="!this.profileDataHasProp('parents')"
+      v-else-if="
+        !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
+      "
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.parents"
+      v-on:stopped="delete profileData.parentsAreThemSupportedByYou"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Marital
-        v-else-if="!this.profileDataHasProp('marital')"
+      v-else-if="!this.profileDataHasProp('maritalStatus')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.marital"
+      v-on:stopped="delete profileData.maritalStatus"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
@@ -57,7 +60,7 @@
         v-bind:showButtons="true"
       />
       <FinancialSituation
-        v-else-if="!this.profileDataHasProp('monthlyExpenses')"
+      v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.monthlyExpenses"
         v-on:setActiveComponent="setActiveComponent"
@@ -113,10 +116,16 @@
         v-bind:showButtons="true"
       />
       <AdditionalInformations
-        v-else-if="!this.profileDataHasProp('additionalInformations')"
+      v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.additionalInformations"
+      v-on:stopped="delete profileData.additionalInfo"
+      v-bind:showButtons="true"
         v-on:setActiveComponent="setActiveComponent"
+    />
+    <FinancialAdvisor
+      v-else-if="!this.profileDataHasProp('financialAdvisor')"
+      v-on:done="feedProfileData"
+      v-on:stopped="delete profileData.financialAdvisor"
         v-bind:showButtons="true"
       />
       <FinancialAdvisor
@@ -149,12 +158,14 @@ import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import FinancialAdvisor from "../profile/FinancialAdvisor";
+import { getProfile, setProfile } from "../../datasource/profile";
 import SideMenu from "../profile/SideMenu";
 
 export default {
   name: "profile",
   data() {
     return {
+      key: 0,
       profileData: {
         accepted: false,
         email: "",
@@ -171,10 +182,31 @@ export default {
     }
   },
   created() {
-    const data = JSON.parse(sessionStorage.getItem("profileData"));
-    if (data) {
-      this.profileData = data;
-    }
+    getProfile()
+      .then((data) => {
+        if (data.data.getProfile[0]) {
+          const rawData = data.data.getProfile[0];
+          for (var key in rawData) {
+            if(rawData[key] != null) {
+              this.profileData[key] = rawData[key];
+            }
+          }
+          this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
+          delete this.profileData["cpf"];
+          this.key += 1;
+        }
+      })
+      .catch((error) => {
+        const message = error.graphQLErrors[0].message;
+        const options = {
+          position: "top-center",
+          duration: 4000,
+          fullWidth: true,
+          closeOnSwipe: true,
+        };
+
+        this.$toasted.error(message, options);
+      });
   },
   components: {
     Intro,
@@ -206,7 +238,10 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
+
+      setProfile(portionProfileData);
     },
+
     profileDataHasProp(prop) {
       if (this.profileData.hasOwnProperty(prop)) {
         return Object.keys(this.profileData[prop]).length != 0;
@@ -221,6 +256,11 @@ export default {
 };
 </script>
 
+<style>
+ul {
+  list-style-type: none;
+}
+</style>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 #main {

@@ -51,7 +51,7 @@ export default {
         insurances: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             monthlyFee: true,
             coverage: null,
@@ -62,9 +62,10 @@ export default {
     };
   },
   components: { Insurance },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

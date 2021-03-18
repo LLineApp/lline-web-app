@@ -68,9 +68,10 @@ export default {
     };
   },
   components: { ImmovableProperty },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },

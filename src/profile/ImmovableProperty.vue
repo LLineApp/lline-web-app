@@ -102,7 +102,7 @@ export default {
   },
 
   mounted() {
-    if (!this.immovablePropertyData.description) {
+    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
       this.focusInput();
     }
   },

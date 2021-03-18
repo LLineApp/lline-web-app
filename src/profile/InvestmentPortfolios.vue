@@ -54,7 +54,7 @@ export default {
         investmentPortfolios: [
           {
             key: 0,
-            type: "",
+            kind: "",
             value: null,
             tx: null,
           },
@@ -63,9 +63,10 @@ export default {
     };
   },
   components: { InvestmentPortfolio },
-  created() {
+  mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
@@ -77,7 +78,7 @@ export default {
       const newKey = this.profileData.investmentPortfolios.length;
       const newInvestmentPortfolio = {
         key: newKey,
-        type: "",
+        kind: "",
         value: null,
         tx: null,
       };

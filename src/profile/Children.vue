@@ -49,8 +49,8 @@ export default {
         children: [
           {
             key: 0,
-            fullName: "",
-            birthDate: null,
+            fullname: "",
+            birthdate: null,
             occupationTraining: "",
             additionalInfo: "",
           },
@@ -59,9 +59,10 @@ export default {
     };
   },
   components: { Child },
-  created() {
-    if (this.recordedData) {
-      Object.assign(this.profileData, this.recordedData);
+  mounted(){
+    if(this.recordedData && this.recordedData.children){
+      Object.assign(this.profileData.children, this.recordedData.children);
+      this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
@@ -73,8 +74,8 @@ export default {
       const newKey = this.profileData.children.length;
       const newChild = {
         key: newKey,
-        fullName: "",
-        birthDate: null,
+        fullname: "",
+        birthdate: null,
         occupationTraining: "",
         additionalInfo: "",
       };
