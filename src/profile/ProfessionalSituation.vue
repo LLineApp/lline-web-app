@@ -180,6 +180,7 @@ export default {
         privateSecurityYourValue: null,
         privateSecurityCompanyValue: null,
         privateSecurityCurrentBalance: null,
+        page: 5,
       },
       companyHasPrivateSecurity: false,
       yesNo: [

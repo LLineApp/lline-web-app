@@ -46,6 +46,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 4,
         children: [
           {
             key: 0,

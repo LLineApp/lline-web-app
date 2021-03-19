@@ -111,7 +111,7 @@ export default {
               },
             })
             .then((data) => {
-              console.log(result);
+              console.log(data);
             });
         }
       });

@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 10,
         insurances: [
           {
             key: 0,

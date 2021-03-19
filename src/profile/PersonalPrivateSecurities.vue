@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 11,
         personalPrivateSecurities: [
           {
             key: 0,
@@ -69,7 +70,7 @@ export default {
   },
   components: { PersonalPrivateSecurity },
   mounted() {
-    if (this.recordedData.personalPrivateSecurities) {
+    if (this.recordedData) {
       Object.assign(
         this.profileData.personalPrivateSecurities,
         this.recordedData.personalPrivateSecurities

@@ -68,6 +68,7 @@ export default {
         howMuchYouSave: null,
         debtLoans: null,
         partnerInCompany: null,
+        page: 8,
       },
     };
   },

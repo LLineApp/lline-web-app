@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 9,
         investorExperiences: [
           {
             key: 0,

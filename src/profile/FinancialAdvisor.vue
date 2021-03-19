@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 17,
         financialAdvisor: {
           fullname: "",
           register: "0",

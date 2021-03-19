@@ -32,10 +32,7 @@
       label-for="spouseName-input"
       v-if="this.hasSpouse"
     >
-      <b-form-input
-        id="spouseName-input"
-        v-model="profileData.spouseName"
-      />
+      <b-form-input id="spouseName-input" v-model="profileData.spouseName" />
     </b-form-group>
     <b-form-group
       id="spouseOccupation-group"
@@ -78,6 +75,7 @@ export default {
         maritalHowManyYears: 0,
         spouseName: "",
         spouseOccupation: "",
+        page: 3,
       },
       maritalStatuses: [
         "Solteiro(a)",
@@ -98,12 +96,12 @@ export default {
   },
   computed: {
     ...mapState("account", ["status"]),
-    hasSpouse: function () {
+    hasSpouse: function() {
       return ["Casado(a)", "União estável"].includes(
         this.profileData.maritalStatus
       );
     },
-    howManyYearsLabel: function () {
+    howManyYearsLabel: function() {
       let status = "casados";
       if (this.profileData.maritalStatus == "União estável") {
         status = "em união estável";
