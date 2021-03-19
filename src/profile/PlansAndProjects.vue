@@ -35,13 +35,14 @@ export default {
   data() {
     return {
       profileData: {
+        page: 12,
         plansAndProjects: "",
       },
     };
   },
   components: { Memo },
   mounted() {
-    if (this.recordedData.plansAndProjects) {
+    if (this.recordedData) {
       this.profileData.plansAndProjects = this.recordedData.plansAndProjects;
       this.$forceUpdate();
     }

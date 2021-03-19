@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 13,
         investmentPortfolios: [
           {
             key: 0,

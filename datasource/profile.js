@@ -1,10 +1,9 @@
-import { SET_PROFILE, GET_PROFILE } from "../src/constants/graphql";
+import { SET_PROFILE, GET_PROFILE, GET_PROFILE_PAGE } from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 export async function setProfile(profileInput) {
-  console.log(JSON.stringify(profileInput));
   const data = sanitize(profileInput);
   const conn = connectToBackend(profileURI);
 
@@ -40,4 +39,24 @@ export async function getProfile() {
       token: user.token,
     },
   });
+}
+export async function getProfilePage() {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_PROFILE_PAGE,
+    variables: {
+      token: user.token,
+    },
+  });
+}
+
+export function handleError(message) {
+  const options = {
+    position: "top-center",
+    duration: 4000,
+    fullWidth: true,
+    closeOnSwipe: true,
+  };
+
+  this.$toasted.error(message, options);
 }

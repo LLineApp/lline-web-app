@@ -89,6 +89,7 @@ export default {
         funded: false,
         insuranceValue: null,
         insuranceCompany: "",
+        page: 6,
       };
       this.profileData.immovableProperties.push(newImmovableProperty);
     },
@@ -105,7 +106,7 @@ export default {
     },
     removeImmovableProperty(immovablePropertyData) {
       var remainingImmovableProperties = this.profileData.immovableProperties.filter(
-        function (value, index, arr) {
+        function(value, index, arr) {
           return value != immovablePropertyData;
         }
       );
@@ -159,8 +160,8 @@ button:hover,
   background-color: black;
   border-color: black;
 }
-#success{
+#success {
   margin-left: 3.5%;
-   padding: 2%, 2%;
+  padding: 2%, 2%;
 }
 </style>
