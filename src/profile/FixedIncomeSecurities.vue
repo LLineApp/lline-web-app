@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 14,
         fixedIncomeSecurities: [
           {
             key: 0,

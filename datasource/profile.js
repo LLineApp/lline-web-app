@@ -1,6 +1,7 @@
 import {
   SET_PROFILE,
   GET_PROFILE,
+  GET_PROFILE_PAGE,
   GET_ADVISOR_BY_LINK,
 } from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
@@ -55,4 +56,24 @@ export async function getAdvisorByLink(advisorsLink) {
       link: advisorsLink,
     },
   });
+}
+export async function getProfilePage() {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_PROFILE_PAGE,
+    variables: {
+      token: user.token,
+    },
+  });
+}
+
+export function handleError(message) {
+  const options = {
+    position: "top-center",
+    duration: 4000,
+    fullWidth: true,
+    closeOnSwipe: true,
+  };
+
+  this.$toasted.error(message, options);
 }

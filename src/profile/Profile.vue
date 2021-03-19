@@ -130,6 +130,11 @@
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
         v-bind:showButtons="true"
+        v-on:setActiveComponent="setActiveComponent"
+      />
+      <Congrats
+        v-else-if="!this.profileIsComplete()"
+        v-on:done="feedProfileData"
       />
     </div>
   </div>
@@ -154,8 +159,9 @@ import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import FinancialAdvisor from "../profile/FinancialAdvisor";
-import { getProfile, setProfile } from "../../datasource/profile";
+import { getProfile, setProfile, handleError } from "../../datasource/profile";
 import SideMenu from "../profile/SideMenu";
+import Congrats from "../profile/Congrats";
 
 export default {
   name: "profile",
@@ -167,6 +173,7 @@ export default {
         email: "",
       },
       activeComponentName: "",
+      profilePages: 18,
     };
   },
   updated() {
@@ -193,15 +200,7 @@ export default {
         }
       })
       .catch((error) => {
-        const message = error.graphQLErrors[0].message;
-        const options = {
-          position: "top-center",
-          duration: 4000,
-          fullWidth: true,
-          closeOnSwipe: true,
-        };
-
-        this.$toasted.error(message, options);
+        handleError(error.graphQLErrors[0].message);
       });
   },
   components: {
@@ -224,6 +223,7 @@ export default {
     AdditionalInformations,
     FinancialAdvisor,
     SideMenu,
+    Congrats,
   },
   watch: {
     profileData: function() {
@@ -234,8 +234,8 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
-
       setProfile(portionProfileData);
+      $emit('paging', this.profileData.page)
     },
 
     profileDataHasProp(prop) {
@@ -244,6 +244,31 @@ export default {
       } else {
         return false;
       }
+    },
+    setActiveComponent(name) {
+      this.activeComponentName = name;
+    },
+    profileIsComplete() {
+      return (
+        this.profileData.page == this.profilePages &&
+        this.profileData.email != "" &&
+        this.profileData.hasOwnProperty("parentsAreThemSupportedByYou") &&
+        this.profileDataHasProp("maritalStatus") &&
+        this.profileDataHasProp("children") &&
+        this.profileDataHasProp("occupation") &&
+        this.profileDataHasProp("immovableProperties") &&
+        this.profileDataHasProp("health") &&
+        this.profileData.hasOwnProperty("monthlyExpenses") &&
+        this.profileDataHasProp("investorExperiences") &&
+        this.profileDataHasProp("insurances") &&
+        this.profileDataHasProp("personalPrivateSecurities") &&
+        this.profileDataHasProp("plansAndProjects") &&
+        this.profileDataHasProp("investmentPortfolios") &&
+        this.profileDataHasProp("fixedIncomeSecurities") &&
+        this.profileDataHasProp("currentInvestmentProcess") &&
+        this.profileData.hasOwnProperty("additionalInfo") &&
+        this.profileDataHasProp("financialAdvisor")
+      );
     },
     setActiveComponent(name) {
       this.activeComponentName = name;

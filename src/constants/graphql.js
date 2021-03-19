@@ -29,9 +29,18 @@ export const SET_PROFILE = gql`
   }
 `;
 
+export const GET_PROFILE_PAGE = gql`
+  query getProfilePage($token: String!) {
+    getProfile(token: $token) {
+      page
+    }
+  }
+`;
+
 export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
+      page
       id
       cpf
       email
