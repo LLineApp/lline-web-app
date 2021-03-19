@@ -133,3 +133,19 @@ export const GET_PROFILE = gql`
     }
   }
 `;
+
+export const GET_ADVISOR_BY_LINK = gql`
+  mutation setAdvisorsLink($token: String!, $link: String) {
+    setAdvisorsLink(token: $token, link: $link) {
+      advisorsLinkData {
+        advisor {
+          id
+          fullname
+          register
+          company
+          cpf
+        }
+      }
+    }
+  }
+`;

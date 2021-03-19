@@ -1,4 +1,9 @@
-import { SET_PROFILE, GET_PROFILE, GET_PROFILE_PAGE } from "../src/constants/graphql";
+import {
+  SET_PROFILE,
+  GET_PROFILE,
+  GET_PROFILE_PAGE,
+  GET_ADVISOR_BY_LINK,
+} from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -37,6 +42,18 @@ export async function getProfile() {
     mutation: GET_PROFILE,
     variables: {
       token: user.token,
+    },
+  });
+}
+
+export async function getAdvisorByLink(advisorsLink) {
+  const conn = connectToBackend(profileURI);
+
+  return await conn.mutate({
+    mutation: GET_ADVISOR_BY_LINK,
+    variables: {
+      token: user.token,
+      link: advisorsLink,
     },
   });
 }
