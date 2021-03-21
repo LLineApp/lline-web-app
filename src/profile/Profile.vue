@@ -226,7 +226,7 @@ export default {
     Congrats,
   },
   watch: {
-    profileData: function() {
+    profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
@@ -235,7 +235,7 @@ export default {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
       setProfile(portionProfileData);
-      $emit('paging', this.profileData.page)
+      $emit("paging", this.profileData.page);
     },
 
     profileDataHasProp(prop) {

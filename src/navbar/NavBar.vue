@@ -7,7 +7,31 @@
     <div class="topnav" id="main-top-nav">
       <a href="/home" id="home" class="a">Home</a>
       <a href="/profile" id="profileDataSheet" class="a">Profile</a>
-      <a href="#" class="a">Link</a>
+      <div id="advisor-div" class="dropdown">
+        <button id="advisor-btn" class="dropbtn">
+          Acessor
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#"><i class="fa fa-users"></i> Clientes</a>
+          <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
+          <a href="#"
+            ><i
+              class="fa fa-external-link-square"
+              @click="advisorLinkSwitch()"
+            ></i>
+            Link Acessor</a
+          >
+        </div>
+      </div>
+      <a
+        id="dropdown"
+        href="javascript:void(0);"
+        class="icon"
+        @click="responsiveSwitch()"
+      >
+        <i class="fa fa-bars"></i>
+      </a>
       <div id="user-name-div" class="dropdown">
         <button id="user-name-btn" class="dropbtn">
           {{ userFirstName }}
@@ -27,6 +51,16 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
+    <div id="advisor-link-div" v-if="advisorLink">
+      <p id="link-message">Esse é seu link de acessor</p>
+      <div id="ad-div-1">
+        <b-form-input readonly id="advisor-link" type="url" />
+        <b-button class="fa fa-clipboard fa-lg" id="copy-link"></b-button>
+      </div>
+      <div id="ad-div-2">
+        <b-button id="ok" @click="advisorLinkSwitch()">Ok</b-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +70,7 @@ export default {
     return {
       userFirstName: "",
       canShow: true,
+      advisorLink: true,
     };
   },
   computed: {},
@@ -44,6 +79,7 @@ export default {
     this.userFirstName = "Usuário";
     this.canShow = localStorage.getItem("user");
     this.setActive();
+    this.advisorLink = false;
   },
   created() {},
   methods: {
@@ -56,8 +92,14 @@ export default {
       }
     },
     setActive: function () {
-      var aElementReference = document.getElementById(this.$parent.$options.name);
+      var aElementReference = document.getElementById(
+        this.$parent.$options.name
+      );
+      
       aElementReference.className += " active";
+    },
+    advisorLinkSwitch: function () {
+      this.advisorLink = !this.advisorLink;
     },
   },
 };
@@ -97,8 +139,12 @@ export default {
   display: none;
 }
 
-.dropdown {
+#user-name-div {
   float: right;
+}
+
+#advisor-div {
+  float: left;
 }
 
 .dropdown .dropbtn {
@@ -134,6 +180,60 @@ export default {
 .dropdown:hover .dropdown-content {
   display: block;
   position: fixed;
+}
+
+#ad-div-1,
+#ad-div-2 {
+  width: 100%;
+  height: 25%;
+}
+
+#advisor-link-div {
+  width: 20%;
+  height: 20%;
+  float: left;
+  align-self: center;
+  position: absolute;
+  z-index: 99;
+  background-color: black;
+  border-radius: 25px;
+  color: white;
+}
+
+#link-message {
+  width: 100%;
+  text-align: center;
+  padding-top: 5%;
+  font-size: 20px;
+  font-family: "Raleway", sans-serif;
+}
+
+#advisor-link {
+  float: left;
+  width: 60%;
+  background-color: #26fed5;
+  border: 0;
+  margin-left: 10%;
+  height: 90%;
+}
+
+#copy-link {
+  float: left;
+  margin-inline: 5%;
+  color: black;
+  background-color: #26fed5;
+  border: 0;
+  height: 90%;
+}
+
+#ok {
+  float: left;
+  margin-left: 10%;
+  margin-top: 3%;
+  color: black;
+  background-color: #26fed5;
+
+  border: 0;
 }
 
 @media screen and (max-width: 600px) {
