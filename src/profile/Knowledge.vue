@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 15,
         currentInvestmentProcess: "",
         followEconomicNews: null,
         acceptsInfoAboutCourses: null,

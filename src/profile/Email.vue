@@ -134,6 +134,7 @@ export default {
         phones: [],
         preferredContact: "",
         requestBrokerStatus: false,
+        page: 1,
       },
       submitted: false,
       phoneInput: "",

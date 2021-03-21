@@ -29,9 +29,18 @@ export const SET_PROFILE = gql`
   }
 `;
 
+export const GET_PROFILE_PAGE = gql`
+  query getProfilePage($token: String!) {
+    getProfile(token: $token) {
+      page
+    }
+  }
+`;
+
 export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
+      page
       id
       cpf
       email
@@ -120,6 +129,22 @@ export const GET_PROFILE = gql`
         kind
         value
         tx
+      }
+    }
+  }
+`;
+
+export const GET_ADVISOR_BY_LINK = gql`
+  mutation setAdvisorsLink($token: String!, $link: String) {
+    setAdvisorsLink(token: $token, link: $link) {
+      advisorsLinkData {
+        advisor {
+          id
+          fullname
+          register
+          company
+          cpf
+        }
       }
     }
   }

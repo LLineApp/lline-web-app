@@ -100,6 +100,9 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.submitted = true;
+      if (this.$route.query.advisor) {
+        localStorage.setItem("advisorsLink", this.$route.query.advisor);
+      }
       this.$validator.validate().then((valid) => {
         if (valid) {
           this.$apollo
@@ -111,7 +114,7 @@ export default {
               },
             })
             .then((data) => {
-              console.log(result);
+              console.log(data);
             });
         }
       });

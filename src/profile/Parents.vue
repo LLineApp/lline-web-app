@@ -86,11 +86,12 @@ export default {
   data() {
     return {
       profileData: {
-          parentsAreThemSupportedByYou: false,
-          parentsHowMuchYouSuportThem: 0.0,
-          parentsIsThereAPossibilityOfInheritance: false,
-          parentsOfWhom: "",
-          parentsWhatIsTheEstimatedValue: 0.0,
+        parentsAreThemSupportedByYou: false,
+        parentsHowMuchYouSuportThem: 0.0,
+        parentsIsThereAPossibilityOfInheritance: false,
+        parentsOfWhom: "",
+        parentsWhatIsTheEstimatedValue: 0.0,
+        page: 2,
       },
       submitted: false,
       yesNo: [
@@ -160,4 +161,3 @@ p {
   padding: 2%, 2%;
 }
 </style>
-

@@ -109,6 +109,12 @@ export default {
             },
           })
           .then((data) => {
+            if (
+              !localStorage.getItem("advisorsLink") &&
+              this.$route.query.advisor
+            ) {
+              localStorage.setItem("advisorsLink", this.$route.query.advisor);
+            }
             if (data.data.tokenAuth.token) {
               localStorage.setItem("user", JSON.stringify(data.data.tokenAuth));
               this.$router.push("/");
