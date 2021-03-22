@@ -17,6 +17,7 @@
         v-on:stopped="profileData.email = ''"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
       <Parents
         v-else-if="
@@ -165,6 +166,7 @@ import Congrats from "../profile/Congrats";
 
 export default {
   name: "profile",
+  props: ["filledByAdvisor"],
   data() {
     return {
       key: 0,
@@ -185,23 +187,25 @@ export default {
     }
   },
   created() {
-    getProfile()
-      .then((data) => {
-        if (data.data.getProfile[0]) {
-          const rawData = data.data.getProfile[0];
-          for (var key in rawData) {
-            if (rawData[key] != null) {
-              this.profileData[key] = rawData[key];
+    if (!this.filledByAdvisor) {
+      getProfile()
+        .then((data) => {
+          if (data.data.getProfile[0]) {
+            const rawData = data.data.getProfile[0];
+            for (var key in rawData) {
+              if (rawData[key] != null) {
+                this.profileData[key] = rawData[key];
+              }
             }
+            this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
+            delete this.profileData["cpf"];
+            this.key += 1;
           }
-          this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
-          delete this.profileData["cpf"];
-          this.key += 1;
-        }
-      })
-      .catch((error) => {
-        handleError(error.graphQLErrors[0].message);
-      });
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
+    }
   },
   components: {
     Intro,
@@ -235,7 +239,7 @@ export default {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
       setProfile(portionProfileData);
-      $emit('paging', this.profileData.page)
+      $emit("paging", this.profileData.page);
     },
 
     profileDataHasProp(prop) {

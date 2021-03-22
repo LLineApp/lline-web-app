@@ -110,7 +110,7 @@ import { parsePhoneNumber } from "libphonenumber-js";
 
 export default {
   name: "email",
-  props: ["recordedData", "showButtons"],
+  props: ["recordedData", "showButtons", "filledByAdvisor"],
   data() {
     return {
       profileData: {
@@ -157,7 +157,9 @@ export default {
       }
     },
     formatEmail(value) {
-      return String(value).toLowerCase().trim();
+      return String(value)
+        .toLowerCase()
+        .trim();
     },
   },
 };
