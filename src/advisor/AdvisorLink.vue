@@ -1,11 +1,15 @@
 <template>
-  <div id="advisor-link-div">
-    <p id="link-message">Esse é seu link de assessor</p>
-    <div id="ad-div-1">
-      <b-form-input readonly id="advisor-link" type="url" />
-      <b-button class="fa fa-clipboard fa-lg" id="copy-link"></b-button>
-    </div>
-    <div id="ad-div-2">
+  <div id="background" @click="$parent.AdvLinkSwitch()">
+    <div id="advisor-link-div">
+      <p id="link-message">Esse é seu link de assessor</p>
+      <b-input-group id="ig-adv-link">
+        <b-form-input readonly type="url" id="link-input"/>
+        <b-input-group-append @click="copyLink()">
+          <span class="input-group-text"
+            ><i class="fa fa-clipboard fa-lg"></i
+          ></span>
+        </b-input-group-append>
+      </b-input-group>
       <b-button @click="$parent.AdvLinkSwitch()" id="ok">Ok</b-button>
     </div>
   </div>
@@ -14,22 +18,34 @@
 <script>
 export default {
   name: "advisor-link",
+  computed: {},
+  methods: {
+    copyLink: function () {
+      alert("ok");
+    },
+  },
 };
 </script>
 
 <style scoped>
-#ad-div-1,
-#ad-div-2 {
+#background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
-  height: 25%;
+  height: 100%;
+  z-index: 98;
 }
 
 #advisor-link-div {
-  width: 20%;
-  height: 20%;
+  width: 40%;
+  height: 25%;
+  margin-inline: 30%;
+  margin-top: 15%;
   float: left;
   align-self: center;
-  position: absolute;
+  position: relative;
   z-index: 99;
   background-color: black;
   border-radius: 5px;
@@ -39,35 +55,28 @@ export default {
 #link-message {
   width: 100%;
   text-align: center;
-  padding-top: 5%;
+  padding-top: 2%;
   font-size: 20px;
   font-family: "Raleway", sans-serif;
 }
 
-#advisor-link {
-  float: left;
-  width: 60%;
-  background-color: #26fed5;
-  border: 0;
-  margin-left: 10%;
-  height: 90%;
-}
-
-#copy-link {
-  float: left;
-  margin-inline: 5%;
-  color: black;
-  background-color: #26fed5;
-  border: 0;
-  height: 90%;
-}
-
 #ok {
   float: left;
-  margin-left: 10%;
-  margin-top: 3%;
   color: black;
   background-color: #26fed5;
   border: 0;
+  margin-top: 2.5%;
+  width: 10%;
+  margin-inline: 45%;
 }
+
+#ig-adv-link {
+  width: 90%;
+  margin-inline: 5%;
+}
+
+#link-input{
+  width: 80%;
+}
+
 </style>
