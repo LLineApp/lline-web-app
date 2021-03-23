@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AdvisorLink v-if="ShowAdvLink" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -15,12 +16,8 @@
         <div class="dropdown-content">
           <a href="#"><i class="fa fa-users"></i> Clientes</a>
           <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
-          <a href="#"
-            ><i
-              class="fa fa-external-link-square"
-              @click="advisorLinkSwitch()"
-            ></i>
-            Link Acessor</a
+          <a href="#" @click="AdvLinkSwitch()"
+            ><i class="fa fa-external-link-square"></i> Link Acessor</a
           >
         </div>
       </div>
@@ -51,26 +48,19 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-    <div id="advisor-link-div" v-if="advisorLink">
-      <p id="link-message">Esse é seu link de acessor</p>
-      <div id="ad-div-1">
-        <b-form-input readonly id="advisor-link" type="url" />
-        <b-button class="fa fa-clipboard fa-lg" id="copy-link"></b-button>
-      </div>
-      <div id="ad-div-2">
-        <b-button id="ok" @click="advisorLinkSwitch()">Ok</b-button>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import AdvisorLink from "../advisor/AdvisorLink";
+
 export default {
+  components: { AdvisorLink },
   data() {
     return {
       userFirstName: "",
       canShow: true,
-      advisorLink: true,
+      ShowAdvLink: false,
     };
   },
   computed: {},
@@ -79,7 +69,6 @@ export default {
     this.userFirstName = "Usuário";
     this.canShow = localStorage.getItem("user");
     this.setActive();
-    this.advisorLink = false;
   },
   created() {},
   methods: {
@@ -95,11 +84,10 @@ export default {
       var aElementReference = document.getElementById(
         this.$parent.$options.name
       );
-      
       aElementReference.className += " active";
     },
-    advisorLinkSwitch: function () {
-      this.advisorLink = !this.advisorLink;
+    AdvLinkSwitch: function () {
+      this.ShowAdvLink = !this.ShowAdvLink;
     },
   },
 };
@@ -180,60 +168,6 @@ export default {
 .dropdown:hover .dropdown-content {
   display: block;
   position: fixed;
-}
-
-#ad-div-1,
-#ad-div-2 {
-  width: 100%;
-  height: 25%;
-}
-
-#advisor-link-div {
-  width: 20%;
-  height: 20%;
-  float: left;
-  align-self: center;
-  position: absolute;
-  z-index: 99;
-  background-color: black;
-  border-radius: 25px;
-  color: white;
-}
-
-#link-message {
-  width: 100%;
-  text-align: center;
-  padding-top: 5%;
-  font-size: 20px;
-  font-family: "Raleway", sans-serif;
-}
-
-#advisor-link {
-  float: left;
-  width: 60%;
-  background-color: #26fed5;
-  border: 0;
-  margin-left: 10%;
-  height: 90%;
-}
-
-#copy-link {
-  float: left;
-  margin-inline: 5%;
-  color: black;
-  background-color: #26fed5;
-  border: 0;
-  height: 90%;
-}
-
-#ok {
-  float: left;
-  margin-left: 10%;
-  margin-top: 3%;
-  color: black;
-  background-color: #26fed5;
-
-  border: 0;
 }
 
 @media screen and (max-width: 600px) {
