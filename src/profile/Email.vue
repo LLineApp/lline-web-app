@@ -28,6 +28,7 @@
     </b-form-group>
 
     <b-form-group
+      v-if="this.filledByAdvisor"
       id="cpf-group"
       label="CPF"
       label-for="cpf-input"
@@ -123,7 +124,7 @@ import { parsePhoneNumber } from "libphonenumber-js";
 
 export default {
   name: "email",
-  props: ["recordedData", "showButtons"],
+  props: ["recordedData", "showButtons", "filledByAdvisor"],
   data() {
     return {
       profileData: {
@@ -161,7 +162,7 @@ export default {
       return re.test(String(this.profileData.email).toLowerCase());
     },
     validateCPF() {
-      const cpf = this.profileData.cpf.replace(/\D/g, '');
+      const cpf = this.profileData.cpf.replace(/\D/g, "");
       return cpf.length == 11;
     },
   },
@@ -175,7 +176,9 @@ export default {
       }
     },
     formatEmail(value) {
-      return String(value).toLowerCase().trim();
+      return String(value)
+        .toLowerCase()
+        .trim();
     },
   },
 };

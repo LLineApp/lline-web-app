@@ -17,6 +17,7 @@
         v-on:stopped="profileData.email = ''"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
       <Parents
         v-else-if="
@@ -122,19 +123,21 @@
         v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.additionalInfo"
-        v-bind:showButtons="true"
         v-on:setActiveComponent="setActiveComponent"
+        v-bind:showButtons="true"
       />
       <FinancialAdvisor
         v-else-if="!this.profileDataHasProp('financialAdvisor')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
-        v-bind:showButtons="true"
         v-on:setActiveComponent="setActiveComponent"
+        v-bind:showButtons="true"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
       <Congrats
         v-else-if="!this.profileIsComplete()"
         v-on:done="feedProfileData"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
     </div>
   </div>
@@ -165,6 +168,7 @@ import Congrats from "../profile/Congrats";
 
 export default {
   name: "profile",
+  props: ["filledByAdvisor"],
   data() {
     return {
       key: 0,
@@ -185,23 +189,25 @@ export default {
     }
   },
   created() {
-    getProfile()
-      .then((data) => {
-        if (data.data.getProfile[0]) {
-          const rawData = data.data.getProfile[0];
-          for (var key in rawData) {
-            if (rawData[key] != null) {
-              this.profileData[key] = rawData[key];
+    if (!this.filledByAdvisor) {
+      getProfile()
+        .then((data) => {
+          if (data.data.getProfile[0]) {
+            const rawData = data.data.getProfile[0];
+            for (var key in rawData) {
+              if (rawData[key] != null) {
+                this.profileData[key] = rawData[key];
+              }
             }
+            this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
+            delete this.profileData["cpf"];
+            this.key += 1;
           }
-          this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
-          delete this.profileData["cpf"];
-          this.key += 1;
-        }
-      })
-      .catch((error) => {
-        handleError(error.graphQLErrors[0].message);
-      });
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
+    }
   },
   components: {
     Intro,
@@ -235,7 +241,7 @@ export default {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
       setProfile(portionProfileData);
-      $emit('paging', this.profileData.page)
+      $emit("paging", this.profileData.page);
     },
 
     profileDataHasProp(prop) {

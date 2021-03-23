@@ -68,7 +68,7 @@ import { getAdvisorByLink } from "../../datasource/profile";
 
 export default {
   name: "financialAdvisor",
-  props: ["recordedData", "showButtons"],
+  props: ["recordedData", "showButtons", "filledByAdvisor"],
   data() {
     return {
       profileData: {
@@ -105,7 +105,7 @@ export default {
       this.$forceUpdate();
     } else {
       const advisorsLink = localStorage.getItem("advisorsLink");
-      if (advisorsLink) {
+      if (advisorsLink || this.filledByAdvisor) {
         getAdvisorByLink(advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
@@ -151,6 +151,18 @@ export default {
   watch: {
     acceptFinancialAdvisorContact: function() {
       return Boolean(this.profileData.financialAdvisor);
+    },
+  },
+  methods: {
+    setLabelsToAdvisorsLink: function() {
+      this.intro = "Que legal! Você já tem um assessor financeiro crendenciado";
+      this.whatIsHisNameLabel = "O nome dele é";
+      this.whatIsHisCompanyLabel = "A operadora é";
+    },
+    setLabelsToFilledByAdvisor: function() {
+      this.intro = "Assessor financeiro crendenciado";
+      this.whatIsHisNameLabel = "Nome";
+      this.whatIsHisCompanyLabel = "Operadora";
     },
   },
 };
