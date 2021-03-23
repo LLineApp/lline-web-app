@@ -6,7 +6,7 @@
       <b-button class="fa fa-clipboard fa-lg" id="copy-link"></b-button>
     </div>
     <div id="ad-div-2">
-      <b-button id="ok">Ok</b-button>
+      <b-button @click="$parent.AdvLinkSwitch()" id="ok">Ok</b-button>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
   position: absolute;
   z-index: 99;
   background-color: black;
-  border-radius: 25px;
+  border-radius: 5px;
   color: white;
 }
 
