@@ -28,6 +28,7 @@
     </b-form-group>
 
     <b-form-group
+      v-if="this.filledByAdvisor"
       id="cpf-group"
       label="CPF"
       label-for="cpf-input"
@@ -161,7 +162,7 @@ export default {
       return re.test(String(this.profileData.email).toLowerCase());
     },
     validateCPF() {
-      const cpf = this.profileData.cpf.replace(/\D/g, '');
+      const cpf = this.profileData.cpf.replace(/\D/g, "");
       return cpf.length == 11;
     },
   },

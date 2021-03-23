@@ -123,19 +123,21 @@
         v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.additionalInfo"
-        v-bind:showButtons="true"
         v-on:setActiveComponent="setActiveComponent"
+        v-bind:showButtons="true"
       />
       <FinancialAdvisor
         v-else-if="!this.profileDataHasProp('financialAdvisor')"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
-        v-bind:showButtons="true"
         v-on:setActiveComponent="setActiveComponent"
+        v-bind:showButtons="true"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
       <Congrats
         v-else-if="!this.profileIsComplete()"
         v-on:done="feedProfileData"
+        v-bind:filledByAdvisor="this.filledByAdvisor"
       />
     </div>
   </div>

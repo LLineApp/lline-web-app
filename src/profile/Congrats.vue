@@ -1,20 +1,26 @@
 <template>
   <div id="main">
     <div id="congrats-div">
-      <h1 id="congrats-h1">Parabéns!</h1>
+      <h1 id="congrats-h1">{{ this.title }}</h1>
     </div>
     <p>
-      Você concluiu o questionário (melhorar)
+      {{ this.message }}
     </p>
     <br />
     <b-button
       id="goto-profilesheet"
       class="btn btn-primary"
       v-on:click="routeToProfileSheet"
+      v-if="!this.filledByAdvisor"
     >
       Revisar meu perfil
     </b-button>
-    <b-button id="goto-home" class="btn btn-primary" v-on:click="routeToHome">
+    <b-button
+      id="goto-home"
+      class="btn btn-primary"
+      v-on:click="routeToHome"
+      v-if="!this.filledByAdvisor"
+    >
       Ir para a tela principal
     </b-button>
   </div>
@@ -23,13 +29,26 @@
 <script>
 export default {
   name: "congrats",
+  props: ["filledByAdvisor"],
+  data() {
+    return {
+      title: "Parabéns",
+      message: "Você concluiu o questionário (melhorar)",
+    };
+  },
+
+  mounted() {
+      this.title = "Concluído",
+      this.message = "O questionário foi devidamente preenchido. Solicite ao seu cliente que ele abra uma conta na LLine usando o CPF dele como login.",
+
+  },
   methods: {
     routeToHome() {
-      this.$emit("done", {page:18});
+      this.$emit("done", { page: 18 });
       this.$router.go();
     },
     routeToProfileSheet() {
-      this.$emit("done", {page:18});
+      this.$emit("done", { page: 18 });
       this.$router.push("/profile");
     },
   },
