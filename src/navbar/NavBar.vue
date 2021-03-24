@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AdvisorLink v-if="ShowAdvLink" v-on:ok="AdvLinkToggle" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -7,7 +8,27 @@
     <div class="topnav" id="main-top-nav">
       <a href="/home" id="home" class="a">Home</a>
       <a href="/profile" id="profileDataSheet" class="a">Profile</a>
-      <a href="#" class="a">Link</a>
+      <div id="advisor-div" class="dropdown">
+        <button id="advisor-btn" class="dropbtn">
+          Acessor
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#"><i class="fa fa-users"></i> Clientes</a>
+          <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
+          <a href="#" @click="AdvLinkToggle()"
+            ><i class="fa fa-external-link-square"></i> Link Acessor</a
+          >
+        </div>
+      </div>
+      <a
+        id="dropdown"
+        href="javascript:void(0);"
+        class="icon"
+        @click="responsiveSwitch()"
+      >
+        <i class="fa fa-bars"></i>
+      </a>
       <div id="user-name-div" class="dropdown">
         <button id="user-name-btn" class="dropbtn">
           {{ userFirstName }}
@@ -31,11 +52,15 @@
 </template>
 
 <script>
+import AdvisorLink from "../advisor/AdvisorLink";
+
 export default {
+  components: { AdvisorLink },
   data() {
     return {
       userFirstName: "",
       canShow: true,
+      ShowAdvLink: false,
     };
   },
   computed: {},
@@ -47,7 +72,7 @@ export default {
   },
   created() {},
   methods: {
-    responsiveSwitch: function () {
+    responsiveSwitch: function() {
       var topNavBar = document.getElementById("main-top-nav");
       if (topNavBar.className === "topnav") {
         topNavBar.className = "topnav responsive";
@@ -55,9 +80,14 @@ export default {
         topNavBar.className = "topnav";
       }
     },
-    setActive: function () {
-      var aElementReference = document.getElementById(this.$parent.$options.name);
+    setActive: function() {
+      var aElementReference = document.getElementById(
+        this.$parent.$options.name
+      );
       aElementReference.className += " active";
+    },
+    AdvLinkToggle: function() {
+      this.ShowAdvLink = !this.ShowAdvLink;
     },
   },
 };
@@ -97,8 +127,12 @@ export default {
   display: none;
 }
 
-.dropdown {
+#user-name-div {
   float: right;
+}
+
+#advisor-div {
+  float: left;
 }
 
 .dropdown .dropbtn {

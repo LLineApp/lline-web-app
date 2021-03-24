@@ -232,7 +232,7 @@ export default {
     Congrats,
   },
   watch: {
-    profileData: function() {
+    profileData: function () {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
