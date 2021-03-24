@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     doSearch() {
-      getAdvisorsPortfolio(this.currentPage)
+      getAdvisorsPortfolio(this.currentPage, this.search)
         .then((data) => {
           if (data.data.getAdvisorsPortfolio) {
             this.currentPage = data.data.getAdvisorsPortfolio.currentPage;

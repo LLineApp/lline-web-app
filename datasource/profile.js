@@ -47,13 +47,14 @@ export async function getProfile() {
   });
 }
 
-export async function getAdvisorsPortfolio(page) {
+export async function getAdvisorsPortfolio(page, search) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISORS_PORTFOLIO,
     variables: {
       token: user.token,
-      page: page
+      page: page,
+      containing: search
     },
   });
 }

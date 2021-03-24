@@ -151,8 +151,8 @@ export const GET_ADVISOR_BY_LINK = gql`
 `;
 
 export const GET_ADVISORS_PORTFOLIO = gql`
-  query getAdvisorsPortfolioQuery($token: String!, $page: Int) {
-    getAdvisorsPortfolio(token: $token, page: $page) {
+  query getAdvisorsPortfolioQuery($token: String!, $page: Int, $containing: String) {
+    getAdvisorsPortfolio(token: $token, page: $page, containing: $containing) {
       totalCount
       totalPages
       currentPage
