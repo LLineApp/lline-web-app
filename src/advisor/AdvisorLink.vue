@@ -3,24 +3,60 @@
     <div id="advisor-link-div">
       <p id="link-message">Esse é seu link de assessor</p>
       <b-input-group id="ig-adv-link">
-        <b-form-input readonly type="url" id="link-input" />
-        <b-input-group-append @click="copyLink()">
+        <b-form-input readonly type="url" v-model="this.link" id="link-input" />
+        <b-input-group-append v-on:click="copyLink">
           <span class="input-group-text"
             ><i class="fa fa-clipboard fa-lg"></i
           ></span>
         </b-input-group-append>
       </b-input-group>
-      <b-button @click="$parent.AdvLinkSwitch()" id="ok">Ok</b-button>
+      <b-button v-on:click="$emit('ok')" id="ok">Ok</b-button>
     </div>
   </div>
 </template>
 
 <script>
+import { getAdvisorLink } from "../../datasource/profile";
 export default {
   name: "advisor-link",
-  mounted() {},
+  data() {
+    return {
+      link: "",
+    };
+  },
+  mounted() {
+    getAdvisorLink()
+      .then((data) => {
+        if (data.data.setAdvisorsLink.advisorsLinkData.link) {
+          const protocol = window.location.protocol;
+          console.log(protocol);
+          const hostname = window.location.hostname;
+          console.log(hostname);
+          const port =
+            hostname == "localhost" ? `:${window.location.port}` : "";
+          console.log(port);
+          const link = data.data.setAdvisorsLink.advisorsLinkData.link;
+          console.log(link);
+          this.link = `${protocol}//${hostname}${port}/register?advisor=${link}`;
+          this.$forceUpdate();
+        }
+      })
+      .catch((error) => {
+        const message = error.graphQLErrors[0].message;
+        const options = {
+          position: "top-center",
+          duration: 4000,
+          fullWidth: true,
+          closeOnSwipe: true,
+        };
+
+        this.$toasted.error(message, options);
+      });
+  },
   methods: {
-    copyLink: function () {},
+    copyLink: function() {
+      navigator.clipboard.writeText(this.link);
+    },
   },
 };
 </script>

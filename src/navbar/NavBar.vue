@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AdvisorLink v-if="ShowAdvLink" />
+    <AdvisorLink v-if="ShowAdvLink" v-on:ok="AdvLinkToggle" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -16,7 +16,7 @@
         <div class="dropdown-content">
           <a href="#"><i class="fa fa-users"></i> Clientes</a>
           <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
-          <a href="#" @click="AdvLinkSwitch()"
+          <a href="#" @click="AdvLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link Acessor</a
           >
         </div>
@@ -72,7 +72,7 @@ export default {
   },
   created() {},
   methods: {
-    responsiveSwitch: function () {
+    responsiveSwitch: function() {
       var topNavBar = document.getElementById("main-top-nav");
       if (topNavBar.className === "topnav") {
         topNavBar.className = "topnav responsive";
@@ -80,13 +80,13 @@ export default {
         topNavBar.className = "topnav";
       }
     },
-    setActive: function () {
+    setActive: function() {
       var aElementReference = document.getElementById(
         this.$parent.$options.name
       );
       aElementReference.className += " active";
     },
-    AdvLinkSwitch: function () {
+    AdvLinkToggle: function() {
       this.ShowAdvLink = !this.ShowAdvLink;
     },
   },
