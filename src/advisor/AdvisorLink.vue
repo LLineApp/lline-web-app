@@ -1,9 +1,9 @@
 <template>
-  <div id="background" @click="$parent.AdvLinkSwitch()">
+  <div id="background">
     <div id="advisor-link-div">
       <p id="link-message">Esse é seu link de assessor</p>
       <b-input-group id="ig-adv-link">
-        <b-form-input readonly type="url" id="link-input"/>
+        <b-form-input readonly type="url" id="link-input" />
         <b-input-group-append @click="copyLink()">
           <span class="input-group-text"
             ><i class="fa fa-clipboard fa-lg"></i
@@ -18,11 +18,9 @@
 <script>
 export default {
   name: "advisor-link",
-  computed: {},
+  mounted() {},
   methods: {
-    copyLink: function () {
-      alert("ok");
-    },
+    copyLink: function () {},
   },
 };
 </script>
@@ -63,11 +61,17 @@ export default {
 #ok {
   float: left;
   color: black;
+  border-color: black;
   background-color: #26fed5;
-  border: 0;
   margin-top: 2.5%;
   width: 10%;
   margin-inline: 45%;
+}
+
+#ok:hover {
+  color: #26fed5;
+  background-color: black;
+  border-color: #26fed5;
 }
 
 #ig-adv-link {
@@ -75,8 +79,7 @@ export default {
   margin-inline: 5%;
 }
 
-#link-input{
+#link-input {
   width: 80%;
 }
-
 </style>
