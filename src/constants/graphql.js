@@ -149,3 +149,20 @@ export const GET_ADVISOR_BY_LINK = gql`
     }
   }
 `;
+
+export const GET_ADVISORS_PORTFOLIO = gql`
+  query getAdvisorsPortfolioQuery($token: String!, $page: Int) {
+    getAdvisorsPortfolio(token: $token, page: $page) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      portfolio {
+        id
+        cpf
+        email
+        fullname
+      }
+    }
+  }
+`;

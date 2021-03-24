@@ -12,7 +12,10 @@ import { connectToBackend, authURI, profileURI } from "../datasource/backendConn
 
 Vue.config.productionTip = false;
 
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+  inject: true,
+  fieldsBagName: 'veeFields'
+});
 Vue.use(VueApollo);
 Vue.use(Toasted);
 Vue.use(BootstrapVue);
