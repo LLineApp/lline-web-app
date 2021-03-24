@@ -5,9 +5,7 @@
       <b-input-group id="ig-adv-link">
         <b-form-input readonly type="url" v-model="this.link" id="link-input" />
         <b-input-group-append v-on:click="copyLink">
-          <span class="input-group-text"
-            ><i class="fa fa-clipboard fa-lg"></i
-          ></span>
+          <b-button class="fa fa-clipboard fa-lg" id="copy"></b-button>
         </b-input-group-append>
       </b-input-group>
       <b-button v-on:click="$emit('ok')" id="ok">Ok</b-button>
@@ -54,7 +52,9 @@ export default {
       });
   },
   methods: {
-    copyLink: function() {
+    copyLink: function () {
+      var copyIcon = document.getElementById("copy");
+      copyIcon.id = "copy1";
       navigator.clipboard.writeText(this.link);
     },
   },
@@ -118,4 +118,19 @@ export default {
 #link-input {
   width: 80%;
 }
+
+#copy {
+  color: black;
+  background-color: white;
+}
+
+#copy:hover {
+  color: #26fed5;
+}
+
+#copy1 {
+  color: black;
+  background-color: #26fed5;
+}
+
 </style>
