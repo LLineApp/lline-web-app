@@ -3,6 +3,7 @@ import {
   GET_PROFILE,
   GET_PROFILE_PAGE,
   GET_ADVISOR_BY_LINK,
+  GET_ADVISOR_LINK,
 } from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
 
@@ -48,7 +49,6 @@ export async function getProfile() {
 
 export async function getAdvisorByLink(advisorsLink) {
   const conn = connectToBackend(profileURI);
-
   return await conn.mutate({
     mutation: GET_ADVISOR_BY_LINK,
     variables: {
@@ -57,6 +57,17 @@ export async function getAdvisorByLink(advisorsLink) {
     },
   });
 }
+
+export async function getAdvisorLink() {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_ADVISOR_LINK,
+    variables: {
+      token: user.token,
+    },
+  });
+}
+
 export async function getProfilePage() {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
