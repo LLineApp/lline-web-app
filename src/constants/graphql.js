@@ -166,3 +166,13 @@ export const GET_ADVISORS_PORTFOLIO = gql`
     }
   }
 `;
+
+export const GET_ADVISOR_LINK = gql`
+  mutation setAdvisorsLink($token: String!) {
+    setAdvisorsLink(token: $token) {
+      advisorsLinkData {
+        link
+      }
+    }
+  }
+`;
