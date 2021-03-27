@@ -146,7 +146,7 @@ export default {
 
 #background,
 #background-color {
-  position: absolute;
+  position: fixed;
   width: 100%;
 }
 #background-black {
