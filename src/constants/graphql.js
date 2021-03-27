@@ -167,6 +167,23 @@ export const GET_ADVISORS_PORTFOLIO = gql`
   }
 `;
 
+export const GET_PROSPECT_PROFILE = gql`
+  query getProspectProfileQuery($token: String!, $page: Int, $containing: String) {
+    getProspectProfile(token: $token, page: $page, containing: $containing) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      portfolio {
+        id
+        cpf
+        email
+        fullname
+      }
+    }
+  }
+`;
+
 export const GET_ADVISOR_LINK = gql`
   mutation setAdvisorsLink($token: String!) {
     setAdvisorsLink(token: $token) {
