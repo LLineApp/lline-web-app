@@ -6,6 +6,7 @@ import LoginPage from "../login/LoginPage";
 import RegisterPage from "../register/RegisterPage";
 import ProfileDataSheet from "../profile/ProfileDataSheet";
 import Profile from "../profile/Profile";
+import Portfolio from "../advisor/Portfolio";
 
 Vue.use(Router);
 
@@ -17,6 +18,7 @@ export const router = new Router({
     { path: "/register", component: RegisterPage },
     { path: "/profile", component: ProfileDataSheet },
     { path: "/new", component: Profile, props: { filledByAdvisor: true } },
+    { path: "/portfolio", component: Portfolio },
 
     { path: "*", redirect: "/" },
   ],

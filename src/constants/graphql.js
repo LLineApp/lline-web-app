@@ -150,6 +150,23 @@ export const GET_ADVISOR_BY_LINK = gql`
   }
 `;
 
+export const GET_ADVISORS_PORTFOLIO = gql`
+  query getAdvisorsPortfolioQuery($token: String!, $page: Int, $containing: String) {
+    getAdvisorsPortfolio(token: $token, page: $page, containing: $containing) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      portfolio {
+        id
+        cpf
+        email
+        fullname
+      }
+    }
+  }
+`;
+
 export const GET_ADVISOR_LINK = gql`
   mutation setAdvisorsLink($token: String!) {
     setAdvisorsLink(token: $token) {

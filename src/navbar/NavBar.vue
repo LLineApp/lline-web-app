@@ -10,14 +10,14 @@
       <a href="/profile" id="profileDataSheet" class="a">Profile</a>
       <div id="advisor-div" class="dropdown">
         <button id="advisor-btn" class="dropbtn">
-          Acessor
+          Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#"><i class="fa fa-users"></i> Clientes</a>
+          <a href="/portfolio"><i class="fa fa-users"></i> Clientes</a>
           <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
           <a href="#" @click="AdvLinkToggle()"
-            ><i class="fa fa-external-link-square"></i> Link Acessor</a
+            ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
   },
   created() {},
   methods: {
-    responsiveSwitch: function() {
+    responsiveSwitch: function () {
       var topNavBar = document.getElementById("main-top-nav");
       if (topNavBar.className === "topnav") {
         topNavBar.className = "topnav responsive";
@@ -80,13 +80,18 @@ export default {
         topNavBar.className = "topnav";
       }
     },
-    setActive: function() {
-      var aElementReference = document.getElementById(
-        this.$parent.$options.name
-      );
-      aElementReference.className += " active";
+    setActive: function () {
+      if (this.$parent.$options.name === "portfolio") {
+        var aElementReference = document.getElementById("advisor-btn");
+        aElementReference.id += "-active";
+      } else {
+        var aElementReference = document.getElementById(
+          this.$parent.$options.name
+        );
+        aElementReference.className += " active";
+      }
     },
-    AdvLinkToggle: function() {
+    AdvLinkToggle: function () {
       this.ShowAdvLink = !this.ShowAdvLink;
     },
   },
@@ -99,13 +104,14 @@ export default {
 .topnav {
   background-color: black;
   overflow: hidden;
+  outline: 0;
 }
 
 .topnav a {
   float: left;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 13.5px 16px;
   text-decoration: none;
   font-size: 17px;
   font-family: "Raleway", sans-serif;
@@ -113,9 +119,14 @@ export default {
 
 .topnav a:hover,
 .dropdown:hover .dropbtn,
+#advisor-btn-active,
 .topnav a.active {
   background-color: #26fed5;
   color: black;
+}
+
+#advisor-btn-active {
+  border-color: #26fed5;
 }
 
 #dropdown:hover {
@@ -172,6 +183,7 @@ export default {
 
 @media screen and (max-width: 600px) {
   #user-name-div,
+  #advisor-div,
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -193,13 +205,15 @@ export default {
   }
 
   .topnav.responsive a,
-  .topnav.responsive #user-name-div {
+  .topnav.responsive #user-name-div,
+  .topnav.responsive #advisor-div {
     float: none;
     display: block;
     text-align: center;
   }
 
   .topnav.responsive #user-name-btn,
+  .topnav.responsive #advisor-btn,
   .topnav.responsive .dropdown-content {
     width: 100%;
   }
@@ -210,3 +224,4 @@ export default {
   }
 }
 </style>
+
