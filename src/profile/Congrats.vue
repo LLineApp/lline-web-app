@@ -38,8 +38,8 @@ export default {
   },
 
   mounted() {
-      this.title = "Concluído",
-      this.message = "O questionário foi devidamente preenchido. Solicite ao seu cliente que ele abra uma conta na LLine usando o CPF dele como login.",
+      this.title = "Concluído";
+      this.message = "O questionário foi devidamente preenchido. Solicite ao seu cliente que ele abra uma conta na LLine usando o CPF dele como login.";
 
   },
   methods: {

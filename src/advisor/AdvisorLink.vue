@@ -27,14 +27,10 @@ export default {
       .then((data) => {
         if (data.data.setAdvisorsLink.advisorsLinkData.link) {
           const protocol = window.location.protocol;
-          console.log(protocol);
           const hostname = window.location.hostname;
-          console.log(hostname);
           const port =
             hostname == "localhost" ? `:${window.location.port}` : "";
-          console.log(port);
           const link = data.data.setAdvisorsLink.advisorsLinkData.link;
-          console.log(link);
           this.link = `${protocol}//${hostname}${port}/register?advisor=${link}`;
           this.$forceUpdate();
         }
