@@ -4,6 +4,7 @@ import {
   GET_PROFILE_PAGE,
   GET_ADVISOR_BY_LINK,
   GET_ADVISORS_PORTFOLIO,
+  GET_PROSPECT_PROFILE,
   GET_ADVISOR_LINK,
 } from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
@@ -52,6 +53,18 @@ export async function getAdvisorsPortfolio(page, search) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISORS_PORTFOLIO,
+    variables: {
+      token: user.token,
+      page: page,
+      containing: search
+    },
+  });
+}
+
+export async function getProspectProfile(page, search) {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_PROSPECT_PROFILE,
     variables: {
       token: user.token,
       page: page,

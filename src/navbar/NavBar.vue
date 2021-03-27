@@ -15,7 +15,7 @@
         </button>
         <div class="dropdown-content">
           <a href="/portfolio"><i class="fa fa-users"></i> Clientes</a>
-          <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
+          <a href="/prospect"><i class="fa fa-user-plus"></i> Novos Clientes</a>
           <a href="#" @click="AdvLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
