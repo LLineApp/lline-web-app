@@ -29,17 +29,19 @@ export const SET_PROFILE = gql`
   }
 `;
 
-export const GET_PROFILE_PAGE = gql`
-  query getProfilePage($token: String!) {
+export const GET_PROFILE_FIELDS = function(fields){
+  return gql`
+  query getSomeFieldsFromProfile($token: String!) {
     getProfile(token: $token) {
-      page
+      ${fields}
     }
   }
-`;
+`};
 
 export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
+      isAdvisor 
       page
       id
       cpf
@@ -145,6 +147,50 @@ export const GET_ADVISOR_BY_LINK = gql`
           company
           cpf
         }
+      }
+    }
+  }
+`;
+
+export const GET_ADVISORS_PORTFOLIO = gql`
+  query getAdvisorsPortfolioQuery($token: String!, $page: Int, $containing: String) {
+    getAdvisorsPortfolio(token: $token, page: $page, containing: $containing) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      portfolio {
+        id
+        cpf
+        email
+        fullname
+      }
+    }
+  }
+`;
+
+export const GET_PROSPECT_PROFILE = gql`
+  query getProspectProfileQuery($token: String!, $page: Int, $containing: String) {
+    getProspectProfile(token: $token, page: $page, containing: $containing) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      portfolio {
+        id
+        cpf
+        email
+        fullname
+      }
+    }
+  }
+`;
+
+export const GET_ADVISOR_LINK = gql`
+  mutation setAdvisorsLink($token: String!) {
+    setAdvisorsLink(token: $token) {
+      advisorsLinkData {
+        link
       }
     }
   }

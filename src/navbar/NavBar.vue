@@ -9,15 +9,15 @@
       <a href="/home" id="home" class="a">Home</a>
       <a href="/profile" id="profileDataSheet" class="a">Profile</a>
       <div id="advisor-div" class="dropdown">
-        <button id="advisor-btn" class="dropbtn">
-          Acessor
+        <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
+          Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#"><i class="fa fa-users"></i> Clientes</a>
-          <a href="#"><i class="fa fa-user-plus"></i> Novos Clientes</a>
+          <a href="/portfolio"><i class="fa fa-users"></i> Clientes</a>
+          <a href="/prospect"><i class="fa fa-user-plus"></i> Novos Clientes</a>
           <a href="#" @click="AdvLinkToggle()"
-            ><i class="fa fa-external-link-square"></i> Link Acessor</a
+            ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
         </div>
       </div>
@@ -61,16 +61,19 @@ export default {
       userFirstName: "",
       canShow: true,
       ShowAdvLink: false,
+      userIsAdvisor: false,
+      userData: { 
+        fullname: "Usuário", 
+        isAdvisor: false },
     };
   },
-  computed: {},
-
   mounted() {
-    this.userFirstName = "Usuário";
     this.canShow = localStorage.getItem("user");
+    this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.userFirstName = this.userData.fullname.split(" ")[0];
+    this.userIsAdvisor = this.userData.isAdvisor;
     this.setActive();
   },
-  created() {},
   methods: {
     responsiveSwitch: function() {
       var topNavBar = document.getElementById("main-top-nav");
@@ -81,10 +84,18 @@ export default {
       }
     },
     setActive: function() {
-      var aElementReference = document.getElementById(
-        this.$parent.$options.name
-      );
-      aElementReference.className += " active";
+      if (this.$parent.$options.name === "portfolio") {
+        var aElementReference = document.getElementById("advisor-btn");
+        aElementReference.id += "-active";
+      } else {
+        var aElementReference = document.getElementById(
+          this.$parent.$options.name
+        );
+        aElementReference.className += " active";
+      }
+    },
+    AdvLinkToggle: function() {
+      this.ShowAdvLink = !this.ShowAdvLink;
     },
     AdvLinkToggle: function() {
       this.ShowAdvLink = !this.ShowAdvLink;
@@ -99,13 +110,14 @@ export default {
 .topnav {
   background-color: black;
   overflow: hidden;
+  outline: 0;
 }
 
 .topnav a {
   float: left;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 13.5px 16px;
   text-decoration: none;
   font-size: 17px;
   font-family: "Raleway", sans-serif;
@@ -113,9 +125,14 @@ export default {
 
 .topnav a:hover,
 .dropdown:hover .dropbtn,
+#advisor-btn-active,
 .topnav a.active {
   background-color: #26fed5;
   color: black;
+}
+
+#advisor-btn-active {
+  border-color: #26fed5;
 }
 
 #dropdown:hover {
@@ -129,6 +146,10 @@ export default {
 
 #user-name-div {
   float: right;
+}
+
+#advisor-div {
+  float: left;
 }
 
 #advisor-div {
@@ -172,6 +193,7 @@ export default {
 
 @media screen and (max-width: 600px) {
   #user-name-div,
+  #advisor-div,
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -193,13 +215,15 @@ export default {
   }
 
   .topnav.responsive a,
-  .topnav.responsive #user-name-div {
+  .topnav.responsive #user-name-div,
+  .topnav.responsive #advisor-div {
     float: none;
     display: block;
     text-align: center;
   }
 
   .topnav.responsive #user-name-btn,
+  .topnav.responsive #advisor-btn,
   .topnav.responsive .dropdown-content {
     width: 100%;
   }

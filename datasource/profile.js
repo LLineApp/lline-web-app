@@ -1,8 +1,10 @@
 import {
   SET_PROFILE,
   GET_PROFILE,
-  GET_PROFILE_PAGE,
+  GET_PROFILE_FIELDS,
   GET_ADVISOR_BY_LINK,
+  GET_ADVISORS_PORTFOLIO,
+  GET_PROSPECT_PROFILE,
   GET_ADVISOR_LINK,
 } from "../src/constants/graphql";
 import { connectToBackend, authURI, profileURI } from "./backendConnect";
@@ -23,7 +25,10 @@ export async function setProfile(profileInput) {
 }
 
 function sanitize(data) {
-  delete data["requestBrokerStatus"];
+  delete data["requestAdvisorStatus"];
+  if (data["cpf"] == "") {
+    delete data["cpf"];
+  }
   for (var item in data) {
     if (Array.isArray(data[item])) {
       const sanitizedItem = [];
@@ -47,6 +52,29 @@ export async function getProfile() {
   });
 }
 
+export async function getAdvisorsPortfolio(page, search) {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_ADVISORS_PORTFOLIO,
+    variables: {
+      token: user.token,
+      page: page,
+      containing: search
+    },
+  });
+}
+
+export async function getProspectProfile(page, search) {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_PROSPECT_PROFILE,
+    variables: {
+      token: user.token,
+      page: page,
+      containing: search
+    },
+  });
+}
 export async function getAdvisorByLink(advisorsLink) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
@@ -68,10 +96,19 @@ export async function getAdvisorLink() {
   });
 }
 
-export async function getProfilePage() {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
-    mutation: GET_PROFILE_PAGE,
+    mutation: GET_ADVISOR_LINK,
+    variables: {
+      token: user.token,
+    },
+  });
+}
+
+export async function getSomeFieldsFromProfile(fields) {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_PROFILE_FIELDS(fields.join('\n')),
     variables: {
       token: user.token,
     },

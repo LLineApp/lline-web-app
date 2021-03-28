@@ -129,7 +129,7 @@ export default {
 
 #background,
 #background-color-2 {
-  position: absolute;
+  position: fixed;
   width: 100%;
 }
 #background-black-2 {
