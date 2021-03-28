@@ -75,6 +75,7 @@ export async function getProspectProfile(page, search) {
     },
   });
 }
+
 export async function getAdvisorByLink(advisorsLink) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
@@ -87,15 +88,6 @@ export async function getAdvisorByLink(advisorsLink) {
 }
 
 export async function getAdvisorLink() {
-  const conn = connectToBackend(profileURI);
-  return await conn.mutate({
-    mutation: GET_ADVISOR_LINK,
-    variables: {
-      token: user.token,
-    },
-  });
-}
-
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISOR_LINK,
