@@ -2,7 +2,7 @@
   <div :key="this.key">
     <NavBar />
     <Profile
-      v-if="this.profileData.page < this.profilePages"
+      v-if="this.userData.page < this.profilePages"
       v-on:paging="updatePage"
     />
   </div>
@@ -11,7 +11,7 @@
 <script>
 import NavBar from "../navbar/NavBar";
 import Profile from "../profile/Profile";
-import { getProfilePage, handleError } from "../../datasource/profile";
+import { getSomeFieldsFromProfile, handleError } from "../../datasource/profile";
 
 export default {
   name: "home",
@@ -20,16 +20,21 @@ export default {
     return {
       key: 0,
       profilePages: 18,
-      profileData: {
+      userData: {
         page: 0,
+        fullname: "Usuário",
+        isAdvisor: false,
       },
     };
   },
   mounted() {
-    getProfilePage()
+    getSomeFieldsFromProfile(['page', 'fullname', "isAdvisor"])
       .then((data) => {
         if (data.data.getProfile[0]) {
-          this.profileData.page = data.data.getProfile[0].page || 0;
+          this.userData.page = data.data.getProfile[0].page || 0;
+          this.userData.fullname = data.data.getProfile[0].fullname || "Usuário";
+          this.userData.isAdvisor = data.data.getProfile[0].isAdvisor;
+          localStorage.setItem("userData", JSON.stringify(this.userData));
           this.key += 1;
         }
       })
@@ -39,7 +44,7 @@ export default {
   },
   methods: {
     updatePage(page) {
-      this.profileData.page = page;
+      this.userData.page = page;
       this.key += 1;
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div :key="key">
+  <div :key="key" id="datasheet">
     <NavBar />
     <p>Estes são os seus dados</p>
     <Email v-bind:recordedData="profileData" />
@@ -95,6 +95,20 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+
+p {
+  margin-top: 1.5%;
+  font-size: 20pt;
+}
+* {
+  font-family: "Raleway", sans-serif;
+  font-size: 15pt;
+}
+#datasheet {
+  padding-inline: 10%;
+  padding-top: 3%;
+}
 ul {
   list-style-type: none;
 }

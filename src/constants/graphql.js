@@ -29,17 +29,19 @@ export const SET_PROFILE = gql`
   }
 `;
 
-export const GET_PROFILE_PAGE = gql`
-  query getProfilePage($token: String!) {
+export const GET_PROFILE_FIELDS = function(fields){
+  return gql`
+  query getSomeFieldsFromProfile($token: String!) {
     getProfile(token: $token) {
-      page
+      ${fields}
     }
   }
-`;
+`};
 
 export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
+      isAdvisor 
       page
       id
       cpf
