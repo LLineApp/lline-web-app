@@ -1,16 +1,16 @@
 <template>
   <div>
     <div id="welcome-div">
-      <h1 id="welcome-h1">Bem vindo!</h1>
-      <p id="welcome-p">Agora você faz parte da LLine</p>
+      <h1 id="welcome-h1">Nossas boas-vindas a você!</h1>
+      <p id="welcome-p">Agora você faz parte do LLine</p>
     </div>
     <p>
-      Olá. Parece que você acabou de se inscrever, e eu não tenho muitas
-      informações a seu respeito. Para que possamos dar continuidade ao
-      processo, será necessário eu fazer algumas perguntas. As informações
-      obtidas aqui são de sigilo absoluto, e você pode interromper o
-      preenchimento a hora que quiser, e continuar mais tarde se assim precisar
-      <b>Mais tarde precisaremos melhorar esse texto</b>
+      Olá! É um prazer ter você conosco no Lline!<br />Ainda não sabemos muito
+      sobre você, então, para que possamos estruturar sua <b>Linha da Vida</b>,
+      precisamos de mais informações a seu respeito. Entendemos que esses dados
+      são pessoais e delicados, mas tudo o que for submetido aqui está protegido
+      por sigilo bancário, porém eles influenciam diretamente no cálculo da sua
+      <b>Linha da Vida</b>.
       <br />
       <button
         id="success"
