@@ -85,14 +85,14 @@
     </b-form-group>
 
     <b-form-group
-      id="requestBrokerStatus-group"
+      id="requestAdvisorStatus-group"
       label=""
-      label-for="requestBrokerStatus-input"
+      label-for="requestAdvisorStatus-input"
     >
       <b-form-checkbox
-        id="requestBrokerStatus-input"
-        name="requestBrokerStatus"
-        v-model="profileData.requestBrokerStatus"
+        id="requestAdvisorStatus-input"
+        name="requestAdvisorStatus"
+        v-model="profileData.requestAdvisorStatus"
       >
         Solicitar status de Assessor
       </b-form-checkbox>
@@ -134,7 +134,7 @@ export default {
         birthdate: null,
         phones: [],
         preferredContact: "",
-        requestBrokerStatus: false,
+        requestAdvisorStatus: false,
         page: 1,
       },
       submitted: false,

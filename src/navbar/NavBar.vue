@@ -9,7 +9,7 @@
       <a href="/home" id="home" class="a">Home</a>
       <a href="/profile" id="profileDataSheet" class="a">Profile</a>
       <div id="advisor-div" class="dropdown">
-        <button id="advisor-btn" class="dropbtn">
+        <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
@@ -61,18 +61,21 @@ export default {
       userFirstName: "",
       canShow: true,
       ShowAdvLink: false,
+      userIsAdvisor: false,
+      userData: { 
+        fullname: "Usuário", 
+        isAdvisor: false },
     };
   },
-  computed: {},
-
   mounted() {
-    this.userFirstName = "Usuário";
     this.canShow = localStorage.getItem("user");
+    this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.userFirstName = this.userData.fullname.split(" ")[0];
+    this.userIsAdvisor = this.userData.isAdvisor;
     this.setActive();
   },
-  created() {},
   methods: {
-    responsiveSwitch: function () {
+    responsiveSwitch: function() {
       var topNavBar = document.getElementById("main-top-nav");
       if (topNavBar.className === "topnav") {
         topNavBar.className = "topnav responsive";
@@ -80,7 +83,7 @@ export default {
         topNavBar.className = "topnav";
       }
     },
-    setActive: function () {
+    setActive: function() {
       if (this.$parent.$options.name === "portfolio") {
         var aElementReference = document.getElementById("advisor-btn");
         aElementReference.id += "-active";
@@ -91,7 +94,7 @@ export default {
         aElementReference.className += " active";
       }
     },
-    AdvLinkToggle: function () {
+    AdvLinkToggle: function() {
       this.ShowAdvLink = !this.ShowAdvLink;
     },
   },
@@ -224,4 +227,3 @@ export default {
   }
 }
 </style>
-

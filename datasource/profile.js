@@ -1,7 +1,7 @@
 import {
   SET_PROFILE,
   GET_PROFILE,
-  GET_PROFILE_PAGE,
+  GET_PROFILE_FIELDS,
   GET_ADVISOR_BY_LINK,
   GET_ADVISORS_PORTFOLIO,
   GET_PROSPECT_PROFILE,
@@ -25,7 +25,10 @@ export async function setProfile(profileInput) {
 }
 
 function sanitize(data) {
-  delete data["requestBrokerStatus"];
+  delete data["requestAdvisorStatus"];
+  if (data["cpf"] == "") {
+    delete data["cpf"];
+  }
   for (var item in data) {
     if (Array.isArray(data[item])) {
       const sanitizedItem = [];
@@ -94,10 +97,10 @@ export async function getAdvisorLink() {
   });
 }
 
-export async function getProfilePage() {
+export async function getSomeFieldsFromProfile(fields) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
-    mutation: GET_PROFILE_PAGE,
+    mutation: GET_PROFILE_FIELDS(fields.join('\n')),
     variables: {
       token: user.token,
     },
