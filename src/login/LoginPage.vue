@@ -92,7 +92,7 @@ export default {
     ...mapState("account", ["status"]),
   },
   created() {
-    this.logout();
+    localStorage.removeItem('user');
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),

@@ -36,7 +36,7 @@
         </button>
         <div class="dropdown-content">
           <a href="/profile"><i class="fa fa-user"></i> Perfil</a>
-          <a href="/login"><i class="fa fa-sign-out"></i> Sair</a>
+          <a href="#" @click="logout()"><i class="fa fa-sign-out"></i> Sair</a>
         </div>
       </div>
       <a
@@ -58,20 +58,23 @@ export default {
   components: { AdvisorLink },
   data() {
     return {
-      userFirstName: "",
+      userFirstName: "Usuário",
       canShow: true,
       ShowAdvLink: false,
       userIsAdvisor: false,
-      userData: { 
-        fullname: "Usuário", 
-        isAdvisor: false },
+      userData: {
+        fullname: "Usuário",
+        isAdvisor: false,
+      },
     };
   },
   mounted() {
     this.canShow = localStorage.getItem("user");
     this.userData = JSON.parse(localStorage.getItem("userData"));
-    this.userFirstName = this.userData.fullname.split(" ")[0];
-    this.userIsAdvisor = this.userData.isAdvisor;
+    if (this.userData) {
+      this.userFirstName = this.userData.fullname.split(" ")[0];
+      this.userIsAdvisor = this.userData.isAdvisor;
+    }
     this.setActive();
   },
   methods: {
@@ -97,8 +100,11 @@ export default {
     AdvLinkToggle: function() {
       this.ShowAdvLink = !this.ShowAdvLink;
     },
-    AdvLinkToggle: function() {
-      this.ShowAdvLink = !this.ShowAdvLink;
+    logout: function() {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userData");
+      sessionStorage.removeItem("profileData");
+      this.$router.push("/login");
     },
   },
 };

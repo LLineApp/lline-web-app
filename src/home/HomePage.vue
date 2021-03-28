@@ -36,6 +36,7 @@ export default {
           this.userData.isAdvisor = data.data.getProfile[0].isAdvisor;
           localStorage.setItem("userData", JSON.stringify(this.userData));
           this.key += 1;
+          this.$forceUpdate();
         }
       })
       .catch((error) => {
