@@ -1,24 +1,26 @@
 <template>
-  <div :key="key" id="datasheet">
+  <div :key="key">
     <NavBar />
-    <p>Estes são os seus dados</p>
-    <Email v-bind:recordedData="profileData" />
-    <Parents v-bind:recordedData="profileData" />
-    <Marital v-bind:recordedData="profileData" />
-    <Children v-bind:recordedData="profileData" />
-    <ProfessionalSituation v-bind:recordedData="profileData" />
-    <ImmovableProperties v-bind:recordedData="profileData" />
-    <Health v-bind:recordedData="profileData" />
-    <FinancialSituation v-bind:recordedData="profileData" />
-    <InvestorExperiences v-bind:recordedData="profileData" />
-    <Insurances v-bind:recordedData="profileData" />
-    <PersonalPrivateSecurities v-bind:recordedData="profileData" />
-    <PlansAndProjects v-bind:recordedData="profileData" />
-    <InvestmentPortfolios v-bind:recordedData="profileData" />
-    <FixedIncomeSecurities v-bind:recordedData="profileData" />
-    <Knowledge v-bind:recordedData="profileData" />
-    <AdditionalInformations v-bind:recordedData="profileData" />
-    <FinancialAdvisor v-bind:recordedData="profileData" />
+    <div id="datasheet">
+      <p>Estes são os seus dados</p>
+      <Email v-bind:recordedData="profileData" />
+      <Parents v-bind:recordedData="profileData" />
+      <Marital v-bind:recordedData="profileData" />
+      <Children v-bind:recordedData="profileData" />
+      <ProfessionalSituation v-bind:recordedData="profileData" />
+      <ImmovableProperties v-bind:recordedData="profileData" />
+      <Health v-bind:recordedData="profileData" />
+      <FinancialSituation v-bind:recordedData="profileData" />
+      <InvestorExperiences v-bind:recordedData="profileData" />
+      <Insurances v-bind:recordedData="profileData" />
+      <PersonalPrivateSecurities v-bind:recordedData="profileData" />
+      <PlansAndProjects v-bind:recordedData="profileData" />
+      <InvestmentPortfolios v-bind:recordedData="profileData" />
+      <FixedIncomeSecurities v-bind:recordedData="profileData" />
+      <Knowledge v-bind:recordedData="profileData" />
+      <AdditionalInformations v-bind:recordedData="profileData" />
+      <FinancialAdvisor v-bind:recordedData="profileData" />
+    </div>
   </div>
 </template>
 
@@ -94,12 +96,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
 p {
   margin-top: 1.5%;
-  font-size: 20pt;
+  font-size: 25pt;
+  text-align: center;
 }
 * {
   font-family: "Raleway", sans-serif;
