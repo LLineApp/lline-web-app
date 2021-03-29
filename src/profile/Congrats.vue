@@ -19,7 +19,6 @@
       id="goto-home"
       class="btn btn-primary"
       v-on:click="routeToHome"
-      v-if="!this.filledByAdvisor"
     >
       Ir para a tela principal
     </b-button>
@@ -32,15 +31,14 @@ export default {
   props: ["filledByAdvisor"],
   data() {
     return {
-      title: "Parabéns",
-      message: "Você concluiu o questionário (melhorar)",
+      title: "Concluído",
+      message: "Muito obrigado por ter completado todo o processo de preenchimento",
     };
   },
 
   mounted() {
-    this.title = "Concluído";
     this.message =
-      "O questionário foi devidamente preenchido. Solicite ao seu cliente que ele abra uma conta na LLine usando o CPF dele como login.";
+      "O questionário do seu cliente foi devidamente preenchido. Agora basta pedi-lo para abrir uma conta na LLine.";
   },
   methods: {
     routeToHome() {
