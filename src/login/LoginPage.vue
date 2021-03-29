@@ -91,8 +91,10 @@ export default {
   computed: {
     ...mapState("account", ["status"]),
   },
-  created() {
-    localStorage.removeItem('user');
+  mounted() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userData");
+    sessionStorage.removeItem("profileData");
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),
