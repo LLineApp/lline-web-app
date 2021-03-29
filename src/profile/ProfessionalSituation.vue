@@ -188,7 +188,7 @@ export default {
         { text: "Sim", value: true },
       ],
       businessKind: ["Autônomo", "Pessoa Jurídica"],
-      incomeTaxDeclarationType: ["Simples", "Completa"],
+      incomeTaxDeclarationType: ["Simples", "Completa", "Não declarante"],
     };
   },
   mounted() {
