@@ -1,16 +1,6 @@
 <template>
   <div id="main">
     <h1>Títulos de Renda Fixa</h1>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        v-on:click="addFixedIncomeSecurity()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar outro Título de Renda Fixa
-    </p>
 
     <ul id="fixedIncomeSecurities">
       <li
@@ -24,9 +14,19 @@
         />
       </li>
     </ul>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        v-on:click="addFixedIncomeSecurity()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar outro Título de Renda Fixa
+    </p>
 
     <b-button
-    id="success"
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
@@ -34,7 +34,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 

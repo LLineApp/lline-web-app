@@ -1,16 +1,7 @@
 <template>
   <div id="main">
     <h1>Experiências como investidor</h1>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        v-on:click="addInvestorExperience()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar uma nova experiência
-    </p>
+
     <ul id="investorExperiences">
       <li
         v-for="investorExperience in this.profileData.investorExperiences"
@@ -23,6 +14,16 @@
         />
       </li>
     </ul>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        v-on:click="addInvestorExperience()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar uma nova experiência
+    </p>
     <b-button
       id="success"
       variant="success"

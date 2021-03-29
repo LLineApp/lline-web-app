@@ -1,16 +1,7 @@
 <template>
   <div id="main">
     <h1>Descreva sua carteira de investimentos</h1>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        v-on:click="addInvestmentPortfolio()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar mais um item à sua carteira
-    </p>
+
     <ul id="investmentPortfolios">
       <li
         v-for="investmentPortfolio in this.profileData.investmentPortfolios"
@@ -23,6 +14,16 @@
         />
       </li>
     </ul>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        v-on:click="addInvestmentPortfolio()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar mais um item à sua carteira
+    </p>
 
     <b-button
       id="success"
