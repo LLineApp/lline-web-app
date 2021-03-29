@@ -1,17 +1,6 @@
 <template>
   <div id="main">
     <h1>Previdências Privadas</h1>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        aria-label="Close"
-        v-on:click="addPersonalPrivateSecurity()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar outra previdência privada
-    </p>
 
     <ul id="personalPrivateSecurities">
       <li
@@ -26,6 +15,17 @@
         />
       </li>
     </ul>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        aria-label="Close"
+        v-on:click="addPersonalPrivateSecurity()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar outra previdência privada
+    </p>
     <b-button
       id="success"
       variant="success"
@@ -77,7 +77,7 @@ export default {
       );
     }
     this.$emit("setActiveComponent", this.$options.name);
-      this.$forceUpdate();
+    this.$forceUpdate();
   },
   computed: {
     ...mapState("account", ["status"]),

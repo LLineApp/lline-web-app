@@ -1,6 +1,16 @@
 <template>
   <div id="main">
     <h1>Seguros</h1>
+
+    <ul id="insurances">
+      <li v-for="insurance in this.profileData.insurances" :key="insurance.key">
+        <Insurance
+          v-bind:insuranceData="insurance"
+          v-on:apply="applyInsurance"
+          v-on:remove="removeInsurance"
+        />
+      </li>
+    </ul>
     <p>
       Clique
       <b-button
@@ -12,15 +22,6 @@
       ></b-button>
       para adicionar outro seguro
     </p>
-    <ul id="insurances">
-      <li v-for="insurance in this.profileData.insurances" :key="insurance.key">
-        <Insurance
-          v-bind:insuranceData="insurance"
-          v-on:apply="applyInsurance"
-          v-on:remove="removeInsurance"
-        />
-      </li>
-    </ul>
     <b-button
       id="success"
       variant="success"

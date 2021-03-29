@@ -1,17 +1,6 @@
 <template>
   <div id="main">
     <h1>Patrimônios (Bens, veículos e Imóveis)</h1>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        aria-label="Close"
-        v-on:click="addImmovableProperty()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar um novo patrimônio
-    </p>
 
     <ul id="immovableProperties">
       <li
@@ -25,6 +14,17 @@
         />
       </li>
     </ul>
+    <p>
+      Clique
+      <b-button
+        type="button"
+        aria-label="Close"
+        v-on:click="addImmovableProperty()"
+        aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar um novo patrimônio
+    </p>
 
     <b-button
       id="success"
@@ -106,7 +106,7 @@ export default {
     },
     removeImmovableProperty(immovablePropertyData) {
       var remainingImmovableProperties = this.profileData.immovableProperties.filter(
-        function(value, index, arr) {
+        function (value, index, arr) {
           return value != immovablePropertyData;
         }
       );

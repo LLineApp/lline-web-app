@@ -1,13 +1,6 @@
 <template>
   <div id="main">
     <h1>Sobre seus filhos:</h1>
-    <p>
-      Clique
-      <b-button type="button" v-on:click="addChild()" aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar mais um(a) filho(a)
-    </p>
 
     <ul id="children">
       <li v-for="child in this.profileData.children" :key="child.key">
@@ -18,7 +11,13 @@
         />
       </li>
     </ul>
-
+    <p>
+      Clique
+      <b-button type="button" v-on:click="addChild()" aria-hidden="true"
+        ><i class="fa fa-plus"></i
+      ></b-button>
+      para adicionar mais um(a) filho(a)
+    </p>
     <b-button
       id="success"
       variant="success"
@@ -60,8 +59,8 @@ export default {
     };
   },
   components: { Child },
-  mounted(){
-    if(this.recordedData && this.recordedData.children){
+  mounted() {
+    if (this.recordedData && this.recordedData.children) {
       Object.assign(this.profileData.children, this.recordedData.children);
       this.$forceUpdate();
     }
