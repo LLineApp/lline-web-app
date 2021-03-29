@@ -70,6 +70,9 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.doSearch();
+  },
   methods: {
     doSearch() {
       getProspectProfile(this.currentPage, this.search)
