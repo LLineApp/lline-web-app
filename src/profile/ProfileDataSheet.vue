@@ -1,24 +1,80 @@
 <template>
-  <div :key="key" id="datasheet">
+  <div>
     <NavBar />
-    <p>Estes são os seus dados</p>
-    <Email v-bind:recordedData="profileData" />
-    <Parents v-bind:recordedData="profileData" />
-    <Marital v-bind:recordedData="profileData" />
-    <Children v-bind:recordedData="profileData" />
-    <ProfessionalSituation v-bind:recordedData="profileData" />
-    <ImmovableProperties v-bind:recordedData="profileData" />
-    <Health v-bind:recordedData="profileData" />
-    <FinancialSituation v-bind:recordedData="profileData" />
-    <InvestorExperiences v-bind:recordedData="profileData" />
-    <Insurances v-bind:recordedData="profileData" />
-    <PersonalPrivateSecurities v-bind:recordedData="profileData" />
-    <PlansAndProjects v-bind:recordedData="profileData" />
-    <InvestmentPortfolios v-bind:recordedData="profileData" />
-    <FixedIncomeSecurities v-bind:recordedData="profileData" />
-    <Knowledge v-bind:recordedData="profileData" />
-    <AdditionalInformations v-bind:recordedData="profileData" />
-    <FinancialAdvisor v-bind:recordedData="profileData" />
+    <div id="datasheet">
+      <p>Estes são os seus dados</p>
+      <SideMenuDataSheet v-bind:activeComponentName="activeComponentName" />
+      <div id="data">
+        <Email
+          v-bind:recordedData="profileData"
+          v-if="(activeComponentName = 'email')"
+        />
+        <Parents
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'parents')"
+        />
+        <Marital
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'maritial')"
+        />
+        <Children
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'children')"
+        />
+        <ProfessionalSituation
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'professionalSituation')"
+        />
+        <ImmovableProperties
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'immovableProperties')"
+        />
+        <Health
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'health')"
+        />
+        <FinancialSituation
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'financialSituation')"
+        />
+        <InvestorExperiences
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'investorExperiences')"
+        />
+        <Insurances
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'insurances')"
+        />
+        <PersonalPrivateSecurities
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'personalPrivateSecurities')"
+        />
+        <PlansAndProjects
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'plansAndProjects')"
+        />
+        <InvestmentPortfolios
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'investmentPortfolios')"
+        />
+        <FixedIncomeSecurities
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'fixedIncomeSecurities')"
+        />
+        <Knowledge
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'knowledge')"
+        />
+        <AdditionalInformations
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'additionalInformations')"
+        />
+        <FinancialAdvisor
+          v-bind:recordedData="profileData"
+          v-else-if="(activeComponentName = 'financialAdvisor')"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,6 +98,7 @@ import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
 import FinancialAdvisor from "../profile/FinancialAdvisor";
 import { getProfile } from "../../datasource/profile";
+import SideMenuDataSheet from "../profile/SideMenuDataSheet";
 
 export default {
   name: "profileDataSheet",
@@ -51,6 +108,7 @@ export default {
       profileData: {
         accepted: true,
       },
+      activeComponentName: "",
     };
   },
   created() {
@@ -90,26 +148,39 @@ export default {
     Knowledge,
     AdditionalInformations,
     FinancialAdvisor,
+    SideMenuDataSheet,
+  },
+  methods: {
+    setActiveComponent(name) {
+      this.activeComponentName = name;
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
 p {
   margin-top: 1.5%;
-  font-size: 20pt;
-}
-* {
+  font-size: 25pt;
+  text-align: center;
   font-family: "Raleway", sans-serif;
-  font-size: 15pt;
+  float: right;
+  width: 80%;
 }
-#datasheet {
-  padding-inline: 10%;
-  padding-top: 3%;
-}
+
 ul {
   list-style-type: none;
+}
+#data {
+  width: 75%;
+  float: right;
+  padding-top: 4.5%;
+}
+
+#datasheet {
+  padding-inline: 5%;
+  padding-top: 0;
 }
 </style>
