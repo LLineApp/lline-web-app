@@ -70,6 +70,9 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.doSearch();
+  },
   methods: {
     doSearch() {
       getAdvisorsPortfolio(this.currentPage, this.search)
