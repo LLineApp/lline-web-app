@@ -24,7 +24,7 @@
     </b-form-group>
     <b-form-group
       id="phones-form-group"
-      label="Quais os telefones da empresa (separados por vírgula)?"
+      label="Qual o telefone da empresa? (Caso haja mais que um, separar por vírgulas)"
       label-for="phones-input"
     >
       <b-form-input id="phones-input" v-model="profileData.businessPhones" />
