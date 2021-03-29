@@ -73,7 +73,7 @@ export default {
     this.userData = JSON.parse(localStorage.getItem("userData"));
     if (this.userData) {
       this.userFirstName = this.userData.fullname.split(" ")[0];
-      this.userIsAdvisor = true; //this.userData.isAdvisor;
+      this.userIsAdvisor = this.userData.isAdvisor;
     }
     this.setActive();
   },
