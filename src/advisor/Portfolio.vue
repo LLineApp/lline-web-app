@@ -6,7 +6,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <div id="background">
-      <h1>Assessorados</h1>
+      <h1>Carteira de Clientes</h1>
       <p>Pesquisar:</p>
       <b-input-group id="search-group">
         <b-form-input id="search-input" v-model="search" />

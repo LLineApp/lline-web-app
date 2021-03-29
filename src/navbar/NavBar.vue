@@ -7,15 +7,15 @@
     />
     <div class="topnav" id="main-top-nav">
       <a href="/home" id="home" class="a">Home</a>
-      <a href="/profile" id="profileDataSheet" class="a">Profile</a>
       <div id="advisor-div" class="dropdown">
         <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="/portfolio"><i class="fa fa-users"></i> Clientes</a>
-          <a href="/prospect"><i class="fa fa-user-plus"></i> Novos Clientes</a>
+          <a href="/new"><i class="fa fa-user-plus"></i> Incluir Novo Cliente</a>
+          <a href="/portfolio"><i class="fa fa-users"></i> Carteira de Clientes</a>
+          <a href="/prospect"><i class="fa fa-users"></i> Prospectar Novos Clientes</a>
           <a href="#" @click="AdvLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
@@ -73,7 +73,7 @@ export default {
     this.userData = JSON.parse(localStorage.getItem("userData"));
     if (this.userData) {
       this.userFirstName = this.userData.fullname.split(" ")[0];
-      this.userIsAdvisor = this.userData.isAdvisor;
+      this.userIsAdvisor = true; //this.userData.isAdvisor;
     }
     this.setActive();
   },
