@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <h1>Bens Imóveis</h1>
+    <h1>Patrimônios (Bens, veículos e Imóveis)</h1>
     <p>
       Clique
       <b-button
@@ -10,7 +10,7 @@
         aria-hidden="true"
         ><i class="fa fa-plus"></i
       ></b-button>
-      para adicionar um novo imóvel
+      para adicionar um novo patrimônio
     </p>
 
     <ul id="immovableProperties">
