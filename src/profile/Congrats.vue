@@ -32,13 +32,16 @@ export default {
   data() {
     return {
       title: "Concluído",
-      message: "Muito obrigado por ter completado todo o processo de preenchimento",
+      message:
+        "Muito obrigado por ter completado todo o processo de preenchimento",
     };
   },
 
   mounted() {
-    this.message =
-      "O questionário do seu cliente foi devidamente preenchido. Agora basta pedi-lo para abrir uma conta na LLine.";
+    if (this.filledByAdvisor) {
+      this.message =
+        "O questionário foi devidamente preenchido. Agora basta pedir para abrir uma conta na LLine.";
+    }
   },
   methods: {
     routeToHome() {

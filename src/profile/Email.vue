@@ -93,6 +93,7 @@
         id="requestAdvisorStatus-input"
         name="requestAdvisorStatus"
         v-model="profileData.requestAdvisorStatus"
+        v-if="!(this.filledByAdvisor || this.advisorsLink)"
       >
         Solicitar status de Assessor
       </b-form-checkbox>
@@ -121,6 +122,7 @@
 import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { parsePhoneNumber } from "libphonenumber-js";
+import { getAdvisorByLink } from "../../datasource/profile";
 
 export default {
   name: "email",
@@ -136,13 +138,21 @@ export default {
         preferredContact: "",
         requestAdvisorStatus: false,
         page: 1,
+        financialAdvisor: {
+          fullname: null,
+          register: 0,
+          company: null,
+        },
       },
       submitted: false,
       phoneInput: "",
       phoneListLabel: "Telefones",
+      advisorsLink: null,
     };
   },
   mounted() {
+    this.advisorsLink = localStorage.getItem("advisorsLink");
+
     if (this.showButtons) {
       this.phoneListLabel = "Informe qual é o seu telefone preferencial";
     }
@@ -150,6 +160,10 @@ export default {
       Object.assign(this.profileData, this.recordedData);
       this.$forceUpdate();
     }
+    if (!this.recordedData) {
+      this.fillUpAdvisorData();
+    }
+
     this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
@@ -179,6 +193,36 @@ export default {
       return String(value)
         .toLowerCase()
         .trim();
+    },
+    fillUpAdvisorData() {
+      if (this.advisorsLink || this.filledByAdvisor) {
+        getAdvisorByLink(this.advisorsLink)
+          .then((data) => {
+            if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
+              this.profileData.financialAdvisor.fullname =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
+              this.profileData.financialAdvisor.register =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.register;
+              this.profileData.financialAdvisor.company =
+                data.data.setAdvisorsLink.advisorsLinkData.advisor.company;
+
+              this.profileData.acceptFinancialAdvisorContact = Boolean(
+                this.profileData.financialAdvisor.fullname
+              );
+            }
+          })
+          .catch((error) => {
+            const message = error.graphQLErrors[0].message;
+            const options = {
+              position: "top-center",
+              duration: 4000,
+              fullWidth: true,
+              closeOnSwipe: true,
+            };
+
+            this.$toasted.error(message, options);
+          });
+      }
     },
   },
 };

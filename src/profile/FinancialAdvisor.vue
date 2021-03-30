@@ -64,11 +64,10 @@
 <script>
 import { mapState } from "vuex";
 import { REGISTERING } from "../constants/base64";
-import { getAdvisorByLink } from "../../datasource/profile";
 
 export default {
   name: "financialAdvisor",
-  props: ["recordedData", "showButtons", "filledByAdvisor"],
+  props: ["recordedData", "showButtons"],
   data() {
     return {
       profileData: {
@@ -103,47 +102,21 @@ export default {
         this.profileData.financialAdvisor.fullname
       );
       this.$forceUpdate();
-    } else {
-      const advisorsLink = localStorage.getItem("advisorsLink");
-      if (advisorsLink || this.filledByAdvisor) {
-        getAdvisorByLink(advisorsLink)
-          .then((data) => {
-            if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
-              this.profileData.financialAdvisor.fullname =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
-              this.profileData.financialAdvisor.register =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.register;
-              this.profileData.financialAdvisor.company =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.company;
-
-              if (this.profileData.financialAdvisor.fullname) {
-                this.doYouHaveFinancialAdvisor = true;
-                this.profileData.acceptFinancialAdvisorContact = true;
-                this.alreadyHasFinancialAdvisor = true;
-                this.intro =
-                  "Que legal! Você já tem um assessor financeiro crendenciado";
-                this.whatIsHisNameLabel = "O nome dele é";
-                this.whatIsHisCompanyLabel = "A operadora é";
-              }
-
-              localStorage.removeItem("advisorsLink");
-              this.$forceUpdate();
-            }
-          })
-          .catch((error) => {
-            const message = error.graphQLErrors[0].message;
-            const options = {
-              position: "top-center",
-              duration: 4000,
-              fullWidth: true,
-              closeOnSwipe: true,
-            };
-
-            this.$toasted.error(message, options);
-          });
-      }
     }
-    this.$emit("setActiveComponent", this.$options.name);
+    if (localStorage.getItem("advisorsLink")) {
+      if (this.profileData.financialAdvisor.fullname) {
+        this.doYouHaveFinancialAdvisor = true;
+        this.profileData.acceptFinancialAdvisorContact = true;
+        this.alreadyHasFinancialAdvisor = true;
+        this.intro =
+          "Que legal! Você já tem um assessor financeiro credenciado";
+        this.whatIsHisNameLabel = "O nome dele é";
+        this.whatIsHisCompanyLabel = "A operadora é";
+      }
+
+      localStorage.removeItem("advisorsLink");
+      this.$forceUpdate();
+    }
   },
   computed: {
     ...mapState("account", ["status"]),
