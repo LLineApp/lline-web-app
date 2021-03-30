@@ -127,12 +127,12 @@
         v-bind:showButtons="true"
       />
       <FinancialAdvisor
-        v-else-if="!this.profileDataHasProp('financialAdvisor')"
+        v-else-if="!(this.profileDataHasProp('financialAdvisor') && this.filledByAdvisor) && this.page < 17"
         v-on:done="feedProfileData"
         v-on:stopped="delete profileData.financialAdvisor"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
-        v-bind:filledByAdvisor="this.filledByAdvisor"
+        v-bind:recordedData="profileData"
       />
       <Congrats
         v-else-if="!this.profileIsComplete()"

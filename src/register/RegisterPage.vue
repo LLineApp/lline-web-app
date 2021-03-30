@@ -114,7 +114,6 @@ export default {
               },
             })
             .then((data) => {
-              console.log(data);
               this.$router.push("/login");
             });
         }
