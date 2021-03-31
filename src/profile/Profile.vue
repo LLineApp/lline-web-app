@@ -9,12 +9,12 @@
         :key="this.key"
         v-if="!this.profileData.accepted"
         v-on:didAccept="profileData.accepted = true"
-        v-on:didNotAccept="profileData.accepted = false"
+        v-on:didNotAccept="doStop('accepted')"
       />
       <Email
         v-else-if="this.profileData.email == ''"
         v-on:done="feedProfileData"
-        v-on:stopped="profileData.email = ''"
+        v-on:stop="doStop('email')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
         v-bind:filledByAdvisor="this.filledByAdvisor"
@@ -24,112 +24,116 @@
           !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
         "
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.parentsAreThemSupportedByYou"
+        v-on:stop="doStop('parentsAreThemSupportedByYou')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Marital
         v-else-if="!this.profileDataHasProp('maritalStatus')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.maritalStatus"
+        v-on:stop="doStop('maritalStatus')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Children
         v-else-if="!this.profileDataHasProp('children')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.children"
+        v-on:stop="doStop('children')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ProfessionalSituation
         v-else-if="!this.profileDataHasProp('occupation')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.occupation"
+        v-on:stop="doStop('occupation')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ImmovableProperties
         v-else-if="!this.profileDataHasProp('immovableProperties')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.immovableProperties"
+        v-on:stop="doStop('immovableProperties')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Health
         v-else-if="!this.profileDataHasProp('health')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.health"
+        v-on:stop="doStop('health')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialSituation
         v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.monthlyExpenses"
+        v-on:stop="doStop('monthlyExpenses')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestorExperiences
         v-else-if="!this.profileDataHasProp('investorExperiences')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.investorExperiences"
+        v-on:stop="doStop('investorExperiences')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Insurances
         v-else-if="!this.profileDataHasProp('insurances')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.insurances"
+        v-on:stop="doStop('insurances')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PersonalPrivateSecurities
         v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.personalPrivateSecurities"
+        v-on:stop="doStop('personalPrivateSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PlansAndProjects
         v-else-if="!this.profileDataHasProp('plansAndProjects')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.plansAndProjects"
+        v-on:stop="doStop('plansAndProjects')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestmentPortfolios
         v-else-if="!this.profileDataHasProp('investmentPortfolios')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.investmentPortfolios"
+        v-on:stop="doStop('investmentPortfolios')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FixedIncomeSecurities
         v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.fixedIncomeSecurities"
+        v-on:stop="doStop('fixedIncomeSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Knowledge
         v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.currentInvestmentProcess"
+        v-on:stop="doStop('currentInvestmentProcess')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <AdditionalInformations
         v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.additionalInfo"
+        v-on:stop="doStop('additionalInfo')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialAdvisor
-        v-else-if="!(this.profileDataHasProp('financialAdvisor') && this.filledByAdvisor) && this.page < 17"
+        v-else-if="
+          !(
+            this.profileDataHasProp('financialAdvisor') && this.filledByAdvisor
+          ) && this.page < 17
+        "
         v-on:done="feedProfileData"
-        v-on:stopped="delete profileData.financialAdvisor"
+        v-on:stop="doStop('financialAdvisor')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
         v-bind:recordedData="profileData"
@@ -232,7 +236,7 @@ export default {
     Congrats,
   },
   watch: {
-    profileData: function () {
+    profileData: function() {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
     },
   },
@@ -278,6 +282,29 @@ export default {
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
+    },
+    doStop(prop) {
+      console.log("prop = ", prop);
+      if (this.profileData[prop]) {
+        console.log("prop exists");
+        if (prop == "accepted") {
+          console.log("prop is 'accepted'");
+          this.profileData.accepted = false;
+        } else {
+          console.log("prop different than 'accepted'");
+          if (
+            this.profileData[prop] === Object(this.profileData[prop]) ||
+            Array.isArray(this.profileData[prop])
+          ) {
+            console.log("prop is an array or object");
+            delete this.profileData[prop];
+          } else {
+            console.log("prop is a single value");
+            this.profileData[prop] = undefined;
+          }
+        }
+      }
+      this.$router.push("/");
     },
   },
 };
