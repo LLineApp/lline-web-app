@@ -6,7 +6,8 @@
         type="number"
         v-model="inputValue"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
+        lazy-formatter
         :formatter="formatNumericField"
         v-on:blur="$emit('apply', field, inputValue)"
       />
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import { formatNumericField } from "../_helpers/formaters";
 export default {
   props: ["label", "field", "fieldValue"],
   data() {
@@ -29,7 +31,7 @@ export default {
     },
   methods: {
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };

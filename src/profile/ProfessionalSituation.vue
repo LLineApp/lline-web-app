@@ -83,6 +83,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -106,6 +107,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -122,6 +124,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -138,6 +141,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       ></b-form-input>
     </b-form-group>
@@ -160,6 +164,7 @@
 import { mapState } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "professionalSituation",
@@ -203,7 +208,7 @@ export default {
   },
   methods: {
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
     formatLowerCase(value) {
       return value.toLowerCase();

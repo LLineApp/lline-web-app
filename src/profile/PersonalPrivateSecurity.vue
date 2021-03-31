@@ -46,8 +46,9 @@
         v-model.number="personalPrivateSecurityData.balance"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -71,6 +72,7 @@
 
 <script>
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "personalPrivateSecurity",
@@ -95,7 +97,7 @@ export default {
       this.$refs.bank.focus();
     },
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };
