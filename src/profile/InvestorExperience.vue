@@ -15,7 +15,8 @@
         type="number"
         step="1"
         no-wheel
-        placeholder="0.00"
+        placeholder="0,00"
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -38,6 +39,7 @@
 
 <script>
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "investorExperience",
@@ -65,7 +67,7 @@ export default {
       this.$refs.kind.focus();
     },
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };

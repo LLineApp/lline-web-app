@@ -19,8 +19,9 @@
         v-model.number="immovablePropertyData.value"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -53,6 +54,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -89,6 +91,7 @@
 </template>
 
 <script>
+import { formatNumericField } from "../_helpers/formaters";
 export default {
   name: "immovableProperty",
   props: ["immovablePropertyData"],
@@ -111,7 +114,7 @@ export default {
       this.$refs.description.focus();
     },
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };

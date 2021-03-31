@@ -14,8 +14,9 @@
         v-model.number="investmentPortfolioData.value"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -27,6 +28,7 @@
         step="1"
         placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -49,6 +51,7 @@
 </template>
 
 <script>
+import { formatNumericField } from "../_helpers/formaters";
 export default {
   name: "investmentPortfolio",
   props: ["investmentPortfolioData"],
@@ -62,7 +65,7 @@ export default {
       this.$refs.kind.focus();
     },
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };

@@ -16,8 +16,8 @@
     >
       <b-form-input
         id="maritalHowManyYears-input"
+        type="number"
         v-model.number="profileData.maritalHowManyYears"
-        number
         step="1"
         min="0"
         max="100"
@@ -72,7 +72,7 @@ export default {
     return {
       profileData: {
         maritalStatus: "",
-        maritalHowManyYears: 0,
+        maritalHowManyYears: null,
         spouseName: "",
         spouseOccupation: "",
         page: 3,
@@ -111,7 +111,11 @@ export default {
   },
   methods: {
     formatToInt(value) {
-      return parseInt(value);
+      if (value) {
+        value = value.replace(/\D/g, '');
+        value = isNaN( value ) ? 0 : value; 
+        return parseInt(value);
+      }
     },
   },
 };

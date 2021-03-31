@@ -14,8 +14,9 @@
         v-model.number="insuranceData.value"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -36,8 +37,9 @@
         v-model.number="insuranceData.coverage"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -72,6 +74,7 @@
 
 <script>
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "insurance",
@@ -101,7 +104,7 @@ export default {
       this.$refs.kind.focus();
     },
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };

@@ -20,8 +20,9 @@
         v-model.number="profileData.parentsHowMuchYouSuportThem"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -55,8 +56,9 @@
         v-model.number="profileData.parentsWhatIsTheEstimatedValue"
         type="number"
         step="1"
-        placeholder="0.00"
+        placeholder="0,00"
         no-wheel
+        lazy-formatter
         :formatter="formatNumericField"
       />
     </b-form-group>
@@ -79,6 +81,7 @@
 import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "parents",
@@ -113,7 +116,7 @@ export default {
   },
   methods: {
     formatNumericField(value) {
-      return parseFloat(value);
+      return formatNumericField(value);
     },
   },
 };
