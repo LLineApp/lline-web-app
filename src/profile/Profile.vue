@@ -130,7 +130,7 @@
         v-else-if="
           !(
             this.profileDataHasProp('financialAdvisor') && this.filledByAdvisor
-          ) && this.page < 17
+          ) && this.profileData.page < 17
         "
         v-on:done="feedProfileData"
         v-on:stop="doStop('financialAdvisor')"
@@ -245,7 +245,7 @@ export default {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
       setProfile(portionProfileData);
-      $emit("paging", this.profileData.page);
+      this.$emit("paging", this.profileData.page);
     },
 
     profileDataHasProp(prop) {
@@ -284,22 +284,16 @@ export default {
       this.activeComponentName = name;
     },
     doStop(prop) {
-      console.log("prop = ", prop);
       if (this.profileData[prop]) {
-        console.log("prop exists");
         if (prop == "accepted") {
-          console.log("prop is 'accepted'");
           this.profileData.accepted = false;
         } else {
-          console.log("prop different than 'accepted'");
           if (
             this.profileData[prop] === Object(this.profileData[prop]) ||
             Array.isArray(this.profileData[prop])
           ) {
-            console.log("prop is an array or object");
             delete this.profileData[prop];
           } else {
-            console.log("prop is a single value");
             this.profileData[prop] = undefined;
           }
         }

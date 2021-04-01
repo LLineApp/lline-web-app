@@ -1,5 +1,5 @@
 export function formatNumericField(value) {
-    const numberFormat = new Intl.NumberFormat("pt-BR", {
+    const numberFormat = new Intl.NumberFormat("en-US", {
       minimumIntegerDigits: 1,
       minimumFractionDigits: 2,
     });
