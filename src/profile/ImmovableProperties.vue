@@ -53,14 +53,15 @@ export default {
   data() {
     return {
       profileData: {
+        page: 6,
         immovableProperties: [
           {
             key: 0,
             description: "",
-            value: "",
+            value: 0,
             rented: false,
             funded: false,
-            insuranceValue: null,
+            insuranceValue: 0,
             insuranceCompany: "",
           },
         ],
@@ -84,12 +85,11 @@ export default {
       const newImmovableProperty = {
         key: newKey,
         description: "",
-        value: "",
+        value: 0,
         rented: false,
         funded: false,
-        insuranceValue: null,
+        insuranceValue: 0,
         insuranceCompany: "",
-        page: 6,
       };
       this.profileData.immovableProperties.push(newImmovableProperty);
     },
