@@ -118,6 +118,7 @@ export const GET_PROFILE = gql`
         kind
         value
         tx
+        txType
       }
       personalPrivateSecurities {
         bank

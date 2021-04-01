@@ -59,7 +59,7 @@ export default {
             kind: "",
             value: null,
             tx: null,
-            tx_type: "Taxa fixa",
+            txType: "Taxa fixa",
           },
         ],
       },
@@ -84,6 +84,7 @@ export default {
         kind: "",
         value: null,
         tx: null,
+        txType: "Taxa fixa",
       };
       this.profileData.investmentPortfolios.push(newInvestmentPortfolio);
     },

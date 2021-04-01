@@ -36,7 +36,7 @@
           :formatter="formatNumericField"
         />
         <b-input-group-append id="tx-type">
-          <b-form-select id="tx-type-select" v-model="investmentPortfolioData.tx_type" :options="options"></b-form-select>
+          <b-form-select id="tx-type-select" v-model="investmentPortfolioData.txType" :options="options"></b-form-select>
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
