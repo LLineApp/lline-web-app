@@ -59,6 +59,7 @@ export default {
             kind: "",
             value: null,
             tx: null,
+            tx_type: "Taxa fixa",
           },
         ],
       },
