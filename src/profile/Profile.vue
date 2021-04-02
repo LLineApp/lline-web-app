@@ -244,6 +244,9 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
+      if (this.profileData.cpf) {
+        portionProfileData["cpf"] = this.profileData.cpf;
+      }
       setProfile(portionProfileData);
       this.$emit("paging", this.profileData.page);
     },

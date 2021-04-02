@@ -46,7 +46,7 @@ export default {
   methods: {
     routeToHome() {
       this.$emit("done", { page: 18 });
-      this.$router.go();
+      this.$router.push("/");
     },
     routeToProfileSheet() {
       this.$emit("done", { page: 18 });
