@@ -77,14 +77,14 @@ export async function getProspectProfile(page, search) {
   });
 }
 
-export async function getAdvisors(page, search) {
+export async function getAllAdvisors() {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISORS,
     variables: {
       token: user.token,
-      page: page,
-      containing: search
+      page: -1,
+      containing: ""
     },
   });
 }
