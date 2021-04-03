@@ -17,10 +17,37 @@
       label-for="financialAdvisor-input"
       v-if="this.doYouHaveFinancialAdvisor"
     >
+      <b-alert
+        fade
+        :show="alert.dismissCountDown"
+        dismissible
+        variant="warning"
+        v-on:dismissed="alert.dismissCountDown = 0"
+        v-on:dismiss-count-down="alertCountDownChanged"
+      >
+        Selecione um nome válido para Assessor
+      </b-alert>
+
       <b-form-input
         id="financialAdvisor-input"
+        ref="financialAdvisorInput"
+        list="advisors-list"
         v-model="profileData.financialAdvisor.fullname"
+        v-on:input="getSelectedAdvisor"
+        v-on:blur="validateAdvisor"
       />
+      <datalist id="advisors-list">
+        <option
+          v-for="advisor in advisorsList"
+          v-bind:key="advisor.id"
+          v-bind:data-id="advisor.id"
+          v-bind:data-company="advisor.company"
+          v-bind:data-fullname="advisor.fullname"
+          v-bind:data-register="advisor.register"
+          v-bind:value="advisor.id"
+          >{{ advisor.fullname }}</option
+        >
+      </datalist>
     </b-form-group>
     <b-form-group
       id="financialAdvisorCompany-group"
@@ -47,6 +74,7 @@
       id="success"
       variant="success"
       v-if="showButtons"
+      :disabled="invalidAdvisorName"
       v-on:click="$emit('done', profileData)"
     >
       Concluir
@@ -55,15 +83,17 @@
     <b-button
       id="stop"
       v-if="showButtons && !this.alreadyHasFinancialAdvisor"
-      v-on:click="$emit('stop')"
+      v-on:click="getSelectedAdvisor"
       >Parar</b-button
     >
+
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { REGISTERING } from "../constants/base64";
+import { getAllAdvisors, handleError } from "../../datasource/profile";
 
 export default {
   name: "financialAdvisor",
@@ -72,27 +102,34 @@ export default {
     return {
       profileData: {
         page: 17,
+        acceptFinancialAdvisorContact: false,
         financialAdvisor: {
           fullname: "",
           register: "0",
           company: "",
         },
-        acceptFinancialAdvisorContact: false,
       },
+      advisorId: 0,
       alreadyHasFinancialAdvisor: false,
       doYouHaveFinancialAdvisor: false,
       intro: "Este é o último grupo de perguntas:",
       whatIsHisNameLabel: "Qual o nome dele?",
       whatIsHisCompanyLabel: "Qual a operadora?",
-
+      advisorsListKey: 0,
       yesNo: [
         { text: "Não", value: false },
         { text: "Sim", value: true },
       ],
+      advisorsList: [],
+      alert: {
+        dismissSecs: 5,
+        dismissCountDown: 0,
+      },
     };
   },
   mounted() {
-    if (this.recordedData) {
+    let loadList = true;
+    if (this.recordedData["financialAdvisor"]) {
       Object.assign(
         this.profileData.financialAdvisor,
         this.recordedData.financialAdvisor
@@ -101,6 +138,7 @@ export default {
       this.doYouHaveFinancialAdvisor = Boolean(
         this.profileData.financialAdvisor.fullname
       );
+      loadList = false;
       this.$forceUpdate();
     }
     if (localStorage.getItem("advisorsLink")) {
@@ -115,15 +153,50 @@ export default {
       }
 
       localStorage.removeItem("advisorsLink");
+      loadList = false;
       this.$forceUpdate();
+    }
+    if (loadList) {
+      getAllAdvisors()
+        .then((data) => {
+          if (data.data.getAdvisors.advisorsList) {
+            this.advisorsList = data.data.getAdvisors.advisorsList;
+            this.$forceUpdate();
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
     }
   },
   computed: {
     ...mapState("account", ["status"]),
+    invalidAdvisorName: function() {
+      return (
+        (this.advisorId == 0 &&
+          !this.profileData.financialAdvisor.fullname == "") ||
+        (!this.advisorId == 0 &&
+          this.profileData.financialAdvisor.fullname == "")
+      );
+    },
   },
   watch: {
-    acceptFinancialAdvisorContact: function() {
+    "profileData.acceptFinancialAdvisorContact": function() {
       return Boolean(this.profileData.financialAdvisor);
+    },
+    "profileData.financialAdvisor": function() {
+      if (!this.profileData.financialAdvisor.fullname) {
+        return {
+          fullname: "",
+          register: "0",
+          company: "",
+        };
+      }
+    },
+    advisorId: function() {
+      if (!this.profileData.financialAdvisor.fullname) {
+        return 0;
+      }
     },
   },
   methods: {
@@ -136,6 +209,34 @@ export default {
       this.intro = "Assessor financeiro crendenciado";
       this.whatIsHisNameLabel = "Nome";
       this.whatIsHisCompanyLabel = "Operadora";
+    },
+    getSelectedAdvisor: function(event) {
+      this.advisorId = 0;
+      const advisorInput = document.getElementById("financialAdvisor-input")
+        .value;
+      if (advisorInput) {
+        const advisorQuerySelector = document.querySelector(
+          "#advisors-list option[value='" + advisorInput + "']"
+        );
+        if (advisorQuerySelector) {
+          this.advisorId = advisorQuerySelector.dataset.id;
+          this.profileData.financialAdvisor.fullname =
+            advisorQuerySelector.dataset.fullname;
+          this.profileData.financialAdvisor.company =
+            advisorQuerySelector.dataset.company;
+          this.profileData.financialAdvisor.register =
+            advisorQuerySelector.dataset.register;
+        }
+      }
+    },
+    validateAdvisor() {
+      if (this.invalidAdvisorName) {
+        this.alert.dismissCountDown = this.alert.dismissSecs;
+      }
+    },
+    alertCountDownChanged(dismissCountDown) {
+      this.alert.dismissCountDown = dismissCountDown;
+      this.$refs.financialAdvisorInput.focus();
     },
   },
 };

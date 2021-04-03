@@ -196,3 +196,21 @@ export const GET_ADVISOR_LINK = gql`
     }
   }
 `;
+
+export const GET_ADVISORS = gql`
+  query getAdvisorsQuery($token: String!, $page: Int, $containing: String) {
+    getAdvisors(token: $token, page: $page, containing: $containing) {
+      totalCount
+      totalPages
+      currentPage
+      itemsPerPage
+      advisorsList {
+        id
+        fullname
+        cpf
+        register
+        company
+      }
+    }
+  }
+`;
