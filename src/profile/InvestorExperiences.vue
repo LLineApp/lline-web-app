@@ -2,28 +2,14 @@
   <div id="main">
     <h1>Experiências como investidor</h1>
 
-    <ul id="investorExperiences">
-      <li
-        v-for="investorExperience in this.profileData.investorExperiences"
-        :key="investorExperience.key"
-      >
-        <InvestorExperience
-          v-bind:investorExperienceData="investorExperience"
-          v-on:apply="applyInvestorExperience"
-          v-on:remove="removeInvestorExperience"
-        />
-      </li>
-    </ul>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        v-on:click="addInvestorExperience()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar uma nova experiência
-    </p>
+    <InvestorExperience
+      v-for="investorExperience in investorExperienceOptions"
+      v-bind:key="investorExperience + key"
+      v-bind:kindName="investorExperience"
+      v-bind:investorExperienceData="profileData.investorExperiences"
+      v-on:apply="applyInvestorExperience"
+    />
+
     <b-button
       id="success"
       variant="success"
@@ -32,7 +18,7 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
+    <b-img v-show="status.registering" :src="registering" />
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -44,21 +30,19 @@ import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 import InvestorExperience from "../profile/InvestorExperience";
+import { INVESTOR_EXPERIENCE_OPTIONS } from "../constants/arrays";
 
 export default {
   name: "investorExperiences",
   props: ["recordedData", "showButtons"],
   data() {
     return {
+      key: 0,
+      investorExperienceOptions: INVESTOR_EXPERIENCE_OPTIONS,
+      registering: REGISTERING,
       profileData: {
         page: 9,
-        investorExperiences: [
-          {
-            key: 0,
-            kind: "",
-            value: null,
-          },
-        ],
+        investorExperiences: [],
       },
     };
   },
@@ -66,41 +50,41 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.key = +1;
       this.$forceUpdate();
     }
+    this.investorExperienceOptions = INVESTOR_EXPERIENCE_OPTIONS;
     this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
     ...mapState("account", ["status"]),
   },
   methods: {
-    addInvestorExperience() {
-      const newKey = this.profileData.investorExperiences.length;
-      const newInvestorExperience = {
-        key: newKey,
-        kind: "",
-        value: null,
-      };
-      this.profileData.investorExperiences.push(newInvestorExperience);
-    },
-    applyInvestorExperience(investorExperienceData) {
-      for (var i in this.profileData.investorExperiences) {
-        if (
-          this.profileData.investorExperiences[i].key ==
-          investorExperienceData.key
-        ) {
-          this.profileData.investorExperiences[i] = investorExperienceData;
-          break;
-        }
+    applyInvestorExperience(kind, value) {
+      if (value > 0) {
+        this.addOrUpdateInvestorExperience(kind, value);
+      } else {
+        this.removeInvestorExperience(kind);
       }
     },
-    removeInvestorExperience(investorExperienceData) {
-      var remainingInvestorExperiences = this.profileData.investorExperiences.filter(
-        function (value) {
-          return value != investorExperienceData;
+    addOrUpdateInvestorExperience(kind, value) {
+      for (var i in this.profileData.investorExperiences) {
+        if (this.profileData.investorExperiences[i].kind == kind) {
+          this.profileData.investorExperiences[i].value = value;
+          return;
         }
-      );
-      this.profileData.investorExperiences = remainingInvestorExperiences;
+      }
+      this.profileData.investorExperiences.push({
+        kind: kind,
+        value: value,
+      });
+    },
+    removeInvestorExperience(kind) {
+      for (var i in this.profileData.investorExperiences) {
+        if (this.profileData.investorExperiences[i].kind == kind) {
+          this.profileData.investorExperiences.splice(i, 1);
+        }
+      }
     },
   },
 };
