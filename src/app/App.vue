@@ -1,5 +1,9 @@
 <template>
   <div>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
     <img
       id="background"
       src="https://res.cloudinary.com/tiagogbt/image/upload/v1613605064/background-white-gradient_ac6ayb.png"
