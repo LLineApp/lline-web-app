@@ -1,71 +1,53 @@
 <template>
   <div id="experience">
-    <b-form-group label="Tipo">
-      <b-form-select
-        id="kind-select"
-        v-model="investorExperienceData.kind"
-        :options="investorExperienceOptions"
-        ref="kind"
-      />
+    <b-form-group content-cols-md>
+      <b-row align-v="center">
+        <b-col>
+          <b-input-group :prepend="kindName" id="kind-name">
+            <b-form-input
+              id="value-input"
+              v-model.number="value"
+              type="number"
+              step="1"
+              no-wheel
+              placeholder="0,00"
+              debounce="400"
+              lazy-formatter
+              :formatter="formatNumericField"
+            />
+          </b-input-group>
+        </b-col>
+      </b-row>
     </b-form-group>
-    <b-form-group id="value-group" label="Valor" label-for="value-input">
-      <b-form-input
-        id="value-input"
-        v-model.number="investorExperienceData.value"
-        type="number"
-        step="1"
-        no-wheel
-        placeholder="0,00"
-        lazy-formatter
-        :formatter="formatNumericField"
-      />
-    </b-form-group>
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('apply', investorExperienceData)"
-      aria-hidden="true"
-      ><i class="fa fa-check"></i
-    ></b-button>
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('remove', investorExperienceData)"
-      aria-hidden="true"
-      ><i class="fa fa-times"></i
-    ></b-button>
   </div>
 </template>
 
 <script>
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "investorExperience",
-  props: ["investorExperienceData"],
+  props: ["investorExperienceData", "kindName"],
   data() {
     return {
-      investorExperienceOptions: [
-        "Bolsa",
-        "Dólar",
-        "Fundos de investimento",
-        "Tesouro direto",
-        "Fii",
-        "Bm&F",
-        "Debentures Incentivadas",
-      ],
+      value: null,
     };
   },
   mounted() {
-    if (this.$parent.$parent.$options.name != "profileDataSheet") {
-      this.focusInput();
+    if (this.investorExperienceData) {
+      this.investorExperienceData.forEach((experience) => {
+        if (experience.kind == this.kindName) {
+          this.value = experience.value;
+        }
+      });
     }
   },
-  methods: {
-    focusInput() {
-      this.$refs.kind.focus();
+  watch: {
+    value: function() {
+      this.$emit("apply", this.kindName, this.value);
     },
+  },
+  methods: {
     formatNumericField(value) {
       return formatNumericField(value);
     },
@@ -73,19 +55,13 @@ export default {
 };
 </script>
 <style scoped>
-button {
-  padding: 1%, 2%;
-  color: black;
-  background-color: #26fed5;
-  border-color: #26fed5;
-}
-button:hover {
-  color: #26fed5;
-  background-color: black;
-  border-color: black;
-}
 #experience {
   padding-bottom: 1%;
-  border-bottom: 1px solid black;
+}
+.input-group > .input-group-prepend {
+  flex: 0 0 24%;
+}
+.input-group .input-group-text {
+  width: 100%;
 }
 </style>

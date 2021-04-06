@@ -1,5 +1,5 @@
 <template>
-  <div id="portifolio">
+  <div id="portfolio">
     <b-form-group id="kind-group" label="Que tipo?" label-for="kind-input">
       <b-form-input
         type="text"
@@ -95,7 +95,7 @@ button:hover {
   background-color: black;
   border-color: black;
 }
-#portifolio {
+#portfolio {
   padding-bottom: 1.5%;
   padding-top: 1%;
   border-bottom: 1px solid black;
