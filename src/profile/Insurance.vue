@@ -1,74 +1,50 @@
 <template>
   <div id="insurance">
-    <b-form-group label="Tipo">
-      <b-form-select
-        id="kind-select"
-        v-model="insuranceData.kind"
-        :options="insuranceOptions"
-        ref="kind"
-      />
+    <b-form-group content-cols-md>
+      <b-row align-v="center">
+        <b-col>
+          <b-input-group id="insurance-input">
+            <b-input-group-prepend id="kind-prepend">
+              <b-input-group-text id="kind-prepend-text">
+                {{ kind }}
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              id="value-input"
+              v-model.number="value"
+              type="number"
+              step="1"
+              no-wheel
+              placeholder="0,00"
+              debounce="400"
+              lazy-formatter
+              :formatter="formatNumericField"
+            />
+            <b-input-group-append id="monthly-fee-append">
+              <b-input-group-text id="monthly-fee-append-text">
+                <b-form-radio-group
+                  id="monthlyFee-radio-group"
+                  v-model="monthlyFee"
+                  :options="yesNo"
+                />
+              </b-input-group-text>
+            </b-input-group-append>
+            <b-form-input
+              id="coverage-input"
+              v-model.number="coverage"
+              type="number"
+              step="1"
+              no-wheel
+              placeholder="0,00"
+              debounce="400"
+              lazy-formatter
+              :formatter="formatNumericField"
+            />
+            <b-form-input id="company-input" v-model.number="company" />
+          </b-input-group>
+        </b-col>
+      </b-row>
     </b-form-group>
-    <b-form-group id="value-group" label="Valor" label-for="value-input">
-      <b-form-input
-        id="value-input"
-        v-model.number="insuranceData.value"
-        type="number"
-        step="1"
-        placeholder="0,00"
-        no-wheel
-        lazy-formatter
-        :formatter="formatNumericField"
-      />
-    </b-form-group>
-    <b-form-group label="Contribui mensalmente?">
-      <b-form-radio-group
-        id="monthlyFee-radio-group"
-        v-model="insuranceData.monthlyFee"
-        :options="yesNo"
-      />
-    </b-form-group>
-    <b-form-group
-      id="coverage-group"
-      label="Cobertura"
-      label-for="coverage-input"
-    >
-      <b-form-input
-        id="coverage-input"
-        v-model.number="insuranceData.coverage"
-        type="number"
-        step="1"
-        placeholder="0,00"
-        no-wheel
-        lazy-formatter
-        :formatter="formatNumericField"
-      />
-    </b-form-group>
-    <b-form-group
-      id="company-group"
-      label="Companhia"
-      label-for="company-input"
-    >
-      <b-form-input
-        type="text"
-        id="company-input"
-        v-model="insuranceData.company"
-      />
-    </b-form-group>
-
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('apply', insuranceData)"
-      aria-hidden="true"
-      ><i class="fa fa-check"></i
-    ></b-button>
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('remove', insuranceData)"
-      aria-hidden="true"
-      ><i class="fa fa-times"></i
-    ></b-button>
   </div>
 </template>
 
@@ -78,31 +54,30 @@ import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "insurance",
-  props: ["insuranceData"],
+  props: ["insuranceData", "kind"],
   data() {
     return {
-      insuranceOptions: [
-        "Vida",
-        "RC",
-        "DIT",
-        "Consórcio",
-        "Título de capitalização",
-      ],
+      value: null,
+      monthlyFee: false,
+      coverage: null,
+      company: null,
       yesNo: [
-        { text: "Não", value: false },
+        { text: "Não", value: false, default:true},
         { text: "Sim", value: true },
       ],
     };
   },
+
   mounted() {
-    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
-      this.focusInput();
+    if (this.insuranceData) {
+      this.insuranceData.forEach((insurance) => {
+        if (insurance.kind == this.kind) {
+          this.value = insurance.value;
+        }
+      });
     }
   },
   methods: {
-    focusInput() {
-      this.$refs.kind.focus();
-    },
     formatNumericField(value) {
       return formatNumericField(value);
     },
@@ -122,9 +97,17 @@ button:hover {
   background-color: black;
   border-color: black;
 }
-#insurance {
-  padding-bottom: 1.5%;
-  padding-top: 1%;
-  border-bottom: 1px solid black;
+#kind-prepend-text,
+#monthly-fee-append-text {
+  width: 100%;
+}
+#kind-prepend {
+  width: 23%;
+}
+#company-input {
+  width: 20%;
+}
+#monthlyFee-radio-group{
+  font-size: 12pt;
 }
 </style>

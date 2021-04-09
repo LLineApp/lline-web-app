@@ -1,27 +1,22 @@
 <template>
   <div id="main">
     <h1>Seguros</h1>
-
-    <ul id="insurances">
-      <li v-for="insurance in this.profileData.insurances" :key="insurance.key">
-        <Insurance
-          v-bind:insuranceData="insurance"
-          v-on:apply="applyInsurance"
-          v-on:remove="removeInsurance"
-        />
-      </li>
-    </ul>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        aria-label="Close"
-        v-on:click="addInsurance()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar outro seguro
-    </p>
+    <div id="subtitle">
+      <p id="kind">Tipo</p>
+      <p id="value">Valor</p>
+      <p id="monthlyFee">Con. Mensalmente</p>
+      <p id="coverage">Cobertura</p>
+      <p id="company">Compania</p>
+    </div>
+    <div id="insurances">
+      <Insurance
+        v-for="insurance in insurancesOptions"
+        v-bind:key="insurance + key"
+        v-bind:kind="insurance"
+        v-bind:insuranceData="profileData.Insurances"
+        v-on:apply="applyInsurance"
+      />
+    </div>
     <b-button
       id="success"
       variant="success"
@@ -30,7 +25,7 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
+    <b-img v-show="status.registering" :src="registering" />
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -42,24 +37,19 @@ import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 import Insurance from "../profile/Insurance";
+import { INSURANCE_OPTIONS } from "../constants/arrays";
 
 export default {
   name: "insurances",
   props: ["recordedData", "showButtons"],
   data() {
     return {
+      key: 0,
+      insurancesOptions: INSURANCE_OPTIONS,
+      registering: REGISTERING,
       profileData: {
         page: 10,
-        insurances: [
-          {
-            key: 0,
-            kind: "",
-            value: null,
-            monthlyFee: true,
-            coverage: null,
-            company: "",
-          },
-        ],
+        insurances: [],
       },
     };
   },
@@ -94,29 +84,20 @@ export default {
         }
       }
     },
-    removeInsurance(insuranceData) {
-      var remainingInsurances = this.profileData.insurances.filter(function (
-        value
-      ) {
-        return value != insuranceData;
-      });
-      this.profileData.insurances = remainingInsurances;
-    },
   },
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
-
-p {
-  font-size: 17pt;
-}
 h1 {
   font-size: 20pt;
 }
 * {
   font-family: "Raleway", sans-serif;
   font-size: 15pt;
+}
+p {
+  font-size: 12pt;
+  float: left;
 }
 #stop,
 #success {
@@ -150,8 +131,22 @@ button:hover,
   border-color: black;
 }
 #success {
-  margin-left: 3.5%;
   padding: 2%, 2%;
+}
+#kind {
+  width: 23%;
+}
+#value, #coverage {
+  width: 13%;
+}
+#monthlyFee{
+  width: 21%;
+}
+#company{
+  width: 30%;
+}
+#subtitle{
+  height: 40px;
 }
 </style>
 
