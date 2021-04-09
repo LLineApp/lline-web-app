@@ -13,9 +13,15 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="/new"><i class="fa fa-user-plus"></i> Incluir Novo Cliente</a>
-          <a href="/portfolio"><i class="fa fa-users"></i> Carteira de Clientes</a>
-          <a href="/prospect"><i class="fa fa-users"></i> Prospectar Novos Clientes</a>
+          <a href="/new"
+            ><i class="fa fa-user-plus"></i> Incluir Novo Cliente</a
+          >
+          <a href="/portfolio"
+            ><i class="fa fa-users"></i> Carteira de Clientes</a
+          >
+          <a href="/prospect"
+            ><i class="fa fa-users"></i> Prospectar Novos Clientes</a
+          >
           <a href="#" @click="AdvLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
@@ -58,10 +64,8 @@ export default {
   components: { AdvisorLink },
   data() {
     return {
-      userFirstName: "Usuário",
       canShow: true,
       ShowAdvLink: false,
-      userIsAdvisor: false,
       userData: {
         fullname: "Usuário",
         isAdvisor: false,
@@ -71,11 +75,19 @@ export default {
   mounted() {
     this.canShow = localStorage.getItem("user");
     this.userData = JSON.parse(localStorage.getItem("userData"));
-    if (this.userData) {
-      this.userFirstName = this.userData.fullname.split(" ")[0];
-      this.userIsAdvisor = this.userData.isAdvisor;
-    }
     this.setActive();
+  },
+  computed: {
+    userFirstName: function() {
+      if (this.userData.fullname) {
+        return this.userData.fullname.split(" ")[0];
+      } else {
+        return "Usuário";
+      }
+    },
+    userIsAdvisor: function() {
+      return this.userData.isAdvisor;
+    }
   },
   methods: {
     responsiveSwitch: function() {
@@ -88,13 +100,17 @@ export default {
     },
     setActive: function() {
       if (this.$parent.$options.name === "portfolio") {
-        var aElementReference = document.getElementById("advisor-btn");
-        aElementReference.id += "-active";
+        const aElementReference = document.getElementById("advisor-btn");
+        if (aElementReference) {
+          aElementReference.id += "-active";
+        }
       } else {
-        var aElementReference = document.getElementById(
+        const aElementReference = document.getElementById(
           this.$parent.$options.name
         );
-        aElementReference.className += " active";
+        if (aElementReference) {
+          aElementReference.className += " active";
+        }
       }
     },
     AdvLinkToggle: function() {

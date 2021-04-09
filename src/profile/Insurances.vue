@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 10,
+        page: 11,
         insurances: [
           {
             key: 0,

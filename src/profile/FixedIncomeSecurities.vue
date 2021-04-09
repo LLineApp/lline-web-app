@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 14,
+        page: 15,
         fixedIncomeSecurities: [
           {
             key: 0,

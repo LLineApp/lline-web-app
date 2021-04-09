@@ -60,12 +60,12 @@ export default {
     return {
       key: 0,
       profileData: {
+        page: 9,
         monthlyExpenses: null,
         costsWithDependents: null,
         howMuchYouSave: null,
         debtLoans: null,
         partnerInCompany: null,
-        page: 8,
       },
     };
   },

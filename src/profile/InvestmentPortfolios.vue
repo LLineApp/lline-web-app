@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 13,
+        page: 14,
         investmentPortfolios: [
           {
             key: 0,

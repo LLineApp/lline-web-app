@@ -1,18 +1,18 @@
 <template>
   <div id="main">
     <SideMenu
-      v-if="this.profileData.accepted"
+      v-if="this.profileData.page > 0"
       v-bind:activeComponentName="activeComponentName"
     />
     <div id="dados-div">
       <Intro
         :key="this.key"
-        v-if="!this.profileData.accepted"
-        v-on:didAccept="profileData.accepted = true"
+        v-if="this.profileData.page == 0"
+        v-on:didAccept="doAccept()"
         v-on:didNotAccept="doStop('accepted')"
       />
       <Email
-        v-else-if="this.profileData.email == ''"
+        v-else-if="profileData.page == 1"
         v-on:done="feedProfileData"
         v-on:stop="doStop('email')"
         v-on:setActiveComponent="setActiveComponent"
@@ -20,118 +20,112 @@
         v-bind:filledByAdvisor="this.filledByAdvisor"
       />
       <Parents
-        v-else-if="
-          !this.profileData.hasOwnProperty('parentsAreThemSupportedByYou')
-        "
+        v-else-if="this.profileData.page == 2"
         v-on:done="feedProfileData"
         v-on:stop="doStop('parentsAreThemSupportedByYou')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Marital
-        v-else-if="!this.profileDataHasProp('maritalStatus')"
+        v-else-if="this.profileData.page == 3"
         v-on:done="feedProfileData"
         v-on:stop="doStop('maritalStatus')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Children
-        v-else-if="!this.profileDataHasProp('children')"
+        v-else-if="this.profileData.page == 4"
         v-on:done="feedProfileData"
         v-on:stop="doStop('children')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ProfessionalSituation
-        v-else-if="!this.profileDataHasProp('occupation')"
+        v-else-if="this.profileData.page == 5"
         v-on:done="feedProfileData"
         v-on:stop="doStop('occupation')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <ImmovableProperties
-        v-else-if="!this.profileDataHasProp('immovableProperties')"
+        v-else-if="this.profileData.page == 6"
         v-on:done="feedProfileData"
         v-on:stop="doStop('immovableProperties')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Health
-        v-else-if="!this.profileDataHasProp('health')"
+        v-else-if="this.profileData.page == 7"
         v-on:done="feedProfileData"
         v-on:stop="doStop('health')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialSituation
-        v-else-if="!this.profileData.hasOwnProperty('monthlyExpenses')"
+        v-else-if="this.profileData.page == 8"
         v-on:done="feedProfileData"
         v-on:stop="doStop('monthlyExpenses')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestorExperiences
-        v-else-if="!this.profileDataHasProp('investorExperiences')"
+        v-else-if="this.profileData.page == 9"
         v-on:done="feedProfileData"
         v-on:stop="doStop('investorExperiences')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Insurances
-        v-else-if="!this.profileDataHasProp('insurances')"
+        v-else-if="this.profileData.page == 10"
         v-on:done="feedProfileData"
         v-on:stop="doStop('insurances')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PersonalPrivateSecurities
-        v-else-if="!this.profileDataHasProp('personalPrivateSecurities')"
+        v-else-if="this.profileData.page == 11"
         v-on:done="feedProfileData"
         v-on:stop="doStop('personalPrivateSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <PlansAndProjects
-        v-else-if="!this.profileDataHasProp('plansAndProjects')"
+        v-else-if="this.profileData.page == 12"
         v-on:done="feedProfileData"
         v-on:stop="doStop('plansAndProjects')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <InvestmentPortfolios
-        v-else-if="!this.profileDataHasProp('investmentPortfolios')"
+        v-else-if="this.profileData.page == 13"
         v-on:done="feedProfileData"
         v-on:stop="doStop('investmentPortfolios')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FixedIncomeSecurities
-        v-else-if="!this.profileDataHasProp('fixedIncomeSecurities')"
+        v-else-if="this.profileData.page == 14"
         v-on:done="feedProfileData"
         v-on:stop="doStop('fixedIncomeSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <Knowledge
-        v-else-if="!this.profileDataHasProp('currentInvestmentProcess')"
+        v-else-if="this.profileData.page == 15"
         v-on:done="feedProfileData"
         v-on:stop="doStop('currentInvestmentProcess')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <AdditionalInformations
-        v-else-if="!this.profileData.hasOwnProperty('additionalInfo')"
+        v-else-if="this.profileData.page == 16"
         v-on:done="feedProfileData"
         v-on:stop="doStop('additionalInfo')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
       />
       <FinancialAdvisor
-        v-else-if="
-          !(
-            this.profileDataHasProp('financialAdvisor') && this.filledByAdvisor
-          ) && this.profileData.page < 17
-        "
+        v-else-if="this.showAdvisorPage"
         v-on:done="feedProfileData"
         v-on:stop="doStop('financialAdvisor')"
         v-on:setActiveComponent="setActiveComponent"
@@ -139,7 +133,7 @@
         v-bind:recordedData="profileData"
       />
       <Congrats
-        v-else-if="!this.profileIsComplete()"
+        v-else-if="this.profileData.page == 18"
         v-on:done="feedProfileData"
         v-bind:filledByAdvisor="this.filledByAdvisor"
       />
@@ -177,19 +171,19 @@ export default {
     return {
       key: 0,
       profileData: {
+        page: -1,
         accepted: false,
         email: "",
       },
       activeComponentName: "",
-      profilePages: 18,
     };
   },
   updated() {
-    var dDiv = document.getElementById("dados-div");
-    if (this.profileData.accepted) {
-      dDiv.style.width = "80%";
-    } else {
+    const dDiv = document.getElementById("dados-div");
+    if (this.profileData.page == 0) {
       dDiv.style.width = "100%";
+    } else {
+      dDiv.style.width = "80%";
     }
   },
   created() {
@@ -206,11 +200,15 @@ export default {
             this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
             delete this.profileData["cpf"];
             this.key += 1;
+          } else {
+            this.profileData.page = 0;
           }
         })
         .catch((error) => {
           handleError(error.graphQLErrors[0].message);
         });
+    } else {
+      this.profileData.page = 1;
     }
   },
   components: {
@@ -235,6 +233,14 @@ export default {
     SideMenu,
     Congrats,
   },
+  computed: {
+    showAdvisorPage: function() {
+      if (this.filledByAdvisor) {
+        this.profileData.page = 18;
+      }
+      return this.profileData.page == 17;
+    },
+  },
   watch: {
     profileData: function() {
       sessionStorage.setItem("profileData", JSON.stringify(this.profileData));
@@ -244,47 +250,25 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
-      if (this.profileData.cpf) {
+      if (this.profileData.cpf != "") {
         portionProfileData["cpf"] = this.profileData.cpf;
+      }
+      if (portionProfileData["cpf"] == "") {
+        delete portionProfileData["cpf"];
+      }
+      if (portionProfileData.financialAdvisor) {
+        delete portionProfileData.financialAdvisor["id"];
+        delete portionProfileData.financialAdvisor["__typename"];
       }
       setProfile(portionProfileData);
       this.$emit("paging", this.profileData.page);
     },
-
-    profileDataHasProp(prop) {
-      if (this.profileData.hasOwnProperty(prop)) {
-        return Object.keys(this.profileData[prop]).length != 0;
-      } else {
-        return false;
-      }
-    },
     setActiveComponent(name) {
       this.activeComponentName = name;
     },
-    profileIsComplete() {
-      return (
-        this.profileData.page == this.profilePages &&
-        this.profileData.email != "" &&
-        this.profileData.hasOwnProperty("parentsAreThemSupportedByYou") &&
-        this.profileDataHasProp("maritalStatus") &&
-        this.profileDataHasProp("children") &&
-        this.profileDataHasProp("occupation") &&
-        this.profileDataHasProp("immovableProperties") &&
-        this.profileDataHasProp("health") &&
-        this.profileData.hasOwnProperty("monthlyExpenses") &&
-        this.profileDataHasProp("investorExperiences") &&
-        this.profileDataHasProp("insurances") &&
-        this.profileDataHasProp("personalPrivateSecurities") &&
-        this.profileDataHasProp("plansAndProjects") &&
-        this.profileDataHasProp("investmentPortfolios") &&
-        this.profileDataHasProp("fixedIncomeSecurities") &&
-        this.profileDataHasProp("currentInvestmentProcess") &&
-        this.profileData.hasOwnProperty("additionalInfo") &&
-        this.profileDataHasProp("financialAdvisor")
-      );
-    },
-    setActiveComponent(name) {
-      this.activeComponentName = name;
+    doAccept() {
+      this.profileData.accepted = true;
+      this.profileData.page = 1;
     },
     doStop(prop) {
       if (this.profileData[prop]) {

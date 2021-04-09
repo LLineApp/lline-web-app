@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       profileData: {
+        page: 8,
         health: "",
-        page: 7,
       },
     };
   },
