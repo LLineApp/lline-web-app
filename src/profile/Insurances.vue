@@ -6,7 +6,7 @@
       <p id="value">Valor</p>
       <p id="monthlyFee">Con. Mensalmente</p>
       <p id="coverage">Cobertura</p>
-      <p id="company">Compania</p>
+      <p id="company">Companhia</p>
     </div>
     <div id="insurances">
       <Insurance
@@ -65,22 +65,26 @@ export default {
     ...mapState("account", ["status"]),
   },
   methods: {
-    addInsurance() {
-      const newKey = this.profileData.insurances.length;
-      const newInsurance = {
-        key: newKey,
-        value: null,
-        monthlyFee: true,
-        coverage: null,
-        company: "",
-      };
-      this.profileData.insurances.push(newInsurance);
+    applyInsurance(insurance) {
+      if (insurance.value > 0) {
+        this.addOrUpdateInsurance(insurance);
+      } else {
+        this.removeInsurance(insurance.kind);
+      }
     },
-    applyInsurance(insuranceData) {
+    addOrUpdateInsurance(insurance) {
       for (var i in this.profileData.insurances) {
-        if (this.profileData.insurances[i].key == insuranceData.key) {
-          this.profileData.insurances[i] = insuranceData;
-          break;
+        if (this.profileData.insurances[i].kind == insurance.kind) {
+          this.profileData.insurances[i] = insurance;
+          return;
+        }
+      }
+      this.profileData.insurances.push(insurance);
+    },
+    removeInsurance(kind) {
+      for (var i in this.profileData.insurances) {
+        if (this.profileData.insurances[i].kind == kind) {
+          this.profileData.insurances.splice(i, 1);
         }
       }
     },

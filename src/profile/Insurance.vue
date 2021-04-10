@@ -11,7 +11,7 @@
             </b-input-group-prepend>
             <b-form-input
               id="value-input"
-              v-model.number="value"
+              v-model.number="insurance.value"
               type="number"
               step="1"
               no-wheel
@@ -21,17 +21,16 @@
               :formatter="formatNumericField"
             />
             <b-input-group-append id="monthly-fee-append">
-              <b-input-group-text id="monthly-fee-append-text">
-                <b-form-radio-group
-                  id="monthlyFee-radio-group"
-                  v-model="monthlyFee"
-                  :options="yesNo"
-                />
-              </b-input-group-text>
+              <b-button
+                id="monthlyFee-toggle-button"
+                :pressed.sync="insurance.monthlyFee"
+                variant="primary"
+                >{{ this.monthlyFeeText }}</b-button
+              >
             </b-input-group-append>
             <b-form-input
               id="coverage-input"
-              v-model.number="coverage"
+              v-model.number="insurance.coverage"
               type="number"
               step="1"
               no-wheel
@@ -40,7 +39,10 @@
               lazy-formatter
               :formatter="formatNumericField"
             />
-            <b-form-input id="company-input" v-model.number="company" />
+            <b-form-input
+              id="company-input"
+              v-model.number="insurance.company"
+            />
           </b-input-group>
         </b-col>
       </b-row>
@@ -57,25 +59,43 @@ export default {
   props: ["insuranceData", "kind"],
   data() {
     return {
-      value: null,
-      monthlyFee: false,
-      coverage: null,
-      company: null,
+      insurance: {
+        kind: this.kind,
+        value: null,
+        monthlyFee: true,
+        coverage: null,
+        company: null,
+      },
       yesNo: [
-        { text: "Não", value: false, default:true},
+        { text: "Não", value: false },
         { text: "Sim", value: true },
       ],
+      monthlyFeeText: "Sim",
     };
   },
-
   mounted() {
     if (this.insuranceData) {
       this.insuranceData.forEach((insurance) => {
-        if (insurance.kind == this.kind) {
-          this.value = insurance.value;
+        if (insurance.kind == this.insurance.kind) {
+          this.insurance = insurance;
         }
       });
     }
+  },
+  watch: {
+    "insurance.value": function() {
+      this.$emit("apply", this.insurance);
+    },
+    "insurance.monthlyFee": function() {
+      this.monthlyFeeText = this.insurance.monthlyFee ? "Sim" : "Não";
+      this.$emit("apply", this.insurance);
+    },
+    "insurance.coverage": function() {
+      this.$emit("apply", this.insurance);
+    },
+    "insurance.company": function() {
+      this.$emit("apply", this.insurance);
+    },
   },
   methods: {
     formatNumericField(value) {
@@ -97,8 +117,7 @@ button:hover {
   background-color: black;
   border-color: black;
 }
-#kind-prepend-text,
-#monthly-fee-append-text {
+#kind-prepend-text {
   width: 100%;
 }
 #kind-prepend {
@@ -106,8 +125,5 @@ button:hover {
 }
 #company-input {
   width: 20%;
-}
-#monthlyFee-radio-group{
-  font-size: 12pt;
 }
 </style>
