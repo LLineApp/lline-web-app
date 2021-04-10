@@ -43,3 +43,7 @@ export default {
   transform: translate(-1px, -1px);
 }
 </style>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+</style>
