@@ -1,12 +1,12 @@
 <template>
   <div id="main">
     <h1>Seguros</h1>
-    <div id="subtitle">
-      <p id="kind">Tipo</p>
-      <p id="value">Valor</p>
-      <p id="monthlyFee">Con. Mensalmente</p>
-      <p id="coverage">Cobertura</p>
-      <p id="company">Companhia</p>
+    <div id="subtitle" class="container">
+      <p id="kind"><br />Tipo</p>
+      <p id="value"><br />Valor</p>
+      <p id="monthlyFee">Con. Mensal</p>
+      <p id="coverage"><br />Cobertura</p>
+      <p id="company"><br />Companhia</p>
     </div>
     <div id="insurances">
       <Insurance
@@ -102,6 +102,7 @@ h1 {
 p {
   font-size: 12pt;
   float: left;
+  margin-bottom: 0;
 }
 #stop,
 #success {
@@ -140,17 +141,21 @@ button:hover,
 #kind {
   width: 23%;
 }
-#value, #coverage {
-  width: 13%;
+#value {
+  width: 16.5%;
 }
-#monthlyFee{
-  width: 21%;
+#coverage {
+  width: 17%;
 }
-#company{
+#monthlyFee {
+  width: 10%;
+}
+#company {
   width: 30%;
 }
-#subtitle{
-  height: 40px;
+#subtitle {
+  overflow: hidden;
+  padding: 0;
 }
 </style>
 

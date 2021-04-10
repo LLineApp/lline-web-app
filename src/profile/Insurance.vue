@@ -24,7 +24,6 @@
               <b-button
                 id="monthlyFee-toggle-button"
                 :pressed.sync="insurance.monthlyFee"
-                variant="primary"
                 >{{ this.monthlyFeeText }}</b-button
               >
             </b-input-group-append>
@@ -125,5 +124,14 @@ button:hover {
 }
 #company-input {
   width: 20%;
+}
+#monthly-fee-append{
+  width: 10%;
+}
+#monthlyFee-toggle-button{
+  width: 100%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
 }
 </style>
