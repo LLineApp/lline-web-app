@@ -1,74 +1,51 @@
 <template>
   <div id="insurance">
-    <b-form-group label="Tipo">
-      <b-form-select
-        id="kind-select"
-        v-model="insuranceData.kind"
-        :options="insuranceOptions"
-        ref="kind"
-      />
+    <b-form-group content-cols-md>
+      <b-row align-v="center">
+        <b-col>
+          <b-input-group id="insurance-input">
+            <b-input-group-prepend id="kind-prepend">
+              <b-input-group-text id="kind-prepend-text">
+                {{ kind }}
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              id="value-input"
+              v-model.number="insurance.value"
+              type="number"
+              step="1"
+              no-wheel
+              placeholder="0,00"
+              debounce="400"
+              lazy-formatter
+              :formatter="formatNumericField"
+            />
+            <b-input-group-append id="monthly-fee-append">
+              <b-button
+                id="monthlyFee-toggle-button"
+                :pressed.sync="insurance.monthlyFee"
+                >{{ this.monthlyFeeText }}</b-button
+              >
+            </b-input-group-append>
+            <b-form-input
+              id="coverage-input"
+              v-model.number="insurance.coverage"
+              type="number"
+              step="1"
+              no-wheel
+              placeholder="0,00"
+              debounce="400"
+              lazy-formatter
+              :formatter="formatNumericField"
+            />
+            <b-form-input
+              id="company-input"
+              v-model.number="insurance.company"
+            />
+          </b-input-group>
+        </b-col>
+      </b-row>
     </b-form-group>
-    <b-form-group id="value-group" label="Valor" label-for="value-input">
-      <b-form-input
-        id="value-input"
-        v-model.number="insuranceData.value"
-        type="number"
-        step="1"
-        placeholder="0,00"
-        no-wheel
-        lazy-formatter
-        :formatter="formatNumericField"
-      />
-    </b-form-group>
-    <b-form-group label="Contribui mensalmente?">
-      <b-form-radio-group
-        id="monthlyFee-radio-group"
-        v-model="insuranceData.monthlyFee"
-        :options="yesNo"
-      />
-    </b-form-group>
-    <b-form-group
-      id="coverage-group"
-      label="Cobertura"
-      label-for="coverage-input"
-    >
-      <b-form-input
-        id="coverage-input"
-        v-model.number="insuranceData.coverage"
-        type="number"
-        step="1"
-        placeholder="0,00"
-        no-wheel
-        lazy-formatter
-        :formatter="formatNumericField"
-      />
-    </b-form-group>
-    <b-form-group
-      id="company-group"
-      label="Companhia"
-      label-for="company-input"
-    >
-      <b-form-input
-        type="text"
-        id="company-input"
-        v-model="insuranceData.company"
-      />
-    </b-form-group>
-
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('apply', insuranceData)"
-      aria-hidden="true"
-      ><i class="fa fa-check"></i
-    ></b-button>
-    <b-button
-      type="button"
-      aria-label="Close"
-      v-on:click="$emit('remove', insuranceData)"
-      aria-hidden="true"
-      ><i class="fa fa-times"></i
-    ></b-button>
   </div>
 </template>
 
@@ -78,31 +55,48 @@ import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "insurance",
-  props: ["insuranceData"],
+  props: ["insuranceData", "kind"],
   data() {
     return {
-      insuranceOptions: [
-        "Vida",
-        "RC",
-        "DIT",
-        "Consórcio",
-        "Título de capitalização",
-      ],
+      insurance: {
+        kind: this.kind,
+        value: null,
+        monthlyFee: true,
+        coverage: null,
+        company: null,
+      },
       yesNo: [
         { text: "Não", value: false },
         { text: "Sim", value: true },
       ],
+      monthlyFeeText: "Sim",
     };
   },
   mounted() {
-    if (this.$parent.$parent.$options.name != "profileDataSheet") {  
-      this.focusInput();
+    if (this.insuranceData) {
+      this.insuranceData.forEach((insurance) => {
+        if (insurance.kind == this.insurance.kind) {
+          this.insurance = insurance;
+        }
+      });
     }
   },
-  methods: {
-    focusInput() {
-      this.$refs.kind.focus();
+  watch: {
+    "insurance.value": function() {
+      this.$emit("apply", this.insurance);
     },
+    "insurance.monthlyFee": function() {
+      this.monthlyFeeText = this.insurance.monthlyFee ? "Sim" : "Não";
+      this.$emit("apply", this.insurance);
+    },
+    "insurance.coverage": function() {
+      this.$emit("apply", this.insurance);
+    },
+    "insurance.company": function() {
+      this.$emit("apply", this.insurance);
+    },
+  },
+  methods: {
     formatNumericField(value) {
       return formatNumericField(value);
     },
@@ -122,9 +116,22 @@ button:hover {
   background-color: black;
   border-color: black;
 }
-#insurance {
-  padding-bottom: 1.5%;
-  padding-top: 1%;
-  border-bottom: 1px solid black;
+#kind-prepend-text {
+  width: 100%;
+}
+#kind-prepend {
+  width: 23%;
+}
+#company-input {
+  width: 20%;
+}
+#monthly-fee-append{
+  width: 10%;
+}
+#monthlyFee-toggle-button{
+  width: 100%;
+  color: black;
+  background-color: #26fed5;
+  border-color: #26fed5;
 }
 </style>

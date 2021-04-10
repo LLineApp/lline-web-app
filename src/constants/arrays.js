@@ -7,3 +7,10 @@ export const INVESTOR_EXPERIENCE_OPTIONS = [
   "Bm&F",
   "Debentures Incentivadas",
 ];
+export const INSURANCE_OPTIONS = [
+  "Vida",
+  "RC",
+  "DIT",
+  "Consórcio",
+  "Tít. de capitalização",
+];

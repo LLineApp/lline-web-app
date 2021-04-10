@@ -1,27 +1,22 @@
 <template>
   <div id="main">
     <h1>Seguros</h1>
-
-    <ul id="insurances">
-      <li v-for="insurance in this.profileData.insurances" :key="insurance.key">
-        <Insurance
-          v-bind:insuranceData="insurance"
-          v-on:apply="applyInsurance"
-          v-on:remove="removeInsurance"
-        />
-      </li>
-    </ul>
-    <p>
-      Clique
-      <b-button
-        type="button"
-        aria-label="Close"
-        v-on:click="addInsurance()"
-        aria-hidden="true"
-        ><i class="fa fa-plus"></i
-      ></b-button>
-      para adicionar outro seguro
-    </p>
+    <div id="subtitle" class="container">
+      <p id="kind"><br />Tipo</p>
+      <p id="value"><br />Valor</p>
+      <p id="monthlyFee">Con. Mensal</p>
+      <p id="coverage"><br />Cobertura</p>
+      <p id="company"><br />Companhia</p>
+    </div>
+    <div id="insurances">
+      <Insurance
+        v-for="insurance in insurancesOptions"
+        v-bind:key="insurance + key"
+        v-bind:kind="insurance"
+        v-bind:insuranceData="profileData.Insurances"
+        v-on:apply="applyInsurance"
+      />
+    </div>
     <b-button
       id="success"
       variant="success"
@@ -30,7 +25,7 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
+    <b-img v-show="status.registering" :src="registering" />
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -42,24 +37,19 @@ import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 import Insurance from "../profile/Insurance";
+import { INSURANCE_OPTIONS } from "../constants/arrays";
 
 export default {
   name: "insurances",
   props: ["recordedData", "showButtons"],
   data() {
     return {
+      key: 0,
+      insurancesOptions: INSURANCE_OPTIONS,
+      registering: REGISTERING,
       profileData: {
         page: 10,
-        insurances: [
-          {
-            key: 0,
-            kind: "",
-            value: null,
-            monthlyFee: true,
-            coverage: null,
-            company: "",
-          },
-        ],
+        insurances: [],
       },
     };
   },
@@ -75,48 +65,44 @@ export default {
     ...mapState("account", ["status"]),
   },
   methods: {
-    addInsurance() {
-      const newKey = this.profileData.insurances.length;
-      const newInsurance = {
-        key: newKey,
-        value: null,
-        monthlyFee: true,
-        coverage: null,
-        company: "",
-      };
-      this.profileData.insurances.push(newInsurance);
-    },
-    applyInsurance(insuranceData) {
-      for (var i in this.profileData.insurances) {
-        if (this.profileData.insurances[i].key == insuranceData.key) {
-          this.profileData.insurances[i] = insuranceData;
-          break;
-        }
+    applyInsurance(insurance) {
+      if (insurance.value > 0) {
+        this.addOrUpdateInsurance(insurance);
+      } else {
+        this.removeInsurance(insurance.kind);
       }
     },
-    removeInsurance(insuranceData) {
-      var remainingInsurances = this.profileData.insurances.filter(function (
-        value
-      ) {
-        return value != insuranceData;
-      });
-      this.profileData.insurances = remainingInsurances;
+    addOrUpdateInsurance(insurance) {
+      for (var i in this.profileData.insurances) {
+        if (this.profileData.insurances[i].kind == insurance.kind) {
+          this.profileData.insurances[i] = insurance;
+          return;
+        }
+      }
+      this.profileData.insurances.push(insurance);
+    },
+    removeInsurance(kind) {
+      for (var i in this.profileData.insurances) {
+        if (this.profileData.insurances[i].kind == kind) {
+          this.profileData.insurances.splice(i, 1);
+        }
+      }
     },
   },
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
-
-p {
-  font-size: 17pt;
-}
 h1 {
   font-size: 20pt;
 }
 * {
   font-family: "Raleway", sans-serif;
   font-size: 15pt;
+}
+p {
+  font-size: 12pt;
+  float: left;
+  margin-bottom: 0;
 }
 #stop,
 #success {
@@ -150,8 +136,26 @@ button:hover,
   border-color: black;
 }
 #success {
-  margin-left: 3.5%;
   padding: 2%, 2%;
+}
+#kind {
+  width: 23%;
+}
+#value {
+  width: 16.5%;
+}
+#coverage {
+  width: 17%;
+}
+#monthlyFee {
+  width: 10%;
+}
+#company {
+  width: 30%;
+}
+#subtitle {
+  overflow: hidden;
+  padding: 0;
 }
 </style>
 
