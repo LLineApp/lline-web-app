@@ -41,7 +41,7 @@ export default {
       investorExperienceOptions: INVESTOR_EXPERIENCE_OPTIONS,
       registering: REGISTERING,
       profileData: {
-        page: 9,
+        page: 10,
         investorExperiences: [],
       },
     };

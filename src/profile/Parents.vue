@@ -94,7 +94,7 @@ export default {
         parentsIsThereAPossibilityOfInheritance: false,
         parentsOfWhom: "",
         parentsWhatIsTheEstimatedValue: 0.0,
-        page: 2,
+        page: 3,
       },
       submitted: false,
       yesNo: [

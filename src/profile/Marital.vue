@@ -71,11 +71,11 @@ export default {
   data() {
     return {
       profileData: {
+        page: 4,
         maritalStatus: "",
         maritalHowManyYears: null,
         spouseName: "",
         spouseOccupation: "",
-        page: 3,
       },
       maritalStatuses: [
         "Solteiro(a)",

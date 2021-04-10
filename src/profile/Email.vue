@@ -57,6 +57,7 @@
       id="phone-group"
       label="Informe aqui todos os seus números de telefone com DDD, um por um"
       label-for="phone-input"
+      v-if="showButtons"
     >
       <b-input-group>
         <b-form-input
@@ -137,12 +138,7 @@ export default {
         phones: [],
         preferredContact: "",
         requestAdvisorStatus: false,
-        page: 1,
-        financialAdvisor: {
-          fullname: null,
-          register: 0,
-          company: null,
-        },
+        page: 2,
       },
       submitted: false,
       phoneInput: "",
@@ -199,11 +195,13 @@ export default {
         getAdvisorByLink(this.advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
-              this.profileData.financialAdvisor.fullname =
+            this.profileData["financialAdvisor"] = {};
+
+            this.profileData.financialAdvisor["fullname"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
-              this.profileData.financialAdvisor.register =
+              this.profileData.financialAdvisor["register"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.register;
-              this.profileData.financialAdvisor.company =
+              this.profileData.financialAdvisor["company"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.company;
 
               this.profileData.acceptFinancialAdvisorContact = Boolean(

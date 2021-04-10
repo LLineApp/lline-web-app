@@ -45,11 +45,11 @@ export default {
   },
   methods: {
     routeToHome() {
-      this.$emit("done", { page: 18 });
+      this.$emit("done", { page: 19 });
       this.$router.push("/");
     },
     routeToProfileSheet() {
-      this.$emit("done", { page: 18 });
+      this.$emit("done", { page: 19 });
       this.$router.push("/profile");
     },
   },

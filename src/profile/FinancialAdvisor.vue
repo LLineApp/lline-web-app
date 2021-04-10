@@ -86,7 +86,6 @@
       v-on:click="getSelectedAdvisor"
       >Parar</b-button
     >
-
   </div>
 </template>
 
@@ -101,7 +100,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 17,
+        page: 18,
         acceptFinancialAdvisorContact: false,
         financialAdvisor: {
           fullname: "",
@@ -157,16 +156,7 @@ export default {
       this.$forceUpdate();
     }
     if (loadList) {
-      getAllAdvisors()
-        .then((data) => {
-          if (data.data.getAdvisors.advisorsList) {
-            this.advisorsList = data.data.getAdvisors.advisorsList;
-            this.$forceUpdate();
-          }
-        })
-        .catch((error) => {
-          handleError(error.graphQLErrors[0].message);
-        });
+      this.loadAdvisorsList();
     }
   },
   computed: {
@@ -196,6 +186,11 @@ export default {
     advisorId: function() {
       if (!this.profileData.financialAdvisor.fullname) {
         return 0;
+      }
+    },
+    doYouHaveFinancialAdvisor: function() {
+      if (this.doYouHaveFinancialAdvisor && !this.advisorsList.length) {
+        this.loadAdvisorsList();
       }
     },
   },
@@ -237,6 +232,18 @@ export default {
     alertCountDownChanged(dismissCountDown) {
       this.alert.dismissCountDown = dismissCountDown;
       this.$refs.financialAdvisorInput.focus();
+    },
+    loadAdvisorsList() {
+      getAllAdvisors()
+        .then((data) => {
+          if (data.data.getAdvisors.advisorsList) {
+            this.advisorsList = data.data.getAdvisors.advisorsList;
+            this.$forceUpdate();
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
     },
   },
 };

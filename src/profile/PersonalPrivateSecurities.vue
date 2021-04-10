@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 11,
+        page: 12,
         personalPrivateSecurities: [
           {
             key: 0,

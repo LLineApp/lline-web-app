@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       key: 0,
-      profilePages: 18,
+      profilePages: 19,
       userData: {
         page: 0,
         fullname: "Usuário",

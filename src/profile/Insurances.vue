@@ -48,7 +48,7 @@ export default {
       insurancesOptions: INSURANCE_OPTIONS,
       registering: REGISTERING,
       profileData: {
-        page: 10,
+        page: 11,
         insurances: [],
       },
     };

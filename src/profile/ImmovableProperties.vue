@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 6,
+        page: 7,
         immovableProperties: [
           {
             key: 0,

@@ -172,6 +172,7 @@ export default {
   data() {
     return {
       profileData: {
+        page: 6,
         occupation: "",
         role: "",
         companyName: "",
@@ -185,7 +186,6 @@ export default {
         privateSecurityYourValue: null,
         privateSecurityCompanyValue: null,
         privateSecurityCurrentBalance: null,
-        page: 5,
       },
       companyHasPrivateSecurity: false,
       yesNo: [
