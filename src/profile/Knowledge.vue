@@ -2,10 +2,10 @@
   <div id="main">
     <p>Conhecimento</p>
     <Memo
-      :key=this.profileData.currentInvestmentProcess
+      :key="this.profileData.currentInvestmentProcess"
       label="Como é o seu processo de investimento hoje?"
       fieldName="currentInvestmentProcess"
-      :text=this.profileData.currentInvestmentProcess
+      :text="this.profileData.currentInvestmentProcess"
       v-on:apply="applyValue"
       placeholder=""
     />
@@ -24,15 +24,15 @@
       />
     </b-form-group>
     <Memo
-      :key=this.profileData.haveFinancialConcerns
+      :key="this.profileData.haveFinancialConcerns"
       label="Você tem alguma preocupação financeira?"
       fieldName="haveFinancialConcerns"
-      :text=this.profileData.haveFinancialConcerns
+      :text="this.profileData.haveFinancialConcerns"
       v-on:apply="applyValue"
       placeholder=""
     />
     <b-button
-    id="success"
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
@@ -40,7 +40,12 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 
@@ -72,6 +77,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.profileData.page = 16;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -90,7 +96,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
-p{
+p {
   font-size: 20pt;
 }
 
@@ -99,10 +105,12 @@ p{
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -117,6 +125,7 @@ p{
   background-color: #26fed5;
   border-color: #26fed5;
 }
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

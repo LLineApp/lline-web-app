@@ -1,15 +1,15 @@
 <template>
   <div id="main">
     <Memo
-      :key=this.profileData.additionalInfo
+      :key="this.profileData.additionalInfo"
       label="Informações adicionais"
       fieldName="additionalInfo"
-      :text=this.profileData.additionalInfo
+      :text="this.profileData.additionalInfo"
       v-on:apply="applyValue"
       placeholder="Mais alguma coisa que a gente precisa saber?"
     />
     <b-button
-    id="success"
+      id="success"
       variant="success"
       v-if="showButtons"
       v-on:click="$emit('done', profileData)"
@@ -17,7 +17,13 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
-    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')">Parar</b-button>
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
+
+    <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
+      >Parar</b-button
+    >
   </div>
 </template>
 
@@ -42,6 +48,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       this.profileData.additionalInfo = this.recordedData.additionalInfo;
+      this.profileData.page = 17;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -64,11 +71,13 @@ export default {
   font-family: "Raleway", sans-serif;
   font-size: 20pt;
 }
+#back,
 #stop,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -83,6 +92,7 @@ export default {
   background-color: #26fed5;
   border-color: #26fed5;
 }
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

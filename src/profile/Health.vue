@@ -17,6 +17,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -45,6 +48,7 @@ export default {
     this.$emit("setActiveComponent", this.$options.name);
     if (this.recordedData) {
       this.profileData.health = this.recordedData.health;
+      this.profileData.page = 8;
       this.$forceUpdate();
     }
   },
@@ -67,10 +71,12 @@ export default {
   font-size: 20pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -85,6 +91,7 @@ export default {
   background-color: #26fed5;
   border-color: #26fed5;
 }
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

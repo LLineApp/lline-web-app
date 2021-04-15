@@ -18,115 +18,147 @@
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
         v-bind:filledByAdvisor="this.filledByAdvisor"
+        v-bind:recordedData="this.profileData"
       />
       <Parents
         v-else-if="this.profileData.page == 2"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('parentsAreThemSupportedByYou')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="this.profileData"
       />
       <Marital
         v-else-if="this.profileData.page == 3"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('maritalStatus')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <Children
         v-else-if="this.profileData.page == 4"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('children')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <ProfessionalSituation
         v-else-if="this.profileData.page == 5"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('occupation')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <ImmovableProperties
         v-else-if="this.profileData.page == 6"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('immovableProperties')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <Health
         v-else-if="this.profileData.page == 7"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('health')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <FinancialSituation
         v-else-if="this.profileData.page == 8"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('monthlyExpenses')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <InvestorExperiences
         v-else-if="this.profileData.page == 9"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('investorExperiences')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <Insurances
         v-else-if="this.profileData.page == 10"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('insurances')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <PersonalPrivateSecurities
         v-else-if="this.profileData.page == 11"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('personalPrivateSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <PlansAndProjects
         v-else-if="this.profileData.page == 12"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('plansAndProjects')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <InvestmentPortfolios
         v-else-if="this.profileData.page == 13"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('investmentPortfolios')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <FixedIncomeSecurities
         v-else-if="this.profileData.page == 14"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('fixedIncomeSecurities')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <Knowledge
         v-else-if="this.profileData.page == 15"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('currentInvestmentProcess')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <AdditionalInformations
         v-else-if="this.profileData.page == 16"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('additionalInfo')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
+        v-bind:recordedData="profileData"
       />
       <FinancialAdvisor
         v-else-if="this.showAdvisorPage"
         v-on:done="feedProfileData"
+        v-on:back="goBack"
         v-on:stop="doStop('financialAdvisor')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
@@ -166,7 +198,7 @@ import Congrats from "../profile/Congrats";
 
 export default {
   name: "profile",
-  props: ["filledByAdvisor"],
+  props: ["filledByAdvisor", "currentPage"],
   data() {
     return {
       key: 0,
@@ -199,6 +231,9 @@ export default {
             }
             this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
             delete this.profileData["cpf"];
+            if (this.currentPage < this.profileData.page) {
+              this.profileData.page = this.currentPage;
+            }
             this.key += 1;
           } else {
             this.profileData.page = 0;
@@ -262,6 +297,7 @@ export default {
       }
       setProfile(portionProfileData);
       this.$emit("paging", this.profileData.page);
+      this.$forceUpdate();
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
@@ -286,6 +322,11 @@ export default {
         }
       }
       this.$router.push("/");
+    },
+    goBack() {
+      this.profileData.page -= 1;
+      this.$emit("paging", this.profileData.page);
+      this.key += 1;
     },
   },
 };

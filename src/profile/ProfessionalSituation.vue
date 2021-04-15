@@ -153,7 +153,10 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
+    <b-img v-show="status.registering" :src="registering" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -187,6 +190,7 @@ export default {
         privateSecurityCompanyValue: null,
         privateSecurityCurrentBalance: null,
       },
+      registering: REGISTERING,
       companyHasPrivateSecurity: false,
       yesNo: [
         { text: "Não", value: false },
@@ -199,6 +203,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.profileData.page = 6;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -228,11 +233,13 @@ p {
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
-#stop {
+#stop,
+#back {
   background-color: gray;
   border-color: gray;
   color: black;
@@ -248,6 +255,7 @@ button,
   border-color: #26fed5;
 }
 button:hover,
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

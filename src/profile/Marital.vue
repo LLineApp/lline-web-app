@@ -54,6 +54,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -90,6 +93,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.profileData.page = 4;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -112,8 +116,8 @@ export default {
   methods: {
     formatToInt(value) {
       if (value) {
-        value = value.replace(/\D/g, '');
-        value = isNaN( value ) ? 0 : value; 
+        value = value.replace(/\D/g, "");
+        value = isNaN(value) ? 0 : value;
         return parseInt(value);
       }
     },
@@ -132,10 +136,12 @@ p {
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -150,6 +156,7 @@ p {
   background-color: #26fed5;
   border-color: #26fed5;
 }
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

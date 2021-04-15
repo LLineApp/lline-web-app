@@ -3,6 +3,7 @@
     <NavBar />
     <Profile
       v-if="this.userData.page < this.profilePages"
+      v-bind:currentPage="userData.page"
       v-on:paging="updatePage"
     />
   </div>
@@ -11,7 +12,10 @@
 <script>
 import NavBar from "../navbar/NavBar";
 import Profile from "../profile/Profile";
-import { getSomeFieldsFromProfile, handleError } from "../../datasource/profile";
+import {
+  getSomeFieldsFromProfile,
+  handleError,
+} from "../../datasource/profile";
 
 export default {
   name: "home",
@@ -28,11 +32,12 @@ export default {
     };
   },
   mounted() {
-    getSomeFieldsFromProfile(['page', 'fullname', "isAdvisor"])
+    getSomeFieldsFromProfile(["page", "fullname", "isAdvisor"])
       .then((data) => {
         if (data.data.getProfile[0]) {
           this.userData.page = data.data.getProfile[0].page || 0;
-          this.userData.fullname = data.data.getProfile[0].fullname || "Usuário";
+          this.userData.fullname =
+            data.data.getProfile[0].fullname || "Usuário";
           this.userData.isAdvisor = data.data.getProfile[0].isAdvisor;
           localStorage.setItem("userData", JSON.stringify(this.userData));
           this.key += 1;
@@ -51,5 +56,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
