@@ -1,6 +1,7 @@
 import {
   SET_PROFILE,
   GET_PROFILE,
+  GET_CLIENT_PROFILE,
   GET_PROFILE_FIELDS,
   GET_ADVISOR_BY_LINK,
   GET_ADVISORS_PORTFOLIO,
@@ -43,13 +44,21 @@ function sanitize(data) {
   return data;
 }
 
-export async function getProfile() {
+export async function getProfile(cpf) {
   const conn = connectToBackend(profileURI);
+  var mutation = GET_PROFILE;
+  const variables = {
+    token: user.token,
+  }
+
+  if (cpf) {
+    mutation = GET_CLIENT_PROFILE;
+    variables["cpf"] = cpf; 
+  }
+
   return await conn.mutate({
-    mutation: GET_PROFILE,
-    variables: {
-      token: user.token,
-    },
+    mutation: mutation,
+    variables: variables,
   });
 }
 
