@@ -27,6 +27,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -62,6 +65,7 @@ export default {
   mounted() {
     if (this.recordedData && this.recordedData.children) {
       Object.assign(this.profileData.children, this.recordedData.children);
+      this.profileData.page = 5;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -90,9 +94,7 @@ export default {
       }
     },
     removeChild(childData) {
-      var remainingChildren = this.profileData.children.filter(function (
-        value
-      ) {
+      var remainingChildren = this.profileData.children.filter(function(value) {
         return value != childData;
       });
       this.profileData.children = remainingChildren;
@@ -100,7 +102,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
@@ -115,11 +116,13 @@ h1 {
   font-family: "Raleway", sans-serif;
   font-size: 15pt;
 }
+#back,
 #stop,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -136,6 +139,7 @@ button,
   border-color: #26fed5;
 }
 button:hover,
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;

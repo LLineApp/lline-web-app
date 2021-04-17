@@ -154,6 +154,7 @@ export default {
     }
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.profileData.page = 2;
       this.$forceUpdate();
     }
     if (!this.recordedData) {
@@ -195,9 +196,9 @@ export default {
         getAdvisorByLink(this.advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
-            this.profileData["financialAdvisor"] = {};
+              this.profileData["financialAdvisor"] = {};
 
-            this.profileData.financialAdvisor["fullname"] =
+              this.profileData.financialAdvisor["fullname"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
               this.profileData.financialAdvisor["register"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.register;

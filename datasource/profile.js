@@ -9,14 +9,14 @@ import {
   GET_ADVISOR_LINK,
   GET_ADVISORS,
 } from "../src/constants/graphql";
-import { connectToBackend, authURI, profileURI } from "./backendConnect";
+import { connectToBackend, profileURI } from "./backendConnect";
+import { sanitize } from "./dataSanitizer";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 export async function setProfile(profileInput) {
   const data = sanitize(profileInput);
   const conn = connectToBackend(profileURI);
-
   return await conn.mutate({
     mutation: SET_PROFILE,
     variables: {
@@ -24,24 +24,6 @@ export async function setProfile(profileInput) {
       profileData: data,
     },
   });
-}
-
-function sanitize(data) {
-  delete data["requestAdvisorStatus"];
-  if (data["cpf"] == "") {
-    delete data["cpf"];
-  }
-  for (var item in data) {
-    if (Array.isArray(data[item])) {
-      const sanitizedItem = [];
-      data[item].forEach((element) => {
-        delete element["key"];
-        sanitizedItem.push(element);
-      });
-      data[item] = sanitizedItem;
-    }
-  }
-  return data;
 }
 
 export async function getProfile(cpf) {
@@ -69,7 +51,7 @@ export async function getAdvisorsPortfolio(page, search) {
     variables: {
       token: user.token,
       page: page,
-      containing: search
+      containing: search,
     },
   });
 }
@@ -81,7 +63,7 @@ export async function getProspectProfile(page, search) {
     variables: {
       token: user.token,
       page: page,
-      containing: search
+      containing: search,
     },
   });
 }
@@ -93,7 +75,7 @@ export async function getAllAdvisors() {
     variables: {
       token: user.token,
       page: -1,
-      containing: ""
+      containing: "",
     },
   });
 }
@@ -122,7 +104,7 @@ export async function getAdvisorLink() {
 export async function getSomeFieldsFromProfile(fields) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
-    mutation: GET_PROFILE_FIELDS(fields.join('\n')),
+    mutation: GET_PROFILE_FIELDS(fields.join("\n")),
     variables: {
       token: user.token,
     },

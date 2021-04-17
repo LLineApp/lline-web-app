@@ -34,6 +34,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -69,6 +72,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      this.profileData.page = 14;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -101,7 +105,7 @@ export default {
     },
     removeInvestmentPortfolio(investmentPortfolioData) {
       var remainingInvestmentPortfolios = this.profileData.investmentPortfolios.filter(
-        function (value, index, arr) {
+        function(value, index, arr) {
           return value != investmentPortfolioData;
         }
       );
@@ -125,10 +129,12 @@ h1 {
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
