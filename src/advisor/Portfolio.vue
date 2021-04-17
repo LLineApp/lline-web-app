@@ -9,9 +9,13 @@
       <h1>Carteira de Clientes</h1>
       <p>Pesquisar:</p>
       <b-input-group id="search-group">
-        <b-form-input id="search-input" v-model="search" />
+        <b-form-input
+          id="search-input"
+          v-model="search"
+          v-on:keyup.enter="newSearch()"
+        />
         <b-input-group-append>
-          <b-button id="search-button" v-on:click="doSearch"
+          <b-button id="search-button" v-on:click="newSearch"
             ><i class="fa fa-search"></i
           ></b-button>
         </b-input-group-append>
@@ -19,6 +23,7 @@
 
       <b-pagination
         id="pagination"
+        :key="currentPage"
         first-number
         last-number
         per-page="10"
@@ -27,7 +32,16 @@
         v-on:input="doSearch"
       ></b-pagination>
 
-      <b-table hover :items="items" :fields="fields" id="table"></b-table>
+      <b-table hover :items="items" :fields="fields" id="table">
+        <template #cell(showProfile)="item">
+          <b-button
+            id="show-client-profile-button"
+            v-on:click="showClientProfile(item.item.cpf)"
+          >
+            Mostrar
+          </b-button>
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -59,6 +73,11 @@ export default {
           label: "Telefone",
           sortable: true,
         },
+        {
+          key: "showProfile",
+          label: "Perfil",
+          sortable: false,
+        },
       ],
       items: [
         {
@@ -66,14 +85,24 @@ export default {
           fullname: "",
           email: "",
           preferredContact: "",
+          cpf: "",
         },
       ],
     };
   },
   mounted() {
+    const params = JSON.parse(sessionStorage.getItem("lastSearchParams"));
+    if (params) {
+      this.search = params.search, 
+      this.currentPage = params.currentPage;
+    }
     this.doSearch();
   },
   methods: {
+    newSearch() {
+      this.currentPage = 1;
+      this.doSearch();
+    },
     doSearch() {
       getAdvisorsPortfolio(this.currentPage, this.search)
         .then((data) => {
@@ -86,6 +115,20 @@ export default {
         .catch((error) => {
           handleError(error.graphQLErrors[0].message);
         });
+    },
+    saveSearchParams() {
+      const params = {
+        search: this.search,
+        currentPage: this.currentPage,
+      };
+      sessionStorage.setItem("lastSearchParams", JSON.stringify(params));
+    },
+    showClientProfile(cpf) {
+      this.saveSearchParams();
+      this.$router.push({
+        name: "ProfileDataSheet",
+        params: { clientCpf: cpf },
+      });
     },
   },
 };
@@ -109,6 +152,7 @@ p {
   width: 95%;
 }
 
+#show-client-profile-button,
 #search-button {
   right: 0;
   color: black;
@@ -122,6 +166,7 @@ p {
   border-color: #26fed5;
 }
 
+#show-client-profile-button:hover,
 #search-button:hover {
   color: #26fed5;
   background-color: black;

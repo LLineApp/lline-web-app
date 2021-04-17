@@ -17,7 +17,7 @@ export const router = new Router({
     { path: "/", component: HomePage },
     { path: "/login", component: LoginPage },
     { path: "/register", component: RegisterPage },
-    { path: "/profile", component: ProfileDataSheet },
+    { path: "/profile", component: ProfileDataSheet, name: "ProfileDataSheet" },
     { path: "/new", component: Profile, props: { filledByAdvisor: true } },
     { path: "/portfolio", component: Portfolio },
     { path: "/prospect", component: Prospect },

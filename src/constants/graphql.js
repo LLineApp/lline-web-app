@@ -137,6 +137,105 @@ export const GET_PROFILE = gql`
   }
 `;
 
+export const GET_CLIENT_PROFILE = gql`
+  query getProfileQuery($token: String!, $cpf: String) {
+    getProfile(token: $token, cpf: $cpf) {
+      isAdvisor 
+      page
+      id
+      cpf
+      email
+      fullname
+      birthdate
+      preferredContact
+      maritalStatus
+      maritalHowManyYears
+      spouseName
+      spouseOccupation
+      parentsAreThemSupportedByYou
+      parentsHowMuchYouSuportThem
+      parentsIsThereAPossibilityOfInheritance
+      parentsOfWhom
+      parentsWhatIsTheEstimatedValue
+      occupation
+      role
+      companyName
+      businessPhones
+      businessEmail
+      businessKind
+      businessField
+      companyHasPrivateInsurance
+      socialSecurityValue
+      privateSecurityYourValue
+      privateSecurityCompanyValue
+      privateSecurityCurrentBalance
+      incomeTaxDeclarationType
+      monthlyExpenses
+      costsWithDependents
+      howMuchYouSave
+      debtLoans
+      partnerInCompany
+      health
+      plansAndProjects
+      currentInvestmentProcess
+      followEconomicNews
+      acceptsInfoAboutCourses
+      haveFinancialConcerns
+      additionalInfo
+      portfolioIncome
+      financialAdvisor {
+        id
+      }
+      acceptFinancialAdvisorContact
+      phones
+      children {
+        fullname
+        birthdate
+        occupationTraining
+        additionalInfo
+      }
+      immovableProperties {
+        description
+        value
+        rented
+        funded
+        insuranceValue
+        insuranceCompany
+      }
+      investorExperiences {
+        kind
+        value
+      }
+      insurances {
+        kind
+        value
+        monthlyFee
+        coverage
+        company
+      }
+      investmentPortfolios {
+        kind
+        value
+        tx
+        txType
+      }
+      personalPrivateSecurities {
+        bank
+        enterprise
+        cooperative
+        survival
+        table
+        balance
+      }
+      fixedIncomeSecurities {
+        kind
+        value
+        tx
+      }
+    }
+  }
+`;
+
 export const GET_ADVISOR_BY_LINK = gql`
   mutation setAdvisorsLink($token: String!, $link: String) {
     setAdvisorsLink(token: $token, link: $link) {
@@ -165,6 +264,7 @@ export const GET_ADVISORS_PORTFOLIO = gql`
         cpf
         email
         fullname
+        preferredContact
       }
     }
   }

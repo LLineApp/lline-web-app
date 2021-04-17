@@ -95,6 +95,7 @@ export default {
     localStorage.removeItem("user");
     localStorage.removeItem("userData");
     sessionStorage.removeItem("profileData");
+      sessionStorage.removeItem("lastSearchParams");
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),

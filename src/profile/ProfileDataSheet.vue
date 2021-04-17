@@ -2,7 +2,8 @@
   <div :key="key">
     <NavBar />
     <div id="datasheet">
-      <p>Estes são os seus dados</p>
+      <b-button v-if="isClientProfile" v-on:click="goBack()">Voltar</b-button>
+      <p>{{ this.title }}</p>
       <Email v-bind:recordedData="profileData" />
       <Parents v-bind:recordedData="profileData" />
       <Marital v-bind:recordedData="profileData" />
@@ -50,15 +51,25 @@ export default {
   data() {
     return {
       key: 0,
+      isClientProfile: false,
+      title: "Estes são os seus dados",
       profileData: {
         accepted: true,
       },
     };
   },
   created() {
-    getProfile()
+    const cpf = this.$route.params.clientCpf;
+    if (cpf) {
+      this.isClientProfile = true;
+    }
+
+    getProfile(cpf)
       .then((data) => {
         this.profileData = data.data.getProfile[0];
+        if (this.isClientProfile) {
+          this.title = `Estes são os dados de ${this.profileData.fullname}`;
+        }
         this.key += 1;
       })
       .catch((error) => {
@@ -72,6 +83,11 @@ export default {
 
         this.$toasted.error(message, options);
       });
+  },
+  methods:{
+    goBack() {
+      this.$router.go(-1);
+    }
   },
   components: {
     NavBar,
