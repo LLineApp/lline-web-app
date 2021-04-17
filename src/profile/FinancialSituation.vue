@@ -2,34 +2,34 @@
   <div id="main">
     <p>Sobre sua situação financeira</p>
     <Money
-      :key=this.key
+      :key="this.key"
       label="Qual sua despesa mensal?"
       field="monthlyExpenses"
-      :fieldValue=this.profileData.monthlyExpenses
+      :fieldValue="this.profileData.monthlyExpenses"
       v-on:apply="applyValue"
     />
     <Money
       label="Gastos com dependentes"
       field="costsWithDependents"
-      :fieldValue=this.profileData.costsWithDependents
+      :fieldValue="this.profileData.costsWithDependents"
       v-on:apply="applyValue"
     />
     <Money
       label="Quanto você poupa?"
       field="howMuchYouSave"
-      :fieldValue=this.profileData.howMuchYouSave
+      :fieldValue="this.profileData.howMuchYouSave"
       v-on:apply="applyValue"
     />
     <Money
       label="Tem dívidas/financiamentos?"
       field="debtLoans"
-      :fieldValue=this.profileData.debtLoans
+      :fieldValue="this.profileData.debtLoans"
       v-on:apply="applyValue"
     />
     <Money
       label="É sócio de empresa? (Informe o percentual, ou zero (0) caso não seja sócio)"
       field="partnerInCompany"
-      :fieldValue=this.profileData.partnerInCompany
+      :fieldValue="this.profileData.partnerInCompany"
       v-on:apply="applyValue"
     />
     <b-button
@@ -41,6 +41,9 @@
       Confirmar
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button id="stop" v-if="showButtons" v-on:click="$emit('stop')"
       >Parar</b-button
     >
@@ -73,7 +76,8 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
-      this.key +=1;
+      this.profileData.page = 9;
+      this.key += 1;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -99,10 +103,12 @@ p {
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;

@@ -80,6 +80,9 @@
       Concluir
     </b-button>
     <b-img v-show="status.registering" src="REGISTERING" />
+    <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
+      >Voltar</b-button
+    >
     <b-button
       id="stop"
       v-if="showButtons && !this.alreadyHasFinancialAdvisor"
@@ -158,6 +161,7 @@ export default {
     if (loadList) {
       this.loadAdvisorsList();
     }
+    this.profileData.page = 18;
   },
   computed: {
     ...mapState("account", ["status"]),
@@ -260,10 +264,12 @@ p {
   font-size: 15pt;
 }
 #stop,
+#back,
 #success {
   margin-right: 1%;
   font-size: 17pt;
 }
+#back,
 #stop {
   background-color: gray;
   border-color: gray;
@@ -278,6 +284,7 @@ p {
   background-color: #26fed5;
   border-color: #26fed5;
 }
+#back:hover,
 #success:hover {
   color: #26fed5;
   background-color: black;
