@@ -32,12 +32,10 @@ export async function getProfile(cpf) {
   const variables = {
     token: user.token,
   }
-
   if (cpf) {
     mutation = GET_CLIENT_PROFILE;
     variables["cpf"] = cpf; 
   }
-
   return await conn.mutate({
     mutation: mutation,
     variables: variables,
