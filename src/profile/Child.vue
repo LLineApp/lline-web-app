@@ -128,6 +128,8 @@ button:hover {
   border-bottom: 1px solid black;
 }
 #alert {
-  display: inline-block;
+  position: fixed;
+  top: 20px;
+  width: 60%;
 }
 </style>

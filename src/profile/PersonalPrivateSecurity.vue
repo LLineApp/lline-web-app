@@ -56,7 +56,7 @@
     <b-button
       type="button"
       aria-label="Close"
-      v-on:click="$emit('apply', personalPrivateSecurityData)"
+      v-on:click="doApply()"
       aria-hidden="true"
       ><i class="fa fa-check"></i
     ></b-button>
@@ -67,6 +67,17 @@
       aria-hidden="true"
       ><i class="fa fa-times"></i
     ></b-button>
+    <b-alert
+      id="alert"
+      fade
+      :show="alert.dismissCountDown"
+      dismissible
+      variant="success"
+      v-on:dismissed="alert.dismissCountDown = 0"
+      v-on:dismiss-count-down="alertCountDownChanged"
+    >
+      Registro incluído com sucesso
+    </b-alert>
   </div>
 </template>
 
@@ -79,6 +90,10 @@ export default {
   props: ["personalPrivateSecurityData"],
   data() {
     return {
+      alert: {
+        dismissSecs: 5,
+        dismissCountDown: 0,
+      },
       yesNo: [
         { text: "Não", value: false },
         { text: "Sim", value: true },
@@ -99,6 +114,14 @@ export default {
     formatNumericField(value) {
       return formatNumericField(value);
     },
+    alertCountDownChanged(dismissCountDown) {
+      this.alert.dismissCountDown = dismissCountDown;
+      this.$refs.financialAdvisorInput.focus();
+    },
+    doApply() {
+      this.$emit("apply", this.childData);
+      this.alert.dismissCountDown = this.alert.dismissSecs;
+    },
   },
 };
 </script>
@@ -118,6 +141,11 @@ button:hover {
 #personalPrivateSecurity {
   padding-bottom: 1%;
   border-bottom: 1px solid black;
+}
+#alert {
+  position: fixed;
+  top: 20px;
+  width: 60%;
 }
 </style>
 
