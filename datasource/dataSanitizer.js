@@ -1,5 +1,4 @@
 export function sanitize(data) {
-  delete data["requestAdvisorStatus"];
   delete data["accepted"];
   delete data["id"];
   delete data["isAdvisor"];
