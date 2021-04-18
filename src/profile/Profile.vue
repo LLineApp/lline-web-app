@@ -128,7 +128,7 @@
         v-bind:showButtons="true"
         v-bind:recordedData="profileData"
       />
-      <FixedIncomeSecurities
+      <!-- <FixedIncomeSecurities
         v-else-if="this.profileData.page == 14"
         v-on:done="feedProfileData"
         v-on:back="goBack"
@@ -136,7 +136,7 @@
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
         v-bind:recordedData="profileData"
-      />
+      /> -->
       <Knowledge
         v-else-if="this.profileData.page == 15"
         v-on:done="feedProfileData"
@@ -187,7 +187,7 @@ import Insurances from "../profile/Insurances";
 import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
 import PlansAndProjects from "../profile/PlansAndProjects";
 import Health from "../profile/Health";
-import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
+// import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
 import InvestmentPortfolios from "../profile/InvestmentPortfolios";
 import Knowledge from "./Knowledge.vue";
 import AdditionalInformations from "../profile/AdditionalInformations";
@@ -260,7 +260,7 @@ export default {
     PersonalPrivateSecurities,
     PlansAndProjects,
     Health,
-    FixedIncomeSecurities,
+    // FixedIncomeSecurities,
     InvestmentPortfolios,
     Knowledge,
     AdditionalInformations,
@@ -325,6 +325,9 @@ export default {
     },
     goBack() {
       this.profileData.page -= 1;
+      if (this.profileData.page == 14) {
+        this.profileData.page -= 1;
+      };
       this.$emit("paging", this.profileData.page);
       this.key += 1;
     },
