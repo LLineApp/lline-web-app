@@ -85,26 +85,11 @@
       />
     </b-form-group>
 
-    <b-form-group
-      id="requestAdvisorStatus-group"
-      label=""
-      label-for="requestAdvisorStatus-input"
-    >
-      <b-form-checkbox
-        id="requestAdvisorStatus-input"
-        name="requestAdvisorStatus"
-        v-model="profileData.requestAdvisorStatus"
-        v-if="!(this.filledByAdvisor || this.advisorsLink)"
-      >
-        Solicitar status de Assessor
-      </b-form-checkbox>
-    </b-form-group>
-
     <b-button
       id="success"
       variant="primary"
       v-if="showButtons"
-      v-on:click="$emit('done', profileData)"
+      v-on:click="doDone()"
     >
       Confirmar
     </b-button>
@@ -123,7 +108,10 @@
 import { mapState, mapActions } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { parsePhoneNumber } from "libphonenumber-js";
-import { getAdvisorByLink } from "../../datasource/profile";
+import {
+  getAdvisorByLink,
+  getSomeFieldsFromProfile,
+} from "../../datasource/profile";
 
 export default {
   name: "email",
@@ -137,13 +125,13 @@ export default {
         birthdate: null,
         phones: [],
         preferredContact: "",
-        requestAdvisorStatus: false,
         page: 2,
       },
       submitted: false,
       phoneInput: "",
       phoneListLabel: "Telefones",
       advisorsLink: null,
+      isAdvisor: false,
     };
   },
   mounted() {
@@ -160,7 +148,9 @@ export default {
     if (!this.recordedData) {
       this.fillUpAdvisorData();
     }
-
+    if (!this.filledByAdvisor) {
+      this.checkIfUserIsAdvisor();
+    }
     this.$emit("setActiveComponent", this.$options.name);
   },
   computed: {
@@ -222,6 +212,46 @@ export default {
             this.$toasted.error(message, options);
           });
       }
+    },
+    doDone() {
+      if (this.isAdvisor) {
+        this.askUserToContinue();
+      } else {
+        this.$emit("done", this.profileData);
+      }
+    },
+    askUserToContinue() {
+      this.$bvModal
+        .msgBoxConfirm(
+          "Identifiquei em nossos registros que você é um assessor. Você pode continuar o seu cadastro ou terminar agora se assim preferir.",
+          {
+            title: "Confirmação",
+            size: "md",
+            buttonSize: "md",
+            okVariant: "success",
+            okTitle: "Terminar",
+            cancelTitle: "Continuar",
+            footerClass: "p-2",
+            hideHeaderClose: true,
+            centered: true,
+          }
+        )
+        .then((value) => {
+          this.profileData.page = value ? 18 : 2;
+          this.$emit("done", this.profileData);
+        })
+        .catch((err) => {});
+    },
+    checkIfUserIsAdvisor() {
+      getSomeFieldsFromProfile(["isAdvisor"])
+        .then((data) => {
+          if (data.data.getProfile[0]) {
+            this.isAdvisor = data.data.getProfile[0].isAdvisor;
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
     },
   },
 };
