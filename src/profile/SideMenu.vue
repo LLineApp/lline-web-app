@@ -50,11 +50,11 @@ export default {
           name: "investmentPortfolios",
           style: "",
         },
-        {
-          text: "Títulos de Renda Fixa",
-          name: "fixedIncomeSecurities",
-          style: "",
-        },
+        // {
+        //   text: "Títulos de Renda Fixa",
+        //   name: "fixedIncomeSecurities",
+        //   style: "",
+        // },
         { text: "Conhecimentos", name: "knowledge", style: "" },
         {
           text: "Informações Adicionais",

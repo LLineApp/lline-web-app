@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       profileData: {
-        page: 14,
+        page: 15,
         investmentPortfolios: [
           {
             key: 0,
@@ -72,7 +72,7 @@ export default {
   mounted() {
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
-      this.profileData.page = 14;
+      this.profileData.page = 15;
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
