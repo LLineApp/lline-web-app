@@ -29,13 +29,7 @@ export function sanitize(data) {
             }
             sanitizedItem.push(element);
           }
-        }
-
-        if (item == "phones") {
-          sanitizedItem.push(element);
-        }
-
-        if (
+        } else if (
           [
             "immovableProperties",
             "insurances",
@@ -47,13 +41,11 @@ export function sanitize(data) {
           if (value > 0) {
             sanitizedItem.push(element);
           }
-        }
-
-        if (item == "personalPrivateSecurities") {
+        } else if (item == "personalPrivateSecurities") {
           if (element["bank"] != "") {
             sanitizedItem.push(element);
           }
-        }
+        } else sanitizedItem.push(element);
       });
       data[item] = sanitizedItem;
     }

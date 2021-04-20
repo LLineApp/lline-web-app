@@ -145,9 +145,9 @@ export default {
       this.profileData.page = 2;
       this.$forceUpdate();
     }
-    if (!this.recordedData) {
-      this.fillUpAdvisorData();
-    }
+
+    this.fillUpAdvisorData();
+
     if (!this.filledByAdvisor) {
       this.checkIfUserIsAdvisor();
     }
@@ -182,12 +182,15 @@ export default {
         .trim();
     },
     fillUpAdvisorData() {
-      if (this.advisorsLink || this.filledByAdvisor) {
+      if ((this.advisorsLink || this.filledByAdvisor) && this.showButtons) {
         getAdvisorByLink(this.advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
-              this.profileData["financialAdvisor"] = {};
+              this.profileData["advisors"] = [
+                parseInt(data.data.setAdvisorsLink.advisorsLinkData.advisor.id),
+              ];
 
+              this.profileData["financialAdvisor"] = {};
               this.profileData.financialAdvisor["fullname"] =
                 data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
               this.profileData.financialAdvisor["register"] =
