@@ -105,6 +105,7 @@ export default {
       profileData: {
         page: 18,
         acceptFinancialAdvisorContact: false,
+        advisors: [],
         financialAdvisor: {
           fullname: "",
           register: "0",
@@ -219,6 +220,7 @@ export default {
         );
         if (advisorQuerySelector) {
           this.advisorId = advisorQuerySelector.dataset.id;
+          this.profileData.advisors.push(parseInt(this.advisorId));
           this.profileData.financialAdvisor.fullname =
             advisorQuerySelector.dataset.fullname;
           this.profileData.financialAdvisor.company =
