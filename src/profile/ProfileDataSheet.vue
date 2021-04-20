@@ -1,8 +1,30 @@
 <template>
   <div :key="key">
     <NavBar />
+    <div id="toolbuttons">
+      <b-button
+        type="button"
+        id="back-btn"
+        v-if="isClientProfile"
+        aria-label="Close"
+        v-on:click="goBack()"
+        aria-hidden="true"
+        variant="outline-secondary"
+        squared
+        ><i class="fa fa-arrow-left fa-lg"></i>
+      </b-button>
+      <b-button
+        type="button"
+        id="print-btn"
+        aria-label="Close"
+        v-on:click="print()"
+        aria-hidden="true"
+        variant="outline-secondary"
+        squared
+        ><i class="fa fa-print fa-lg"></i>
+      </b-button>
+    </div>
     <div id="datasheet">
-      <b-button v-if="isClientProfile" v-on:click="goBack()">Voltar</b-button>
       <p>{{ this.title }}</p>
       <Email v-bind:recordedData="profileData" />
       <Parents v-bind:recordedData="profileData" />
@@ -84,10 +106,13 @@ export default {
         this.$toasted.error(message, options);
       });
   },
-  methods:{
+  methods: {
     goBack() {
       this.$router.go(-1);
-    }
+    },
+    print() {
+      this.$htmlToPaper("datasheet");
+    },
   },
   components: {
     NavBar,
@@ -130,5 +155,22 @@ p {
 }
 ul {
   list-style-type: none;
+}
+#toolbuttons {
+  padding-inline: 10%;
+  background: #0000000e;
+}
+#back-btn,
+#print-btn {
+  text-align: center;
+  padding-right: 5pt;
+  width: 45pt;
+  border: none;
+}
+#back-btn:hover,
+#print-btn:hover {
+  color: #26fed5;
+  background-color: rgba(0, 0, 0, 0.795);
+  border-color: black;
 }
 </style>
