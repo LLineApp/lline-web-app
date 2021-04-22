@@ -4,17 +4,6 @@
     <div id="toolbuttons">
       <b-button
         type="button"
-        id="back-btn"
-        v-if="isClientProfile"
-        aria-label="Close"
-        v-on:click="goBack()"
-        aria-hidden="true"
-        variant="outline-secondary"
-        squared
-        ><i class="fa fa-arrow-left fa-lg"></i>
-      </b-button>
-      <b-button
-        type="button"
         id="print-btn"
         aria-label="Close"
         v-on:click="print()"
@@ -22,6 +11,16 @@
         variant="outline-secondary"
         squared
         ><i class="fa fa-print fa-lg"></i>
+      </b-button>
+      <b-button
+        type="button"
+        id="back-btn"
+        aria-label="Close"
+        v-on:click="goBack()"
+        aria-hidden="true"
+        variant="outline-secondary"
+        squared
+        ><i class="fa fa-arrow-left fa-lg"></i>
       </b-button>
     </div>
     <div id="datasheet">
@@ -157,15 +156,14 @@ ul {
   list-style-type: none;
 }
 #toolbuttons {
-  padding-inline: 10%;
   background: #0000000e;
 }
 #back-btn,
 #print-btn {
   text-align: center;
-  padding-right: 5pt;
   width: 45pt;
   border: none;
+  float: right;
 }
 #back-btn:hover,
 #print-btn:hover {
