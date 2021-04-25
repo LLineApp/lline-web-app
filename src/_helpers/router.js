@@ -30,7 +30,6 @@ router.beforeEach((to, from, next) => {
   const publicPages = ["/login", "/register"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = Vue.$cookies.isKey("token");
-  console.log("router", )
 
   if (authRequired && !loggedIn) {
     return next("/login");

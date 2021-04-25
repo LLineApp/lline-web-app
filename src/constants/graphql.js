@@ -24,6 +24,8 @@ export const SET_PROFILE = gql`
     setProfile(token: $token, profileData: $profileData) {
       profile {
         id
+        cpf
+        page
       }
     }
   }

@@ -286,25 +286,31 @@ export default {
   },
   methods: {
     feedProfileData(portionProfileData) {
-      const data = { ...this.profileData, ...portionProfileData };
-      this.profileData = data;
-
       if (this.profileData.cpf != "") {
         portionProfileData["cpf"] = this.profileData.cpf;
       }
       if (portionProfileData["cpf"] == "") {
-        portionProfileData["cpf"] = this.$cookies.get("cpf");
+        portionProfileData["cpf"] = this.filledByAdvisor
+          ? this.profileData.cpf
+          : this.$cookies.get("cpf");
       }
+      const data = { ...this.profileData, ...portionProfileData };
+      this.profileData = data;
 
       if (portionProfileData.financialAdvisor) {
         delete portionProfileData.financialAdvisor["id"];
         delete portionProfileData.financialAdvisor["__typename"];
       }
-      setProfile(this.$cookies.get("token"), portionProfileData).then(() => {
-        this.$emit("paging", this.profileData.page);
-        this.key += 1;
-        this.$forceUpdate();
-      });
+      setProfile(this.$cookies.get("token"), portionProfileData).then(
+        (data) => {
+          if (!this.profileData.cpf) {
+            this.profileData.cpf = data.data.setProfile.profile.cpf;
+          }
+          this.$emit("paging", this.profileData.page);
+          this.key += 1;
+          this.$forceUpdate();
+        }
+      );
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
