@@ -93,9 +93,11 @@ export default {
   },
   mounted() {
     localStorage.removeItem("user");
-    localStorage.removeItem("userData");
+    Vue.$cookies.remove("token");
+    Vue.$cookies.remove("cpf");
+    sessionStorage.removeItem("userData");
     sessionStorage.removeItem("profileData");
-      sessionStorage.removeItem("lastSearchParams");
+    sessionStorage.removeItem("lastSearchParams");
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),
@@ -113,14 +115,15 @@ export default {
           })
           .then((data) => {
             if (
-              !localStorage.getItem("advisorsLink") &&
+              !sessionStorage.getItem("advisorsLink") &&
               this.$route.query.advisor
             ) {
-              localStorage.setItem("advisorsLink", this.$route.query.advisor);
+              sessionStorage.setItem("advisorsLink", this.$route.query.advisor);
             }
             if (data.data.tokenAuth.token) {
-              localStorage.setItem("user", JSON.stringify(data.data.tokenAuth));
-              this.$router.push("/");
+                this.$cookies.set("token", data.data.tokenAuth.token);
+                this.$cookies.set("cpf", cpf);
+                this.$router.push("/");
             }
           })
           .catch((error) => {

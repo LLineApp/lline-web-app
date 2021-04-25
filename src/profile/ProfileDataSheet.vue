@@ -85,7 +85,7 @@ export default {
       this.isClientProfile = true;
     }
 
-    getProfile(cpf)
+    getProfile(this.$cookies.get("token"), cpf)
       .then((data) => {
         this.profileData = data.data.getProfile[0];
         if (this.isClientProfile) {

@@ -1,4 +1,5 @@
 import Vue from "vue";
+import VueCookies from "vue-cookies";
 import VueHtmlToPaper from "vue-html-to-paper";
 import VeeValidate from "vee-validate";
 import { store } from "./_store";
@@ -44,6 +45,7 @@ const options = {
 };
 
 Vue.use(VueHtmlToPaper, options);
+Vue.use(VueCookies);
 
 new Vue({
   el: "#app",

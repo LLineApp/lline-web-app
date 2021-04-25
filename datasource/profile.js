@@ -12,25 +12,23 @@ import {
 import { connectToBackend, profileURI } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
 
-const user = JSON.parse(localStorage.getItem("user"));
-
-export async function setProfile(profileInput) {
+export async function setProfile(token, profileInput) {
   const data = sanitize(profileInput);
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: SET_PROFILE,
     variables: {
-      token: user.token,
+      token: token,
       profileData: data,
     },
   });
 }
 
-export async function getProfile(cpf) {
+export async function getProfile(token, cpf) {
   const conn = connectToBackend(profileURI);
   var mutation = GET_PROFILE;
   const variables = {
-    token: user.token,
+    token: token,
   }
   if (cpf) {
     mutation = GET_CLIENT_PROFILE;
@@ -42,69 +40,69 @@ export async function getProfile(cpf) {
   });
 }
 
-export async function getAdvisorsPortfolio(page, search) {
+export async function getAdvisorsPortfolio(token, page, search) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISORS_PORTFOLIO,
     variables: {
-      token: user.token,
+      token: token,
       page: page,
       containing: search,
     },
   });
 }
 
-export async function getProspectProfile(page, search) {
+export async function getProspectProfile(token, page, search) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_PROSPECT_PROFILE,
     variables: {
-      token: user.token,
+      token: token,
       page: page,
       containing: search,
     },
   });
 }
 
-export async function getAllAdvisors() {
+export async function getAllAdvisors(token) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISORS,
     variables: {
-      token: user.token,
+      token: token,
       page: -1,
       containing: "",
     },
   });
 }
 
-export async function getAdvisorByLink(advisorsLink) {
+export async function getAdvisorByLink(token, advisorsLink) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISOR_BY_LINK,
     variables: {
-      token: user.token,
+      token: token,
       link: advisorsLink,
     },
   });
 }
 
-export async function getAdvisorLink() {
+export async function getAdvisorLink(token) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_ADVISOR_LINK,
     variables: {
-      token: user.token,
+      token: token,
     },
   });
 }
 
-export async function getSomeFieldsFromProfile(fields) {
+export async function getSomeFieldsFromProfile(token, fields) {
   const conn = connectToBackend(profileURI);
   return await conn.mutate({
     mutation: GET_PROFILE_FIELDS(fields.join("\n")),
     variables: {
-      token: user.token,
+      token: token,
     },
   });
 }

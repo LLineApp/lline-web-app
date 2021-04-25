@@ -1,6 +1,6 @@
 <template>
   <div :key="this.key">
-    <NavBar />
+    <NavBar :key="this.keyNavBar"/>
     <Profile
       v-if="this.userData.page < this.profilePages"
       v-bind:currentPage="userData.page"
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       key: 0,
+      keyNavBar:0,
       profilePages: 19,
       userData: {
         page: 0,
@@ -32,14 +33,15 @@ export default {
     };
   },
   mounted() {
-    getSomeFieldsFromProfile(["page", "fullname", "isAdvisor"])
+    if (this.$cookies.get("token")) {
+    getSomeFieldsFromProfile(this.$cookies.get("token"), ["page", "fullname", "isAdvisor"])
       .then((data) => {
-        if (data.data.getProfile[0]) {
-          this.userData.page = data.data.getProfile[0].page || 0;
-          this.userData.fullname =
-            data.data.getProfile[0].fullname || "Usuário";
-          this.userData.isAdvisor = data.data.getProfile[0].isAdvisor;
-          localStorage.setItem("userData", JSON.stringify(this.userData));
+        const userData = data.data.getProfile[0];
+        if (userData) {
+          this.userData.page = userData.page || 0;
+          this.userData.fullname = userData.fullname || "Usuário";
+          this.userData.isAdvisor = userData.isAdvisor;
+          sessionStorage.setItem("userData", JSON.stringify(this.userData));
           this.key += 1;
           this.$forceUpdate();
         }
@@ -47,11 +49,13 @@ export default {
       .catch((error) => {
         handleError(error.graphQLErrors[0].message);
       });
+    }
   },
   methods: {
     updatePage(page) {
       this.userData.page = page;
       this.key += 1;
+      this.keyNavBar += 1;
     },
   },
 };

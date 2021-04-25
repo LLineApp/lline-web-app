@@ -64,7 +64,6 @@ export default {
   components: { AdvisorLink },
   data() {
     return {
-      canShow: true,
       ShowAdvLink: false,
       userData: {
         fullname: "Usuário",
@@ -73,8 +72,10 @@ export default {
     };
   },
   mounted() {
-    this.canShow = localStorage.getItem("user");
-    this.userData = JSON.parse(localStorage.getItem("userData"));
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+    if (userData) {
+      this.userData = userData;
+    }
     this.setActive();
   },
   computed: {
@@ -87,7 +88,7 @@ export default {
     },
     userIsAdvisor: function() {
       return this.userData.isAdvisor;
-    }
+    },
   },
   methods: {
     responsiveSwitch: function() {
@@ -118,7 +119,9 @@ export default {
     },
     logout: function() {
       localStorage.removeItem("user");
-      localStorage.removeItem("userData");
+      this.$cookies.remove("token");
+      this.$cookies.remove("cpf");
+      sessionStorage.removeItem("userData");
       sessionStorage.removeItem("profileData");
       sessionStorage.removeItem("lastSearchParams");
       this.$router.push("/login");
