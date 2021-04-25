@@ -23,7 +23,7 @@ export default {
     };
   },
   mounted() {
-    getAdvisorLink()
+    getAdvisorLink(this.$cookies.get("token"), )
       .then((data) => {
         if (data.data.setAdvisorsLink.advisorsLinkData.link) {
           const protocol = window.location.protocol;

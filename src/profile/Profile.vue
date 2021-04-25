@@ -220,28 +220,31 @@ export default {
   },
   created() {
     if (!this.filledByAdvisor) {
-      getProfile()
-        .then((data) => {
-          if (data.data.getProfile[0]) {
-            const rawData = data.data.getProfile[0];
-            for (var key in rawData) {
-              if (rawData[key] != null) {
-                this.profileData[key] = rawData[key];
+      if (this.$cookies.get("token")) {
+        getProfile(this.$cookies.get("token"), this.$cookies.get("cpf"))
+          .then((data) => {
+            if (data.data.getProfile[0]) {
+              const rawData = data.data.getProfile[0];
+              for (var key in rawData) {
+                if (rawData[key] != null) {
+                  this.profileData[key] = rawData[key];
+                }
               }
+              this.profileData.accepted = this.profileData.hasOwnProperty(
+                "cpf"
+              );
+              if (this.currentPage < this.profileData.page) {
+                this.profileData.page = this.currentPage;
+              }
+              this.key += 1;
+            } else {
+              this.profileData.page = 0;
             }
-            this.profileData.accepted = this.profileData.hasOwnProperty("cpf");
-            delete this.profileData["cpf"];
-            if (this.currentPage < this.profileData.page) {
-              this.profileData.page = this.currentPage;
-            }
-            this.key += 1;
-          } else {
-            this.profileData.page = 0;
-          }
-        })
-        .catch((error) => {
-          handleError(error.graphQLErrors[0].message);
-        });
+          })
+          .catch((error) => {
+            handleError(error.graphQLErrors[0].message);
+          });
+      }
     } else {
       this.profileData.page = 1;
     }
@@ -285,19 +288,23 @@ export default {
     feedProfileData(portionProfileData) {
       const data = { ...this.profileData, ...portionProfileData };
       this.profileData = data;
+
       if (this.profileData.cpf != "") {
         portionProfileData["cpf"] = this.profileData.cpf;
       }
       if (portionProfileData["cpf"] == "") {
-        delete portionProfileData["cpf"];
+        portionProfileData["cpf"] = this.$cookies.get("cpf");
       }
+
       if (portionProfileData.financialAdvisor) {
         delete portionProfileData.financialAdvisor["id"];
         delete portionProfileData.financialAdvisor["__typename"];
       }
-      setProfile(portionProfileData);
-      this.$emit("paging", this.profileData.page);
-      this.$forceUpdate();
+      setProfile(this.$cookies.get("token"), portionProfileData).then(() => {
+        this.$emit("paging", this.profileData.page);
+        this.key += 1;
+        this.$forceUpdate();
+      });
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
@@ -327,7 +334,7 @@ export default {
       this.profileData.page -= 1;
       if (this.profileData.page == 14) {
         this.profileData.page -= 1;
-      };
+      }
       this.$emit("paging", this.profileData.page);
       this.key += 1;
     },

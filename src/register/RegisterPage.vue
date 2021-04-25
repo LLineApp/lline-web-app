@@ -101,7 +101,7 @@ export default {
       e.preventDefault();
       this.submitted = true;
       if (this.$route.query.advisor) {
-        localStorage.setItem("advisorsLink", this.$route.query.advisor);
+        sessionStorage.setItem("advisorsLink", this.$route.query.advisor);
       }
       this.$validator.validate().then((valid) => {
         if (valid) {

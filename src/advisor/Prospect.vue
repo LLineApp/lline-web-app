@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     doSearch() {
-      getProspectProfile(this.currentPage, this.search)
+      getProspectProfile(this.$cookies.get("token"), this.currentPage, this.search)
         .then((data) => {
           if (data.data.getProspectProfile) {
             this.currentPage = data.data.getProspectProfile.currentPage;

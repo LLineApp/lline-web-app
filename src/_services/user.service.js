@@ -33,6 +33,8 @@ function login(cpf, password) {
 
 function logout() {
     localStorage.removeItem('user');
+    Vue.$cookies.remove("token");
+    Vue.$cookies.remove("cpf");
 }
 
 function register(user) {

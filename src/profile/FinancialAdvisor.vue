@@ -144,7 +144,7 @@ export default {
       loadList = false;
       this.$forceUpdate();
     }
-    if (localStorage.getItem("advisorsLink")) {
+    if (sessionStorage.getItem("advisorsLink")) {
       if (this.profileData.financialAdvisor.fullname) {
         this.doYouHaveFinancialAdvisor = true;
         this.profileData.acceptFinancialAdvisorContact = true;
@@ -155,7 +155,7 @@ export default {
         this.whatIsHisCompanyLabel = "A operadora é";
       }
 
-      localStorage.removeItem("advisorsLink");
+      sessionStorage.removeItem("advisorsLink");
       loadList = false;
       this.$forceUpdate();
     }
@@ -240,7 +240,7 @@ export default {
       this.$refs.financialAdvisorInput.focus();
     },
     loadAdvisorsList() {
-      getAllAdvisors()
+      getAllAdvisors(this.$cookies.get("token"))
         .then((data) => {
           if (data.data.getAdvisors.advisorsList) {
             this.advisorsList = data.data.getAdvisors.advisorsList;

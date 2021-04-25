@@ -135,7 +135,7 @@ export default {
     };
   },
   mounted() {
-    this.advisorsLink = localStorage.getItem("advisorsLink");
+    this.advisorsLink = sessionStorage.getItem("advisorsLink");
 
     if (this.showButtons) {
       this.phoneListLabel = "Informe qual é o seu telefone preferencial";
@@ -183,7 +183,7 @@ export default {
     },
     fillUpAdvisorData() {
       if ((this.advisorsLink || this.filledByAdvisor) && this.showButtons) {
-        getAdvisorByLink(this.advisorsLink)
+        getAdvisorByLink(this.$cookies.get("token"), this.advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
               this.profileData["advisors"] = [
@@ -246,7 +246,7 @@ export default {
         .catch((err) => {});
     },
     checkIfUserIsAdvisor() {
-      getSomeFieldsFromProfile(["isAdvisor"])
+      getSomeFieldsFromProfile(this.$cookies.get("token"), ["isAdvisor"])
         .then((data) => {
           if (data.data.getProfile[0]) {
             this.isAdvisor = data.data.getProfile[0].isAdvisor;

@@ -104,7 +104,7 @@ export default {
       this.doSearch();
     },
     doSearch() {
-      getAdvisorsPortfolio(this.currentPage, this.search)
+      getAdvisorsPortfolio(this.$cookies.get("token"), this.currentPage, this.search)
         .then((data) => {
           if (data.data.getAdvisorsPortfolio) {
             this.currentPage = data.data.getAdvisorsPortfolio.currentPage;
