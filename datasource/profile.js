@@ -8,6 +8,7 @@ import {
   GET_PROSPECT_PROFILE,
   GET_ADVISOR_LINK,
   GET_ADVISORS,
+  GET_ANY_PROFILE,
 } from "../src/constants/graphql";
 import { connectToBackend, profileURI } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
@@ -29,10 +30,10 @@ export async function getProfile(token, cpf) {
   var mutation = GET_PROFILE;
   const variables = {
     token: token,
-  }
+  };
   if (cpf) {
     mutation = GET_CLIENT_PROFILE;
-    variables["cpf"] = cpf; 
+    variables["cpf"] = cpf;
   }
   return await conn.mutate({
     mutation: mutation,
@@ -47,6 +48,17 @@ export async function getAdvisorsPortfolio(token, page, search) {
     variables: {
       token: token,
       page: page,
+      containing: search,
+    },
+  });
+}
+
+export async function getAnyProfile(token, search) {
+  const conn = connectToBackend(profileURI);
+  return await conn.mutate({
+    mutation: GET_ANY_PROFILE,
+    variables: {
+      token: token,
       containing: search,
     },
   });

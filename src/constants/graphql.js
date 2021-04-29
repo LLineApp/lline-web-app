@@ -31,19 +31,20 @@ export const SET_PROFILE = gql`
   }
 `;
 
-export const GET_PROFILE_FIELDS = function(fields){
+export const GET_PROFILE_FIELDS = function(fields) {
   return gql`
   query getSomeFieldsFromProfile($token: String!) {
     getProfile(token: $token) {
       ${fields}
     }
   }
-`};
+`;
+};
 
 export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
-      isAdvisor 
+      isAdvisor
       page
       id
       cpf
@@ -142,7 +143,7 @@ export const GET_PROFILE = gql`
 export const GET_CLIENT_PROFILE = gql`
   query getProfileQuery($token: String!, $cpf: String) {
     getProfile(token: $token, cpf: $cpf) {
-      isAdvisor 
+      isAdvisor
       page
       id
       cpf
@@ -255,7 +256,11 @@ export const GET_ADVISOR_BY_LINK = gql`
 `;
 
 export const GET_ADVISORS_PORTFOLIO = gql`
-  query getAdvisorsPortfolioQuery($token: String!, $page: Int, $containing: String) {
+  query getAdvisorsPortfolioQuery(
+    $token: String!
+    $page: Int
+    $containing: String
+  ) {
     getAdvisorsPortfolio(token: $token, page: $page, containing: $containing) {
       totalCount
       totalPages
@@ -272,8 +277,26 @@ export const GET_ADVISORS_PORTFOLIO = gql`
   }
 `;
 
+export const GET_ANY_PROFILE = gql`
+  query getAnyProfileQuery($token: String!, $containing: String!) {
+    getAnyProfile(token: $token, containing: $containing) {
+      totalCount
+      profiles {
+        id
+        email
+        cpf
+        fullname
+      }
+    }
+  }
+`;
+
 export const GET_PROSPECT_PROFILE = gql`
-  query getProspectProfileQuery($token: String!, $page: Int, $containing: String) {
+  query getProspectProfileQuery(
+    $token: String!
+    $page: Int
+    $containing: String
+  ) {
     getProspectProfile(token: $token, page: $page, containing: $containing) {
       totalCount
       totalPages
