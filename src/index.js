@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueCookies from "vue-cookies";
-import VueHtmlToPaper from "vue-html-to-paper";
+import Print from 'vue-print-nb'
 import VeeValidate from "vee-validate";
 import { store } from "./_store";
 import { router } from "./_helpers";
@@ -44,7 +44,7 @@ const options = {
   ],
 };
 
-Vue.use(VueHtmlToPaper, options);
+Vue.use(Print);
 Vue.use(VueCookies);
 
 new Vue({

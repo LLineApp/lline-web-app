@@ -6,7 +6,7 @@
         type="button"
         id="print-btn"
         aria-label="Close"
-        v-on:click="print()"
+        v-print="printObj"
         aria-hidden="true"
         variant="outline-secondary"
         squared
@@ -77,6 +77,12 @@ export default {
       profileData: {
         accepted: true,
       },
+      printObj: {
+              id: "datasheet",
+              popTitle: 'Perfil',
+              extraCss: 'https://www.google.com,https://www.google.com',
+              extraHead: '<meta http-equiv="Content-Language"content="pt-br"/>'
+            }
     };
   },
   created() {
@@ -108,9 +114,6 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
-    },
-    print() {
-      this.$htmlToPaper("datasheet");
     },
   },
   components: {
