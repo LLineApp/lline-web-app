@@ -9,9 +9,11 @@
     >
       <b-form-input
         id="email-input"
+        ref="email"
         v-model="profileData.email"
         :state="validateEmail"
         :formatter="formatEmail"
+        v-on:blur="checkIfEmailIsBeingUsed()"
       />
     </b-form-group>
 
@@ -36,8 +38,10 @@
     >
       <b-form-input
         id="cpf-input"
+        ref="cpf"
         v-model="profileData.cpf"
         :state="validateCPF"
+        v-on:blur="checkIfCPFIsBeingUsed()"
       />
     </b-form-group>
 
@@ -111,6 +115,7 @@ import { parsePhoneNumber } from "libphonenumber-js";
 import {
   getAdvisorByLink,
   getSomeFieldsFromProfile,
+  getAnyProfile,
 } from "../../datasource/profile";
 
 export default {
@@ -255,6 +260,72 @@ export default {
         .catch((error) => {
           handleError(error.graphQLErrors[0].message);
         });
+    },
+    checkIfEmailIsBeingUsed() {
+      if (this.profileData.email)
+        getAnyProfile(this.$cookies.get("token"), this.profileData.email)
+          .then((data) => {
+            if (data.data.getAnyProfile) {
+              if (data.data.getAnyProfile.totalCount > 0) {
+                this.$bvModal
+                  .msgBoxConfirm(
+                    `O e-mail ${this.profileData.email} já está sendo utilizado em um outro cadastro, deseja continuar?`,
+                    {
+                      title: "Confirmação",
+                      size: "md",
+                      buttonSize: "md",
+                      okVariant: "warning",
+                      okTitle: "Sim",
+                      cancelTitle: "Não",
+                      footerClass: "p-2",
+                      hideHeaderClose: true,
+                      centered: true,
+                    }
+                  )
+                  .then((value) => {
+                    if (!value) {
+                      this.profileData.email = "";
+                      this.$refs.email.focus();
+                    }
+                  })
+                  .catch((err) => {});
+              }
+            }
+          })
+          .catch((error) => {
+            handleError(error.errors[0].message);
+          });
+    },
+    checkIfCPFIsBeingUsed() {
+      if (this.profileData.cpf)
+        getAnyProfile(this.$cookies.get("token"), this.profileData.cpf)
+          .then((data) => {
+            if (data.data.getAnyProfile) {
+              if (data.data.getAnyProfile.totalCount > 0) {
+                this.$bvModal
+                  .msgBoxOk(
+                    `O CPF ${this.profileData.cpf} já está sendo utilizado em um outro cadastro, no usuário ${data.data.getAnyProfile.profiles[0].fullname}.`,
+                    {
+                      title: "Aviso",
+                      size: "md",
+                      buttonSize: "md",
+                      okVariant: "warning",
+                      footerClass: "p-2",
+                      hideHeaderClose: true,
+                      centered: true,
+                    }
+                  )
+                  .then((value) => {
+                    this.profileData.cpf = "";
+                    this.$refs.cpf.focus();
+                  })
+                  .catch((err) => {});
+              }
+            }
+          })
+          .catch((error) => {
+            handleError(error.errors[0].message);
+          });
     },
   },
 };
