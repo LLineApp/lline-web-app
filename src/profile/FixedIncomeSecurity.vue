@@ -79,6 +79,11 @@ export default {
       this.focusInput();
     }
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   methods: {
     focusInput() {
       this.$refs.kind.focus();

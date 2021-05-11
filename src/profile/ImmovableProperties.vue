@@ -80,6 +80,11 @@ export default {
     }
     this.$emit("setActiveComponent", this.$options.name);
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },

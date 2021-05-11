@@ -1,88 +1,176 @@
 <template>
   <div :key="key">
     <NavBar />
-    <div id="toolbuttons">
-      <b-button
-        type="button"
-        id="print-btn"
-        aria-label="Close"
-        v-print="printObj"
-        aria-hidden="true"
-        variant="outline-secondary"
-        squared
-        ><i class="fa fa-print fa-lg"></i>
-      </b-button>
-      <b-button
-        type="button"
-        id="back-btn"
-        aria-label="Close"
-        v-on:click="goBack()"
-        aria-hidden="true"
-        variant="outline-secondary"
-        squared
-        ><i class="fa fa-arrow-left fa-lg"></i>
-      </b-button>
-    </div>
-    <div id="datasheet">
-      <p>{{ this.title }}</p>
-      <Email v-bind:recordedData="profileData" />
-      <Parents v-bind:recordedData="profileData" />
-      <Marital v-bind:recordedData="profileData" />
-      <Children v-bind:recordedData="profileData" />
-      <ProfessionalSituation v-bind:recordedData="profileData" />
-      <ImmovableProperties v-bind:recordedData="profileData" />
-      <Health v-bind:recordedData="profileData" />
-      <FinancialSituation v-bind:recordedData="profileData" />
-      <InvestorExperiences v-bind:recordedData="profileData" />
-      <Insurances v-bind:recordedData="profileData" />
-      <PersonalPrivateSecurities v-bind:recordedData="profileData" />
-      <PlansAndProjects v-bind:recordedData="profileData" />
-      <InvestmentPortfolios v-bind:recordedData="profileData" />
-      <FixedIncomeSecurities v-bind:recordedData="profileData" />
-      <Knowledge v-bind:recordedData="profileData" />
-      <AdditionalInformations v-bind:recordedData="profileData" />
-      <FinancialAdvisor v-bind:recordedData="profileData" />
+    <b-button-toolbar id="toolbuttons">
+      <b-button-group>
+        <b-button
+          type="button"
+          id="back-btn"
+          aria-label="Close"
+          v-if="isClientProfile"
+          v-on:click="goBack()"
+          aria-hidden="true"
+          variant="outline-secondary"
+          squared
+          ><i class="fa fa-arrow-left fa-lg"></i>
+        </b-button>
+        <b-button
+          type="button"
+          id="save-btn"
+          aria-label="Close"
+          v-on:click="save()"
+          aria-hidden="true"
+          variant="outline-secondary"
+          squared
+          ><i class="fa fa-floppy-o fa-lg"></i>
+        </b-button>
+        <b-button
+          type="button"
+          id="print-btn"
+          aria-label="Close"
+          v-print="printObj"
+          aria-hidden="true"
+          variant="outline-secondary"
+          squared
+          ><i class="fa fa-print fa-lg"></i>
+        </b-button>
+      </b-button-group>
+    </b-button-toolbar>
+    <div id="main">
+      <SideMenu
+        v-bind:activeComponentName="activeComponentName"
+        v-bind:navigate="true"
+        v-on:page="setPage"
+      />
+      <div id="datasheet">
+        <Alert variant="warning" v-bind:showAlert.sync="showAlert"
+          >Os dados de {{ profileData.fullname }} foram gravado com
+          sucesso</Alert
+        >
+        <p>{{ this.title }}</p>
+        <Email
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 2"
+        />
+        <Parents
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 3"
+        />
+        <Marital
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 4"
+        />
+        <Children
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 5"
+        />
+        <ProfessionalSituation
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 6"
+        />
+        <ImmovableProperties
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 7"
+        />
+        <Health
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 8"
+        />
+        <FinancialSituation
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 9"
+        />
+        <InvestorExperiences
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 10"
+        />
+        <Insurances
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 11"
+        />
+        <PersonalPrivateSecurities
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 12"
+        />
+        <PlansAndProjects
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 13"
+        />
+        <InvestmentPortfolios
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 14"
+        />
+        <!-- <FixedIncomeSecurities v-on:setActiveComponent="setActiveComponent" v-bind:recordedData="profileData" v-if="this.page == 15"/> -->
+        <Knowledge
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 16"
+        />
+        <AdditionalInformations
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 17"
+        />
+        <FinancialAdvisor
+          v-on:setActiveComponent="setActiveComponent"
+          v-bind:recordedData="profileData"
+          v-on:done="feedProfileData"
+          v-if="this.page == 18"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import NavBar from "../navbar/NavBar";
-import Email from "../profile/Email";
-import Parents from "../profile/Parents";
-import Marital from "../profile/Marital";
-import Children from "../profile/Children";
-import ProfessionalSituation from "../profile/ProfessionalSituation";
-import ImmovableProperties from "../profile/ImmovableProperties";
-import Health from "../profile/Health";
-import FinancialSituation from "../profile/FinancialSituation";
-import InvestorExperiences from "../profile/InvestorExperiences";
-import Insurances from "../profile/Insurances";
-import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
-import PlansAndProjects from "../profile/PlansAndProjects";
-import InvestmentPortfolios from "../profile/InvestmentPortfolios";
-import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
-import Knowledge from "./Knowledge.vue";
-import AdditionalInformations from "../profile/AdditionalInformations";
-import FinancialAdvisor from "../profile/FinancialAdvisor";
-import { getProfile } from "../../datasource/profile";
-
+import { getProfile, setProfile } from "../../datasource/profile";
 export default {
   name: "profileDataSheet",
   data() {
     return {
       key: 0,
+      page: 2,
       isClientProfile: false,
       title: "Estes são os seus dados",
+      activeComponentName: "",
+      showAlert: false,
       profileData: {
         accepted: true,
       },
       printObj: {
-              id: "datasheet",
-              popTitle: 'Perfil',
-              extraCss: 'https://www.google.com,https://www.google.com',
-              extraHead: '<meta http-equiv="Content-Language"content="pt-br"/>'
-            }
+        id: "datasheet",
+        popTitle: "Perfil",
+        extraCss: "https://www.google.com,https://www.google.com",
+        extraHead: '<meta http-equiv="Content-Language"content="pt-br"/>',
+      },
     };
   },
   created() {
@@ -115,26 +203,47 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    setPage(page) {
+      this.page = page;
+    },
+    save() {
+      this.profileData.page += 1;
+      this.$forceUpdate();
+      this.profileData.page = 19;
+      delete this.profileData.financialAdvisor;
+      setProfile(this.$cookies.get("token"), this.profileData).then((data) => {
+        this.showAlert = true;
+      });
+    },
+    feedProfileData(portionProfileData) {
+      const data = { ...this.profileData, ...portionProfileData };
+      this.profileData = data;
+    },
+    setActiveComponent(name) {
+      this.activeComponentName = name;
+    },
   },
   components: {
-    NavBar,
-    Email,
-    Parents,
-    Marital,
-    Children,
-    ProfessionalSituation,
-    ImmovableProperties,
-    Health,
-    FinancialSituation,
-    InvestorExperiences,
-    Insurances,
-    PersonalPrivateSecurities,
-    PlansAndProjects,
-    InvestmentPortfolios,
-    FixedIncomeSecurities,
-    Knowledge,
-    AdditionalInformations,
-    FinancialAdvisor,
+    NavBar: require("../navbar/NavBar").default,
+    Email: require("./Email").default,
+    Parents: require("./Parents").default,
+    Marital: require("./Marital").default,
+    Children: require("./Children").default,
+    ProfessionalSituation: require("./ProfessionalSituation").default,
+    ImmovableProperties: require("./ImmovableProperties").default,
+    Health: require("./Health").default,
+    FinancialSituation: require("./FinancialSituation").default,
+    InvestorExperiences: require("./InvestorExperiences").default,
+    Insurances: require("./Insurances").default,
+    PersonalPrivateSecurities: require("./PersonalPrivateSecurities").default,
+    PlansAndProjects: require("./PlansAndProjects").default,
+    InvestmentPortfolios: require("./InvestmentPortfolios").default,
+    // FixedIncomeSecurities: require("./FixedIncomeSecurities").default,
+    Knowledge: require("./Knowledge.vue").default,
+    AdditionalInformations: require("./AdditionalInformations").default,
+    FinancialAdvisor: require("./FinancialAdvisor").default,
+    SideMenu: require("./SideMenu").default,
+    Alert: require("../components/Alert").default,
   },
 };
 </script>
@@ -151,25 +260,35 @@ p {
   font-family: "Raleway", sans-serif;
   font-size: 15pt;
 }
+#main {
+  width: 100%;
+  padding-inline: 5%;
+}
 #datasheet {
   padding-inline: 10%;
   padding-top: 3%;
+  width: 80%;
+  float: right;
 }
 ul {
   list-style-type: none;
 }
 #toolbuttons {
+  width: 70%;
   background: #0000000e;
+  float: right;
 }
 #back-btn,
-#print-btn {
+#print-btn,
+#save-btn {
   text-align: center;
   width: 45pt;
   border: none;
-  float: right;
+  float: left;
 }
 #back-btn:hover,
-#print-btn:hover {
+#print-btn:hover,
+#save-btn:hover {
   color: #26fed5;
   background-color: rgba(0, 0, 0, 0.795);
   border-color: black;

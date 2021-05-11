@@ -6,67 +6,30 @@
         v-for="sideMenuItem in this.sideMenuItems"
         :key="sideMenuItem.key"
       >
-        <a class="nav-link disabled" :style="sideMenuItem.style" href="#">{{
-          sideMenuItem.text
-        }}</a>
+        <b-link
+          class="nav-link"
+          :disabled="!navigate"
+          :style="sideMenuItem.style"
+          v-on:click="$emit('page', sideMenuItem.page)"
+          >{{ sideMenuItem.text }}</b-link
+        >
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { SIDE_MENU_ITEMS } from "../constants/arrays";
 export default {
   name: "sideMenu",
-  props: ["activeComponentName"],
+  props: ["activeComponentName", "navigate"],
   data() {
     return {
-      sideMenuItems: [
-        { text: "Dados Pessoais", name: "email", style: "" },
-        { text: "Parentesco", name: "parents", style: "" },
-        { text: "Matrimonial", name: "marital", style: "" },
-        { text: "Filhos", name: "children", style: "" },
-        {
-          text: "Situação Profisional",
-          name: "professionalSituation",
-          style: "",
-        },
-        { text: "Bens Imóveis", name: "immovableProperties", style: "" },
-        { text: "Saúde", name: "health", style: "" },
-        { text: "Situação Financeira", name: "financialSituation", style: "" },
-        {
-          text: "Experiência em Investimentos",
-          name: "investorExperiences",
-          style: "",
-        },
-        { text: "Seguros", name: "insurances", style: "" },
-        {
-          text: "Seguros Pessoais",
-          name: "personalPrivateSecurities",
-          style: "",
-        },
-        { text: "Planos e Projetos", name: "plansAndProjects", style: "" },
-        {
-          text: "Carteira de Investimentos",
-          name: "investmentPortfolios",
-          style: "",
-        },
-        // {
-        //   text: "Títulos de Renda Fixa",
-        //   name: "fixedIncomeSecurities",
-        //   style: "",
-        // },
-        { text: "Conhecimentos", name: "knowledge", style: "" },
-        {
-          text: "Informações Adicionais",
-          name: "additionalInformations",
-          style: "",
-        },
-        { text: "Assessor Financeiro", name: "financialAdvisor", style: "" },
-      ],
+      sideMenuItems: SIDE_MENU_ITEMS,
     };
   },
   watch: {
-    activeComponentName: function () {
+    activeComponentName: function() {
       this.sideMenuItems.forEach((sideMenuItem) => {
         sideMenuItem.style = "font-weight: normal;";
         if (sideMenuItem.name == this.activeComponentName) {
@@ -86,11 +49,8 @@ export default {
   float: left;
   padding-top: 4%;
 }
-.a {
-  font-size: 16pt;
-  font-family: "Raleway", sans-serif;
-}
 .nav-link {
-  padding: 0.4rem;
+  font-size: 12pt;
+  font-family: "Raleway", sans-serif;
 }
 </style>

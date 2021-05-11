@@ -164,6 +164,11 @@ export default {
     }
     this.profileData.page = 18;
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
     invalidAdvisorName: function() {

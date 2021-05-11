@@ -83,6 +83,11 @@ export default {
     this.profileData.page = 12;
     this.$forceUpdate();
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },
