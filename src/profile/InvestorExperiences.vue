@@ -60,6 +60,11 @@ export default {
     this.investorExperienceOptions = INVESTOR_EXPERIENCE_OPTIONS;
     this.$emit("setActiveComponent", this.$options.name);
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },

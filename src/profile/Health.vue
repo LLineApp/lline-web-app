@@ -52,6 +52,11 @@ export default {
       this.$forceUpdate();
     }
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   computed: {
     ...mapState("account", ["status"]),
   },

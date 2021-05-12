@@ -4,18 +4,16 @@ export function sanitize(data) {
   delete data["isAdvisor"];
   delete data["__typename"];
 
-  if (
-    data["financialAdvisor"] &&
-    Object.keys(data["financialAdvisor"]).length === 0
-  ) {
-    delete data["financialAdvisor"];
+  if (data["financialAdvisor"]) {
+    if (Object.keys(data["financialAdvisor"]).length === 0) {
+      delete data["financialAdvisor"];
+    }
+    delete data["financialAdvisor"]["__typename"];
   }
-
-  if (data["cpf"] == "") {
-    delete data["cpf"];
-  }
-
   for (var item in data) {
+    if (data[item] == null) {
+      delete data[item];
+    }
     if (Array.isArray(data[item])) {
       const sanitizedItem = [];
       data[item].forEach((element) => {

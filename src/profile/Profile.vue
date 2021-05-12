@@ -3,6 +3,7 @@
     <SideMenu
       v-if="this.profileData.page > 0"
       v-bind:activeComponentName="activeComponentName"
+      v-bind:navigate="false"
     />
     <div id="dados-div">
       <Intro
@@ -174,28 +175,7 @@
 </template>
 
 <script>
-import Email from "../profile/Email";
-import Intro from "../profile/Intro";
-import Parents from "../profile/Parents";
-import Marital from "../profile/Marital";
-import Children from "../profile/Children";
-import ProfessionalSituation from "../profile/ProfessionalSituation";
-import ImmovableProperties from "../profile/ImmovableProperties";
-import FinancialSituation from "../profile/FinancialSituation";
-import InvestorExperiences from "../profile/InvestorExperiences";
-import Insurances from "../profile/Insurances";
-import PersonalPrivateSecurities from "../profile/PersonalPrivateSecurities";
-import PlansAndProjects from "../profile/PlansAndProjects";
-import Health from "../profile/Health";
-// import FixedIncomeSecurities from "../profile/FixedIncomeSecurities";
-import InvestmentPortfolios from "../profile/InvestmentPortfolios";
-import Knowledge from "./Knowledge.vue";
-import AdditionalInformations from "../profile/AdditionalInformations";
-import FinancialAdvisor from "../profile/FinancialAdvisor";
 import { getProfile, setProfile, handleError } from "../../datasource/profile";
-import SideMenu from "../profile/SideMenu";
-import Congrats from "../profile/Congrats";
-
 export default {
   name: "profile",
   props: ["filledByAdvisor", "currentPage"],
@@ -250,26 +230,28 @@ export default {
     }
   },
   components: {
-    Intro,
-    Email,
-    Parents,
-    Marital,
-    Children,
-    ProfessionalSituation,
-    ImmovableProperties,
-    FinancialSituation,
-    InvestorExperiences,
-    Insurances,
-    PersonalPrivateSecurities,
-    PlansAndProjects,
-    Health,
-    // FixedIncomeSecurities,
-    InvestmentPortfolios,
-    Knowledge,
-    AdditionalInformations,
-    FinancialAdvisor,
-    SideMenu,
-    Congrats,
+    Email: require("../profile/Email").default,
+    Intro: require("../profile/Intro").default,
+    Parents: require("../profile/Parents").default,
+    Marital: require("../profile/Marital").default,
+    Children: require("../profile/Children").default,
+    ProfessionalSituation: require("../profile/ProfessionalSituation").default,
+    ImmovableProperties: require("../profile/ImmovableProperties").default,
+    FinancialSituation: require("../profile/FinancialSituation").default,
+    InvestorExperiences: require("../profile/InvestorExperiences").default,
+    Insurances: require("../profile/Insurances").default,
+    PersonalPrivateSecurities: require("../profile/PersonalPrivateSecurities")
+      .default,
+    PlansAndProjects: require("../profile/PlansAndProjects").default,
+    Health: require("../profile/Health").default,
+    // FixedIncomeSecurities: require("../profile/FixedIncomeSecurities").default,
+    InvestmentPortfolios: require("../profile/InvestmentPortfolios").default,
+    Knowledge: require("./Knowledge.vue").default,
+    AdditionalInformations: require("../profile/AdditionalInformations")
+      .default,
+    FinancialAdvisor: require("../profile/FinancialAdvisor").default,
+    SideMenu: require("../profile/SideMenu").default,
+    Congrats: require("../profile/Congrats").default,
   },
   computed: {
     showAdvisorPage: function() {
@@ -286,10 +268,10 @@ export default {
   },
   methods: {
     feedProfileData(portionProfileData) {
-      if (this.profileData.cpf != "") {
+      if (!this.profileData.cpf) {
         portionProfileData["cpf"] = this.profileData.cpf;
       }
-      if (portionProfileData["cpf"] == "") {
+      if (!portionProfileData["cpf"]) {
         portionProfileData["cpf"] = this.filledByAdvisor
           ? this.profileData.cpf
           : this.$cookies.get("cpf");

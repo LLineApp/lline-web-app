@@ -61,7 +61,6 @@
       id="phone-group"
       label="Informe aqui todos os seus números de telefone com DDD, um por um"
       label-for="phone-input"
-      v-if="showButtons"
     >
       <b-input-group>
         <b-form-input
@@ -79,7 +78,10 @@
       </b-input-group>
     </b-form-group>
 
-    <b-form-group :label="phoneListLabel" v-slot="{ ariaDescribedby }">
+    <b-form-group
+      label="Informe qual telefone preferencial"
+      v-slot="{ ariaDescribedby }"
+    >
       <b-form-radio-group
         id="phone-radio-slots"
         v-model="profileData.preferredContact"
@@ -134,7 +136,6 @@ export default {
       },
       submitted: false,
       phoneInput: "",
-      phoneListLabel: "Telefones",
       advisorsLink: null,
       isAdvisor: false,
     };
@@ -142,9 +143,6 @@ export default {
   mounted() {
     this.advisorsLink = sessionStorage.getItem("advisorsLink");
 
-    if (this.showButtons) {
-      this.phoneListLabel = "Informe qual é o seu telefone preferencial";
-    }
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
       this.profileData.page = 2;
@@ -157,6 +155,11 @@ export default {
       this.checkIfUserIsAdvisor();
     }
     this.$emit("setActiveComponent", this.$options.name);
+  },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
   },
   computed: {
     ...mapState("account", ["status"]),

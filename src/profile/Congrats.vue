@@ -43,6 +43,11 @@ export default {
         "O questionário foi devidamente preenchido. Agora basta pedir para abrir uma conta na LLine.";
     }
   },
+  updated() {
+    if (!this.showButtons) {
+      this.$emit("done", this.profileData);
+    }
+  },
   methods: {
     routeToHome() {
       this.$emit("done", { page: 19 });
