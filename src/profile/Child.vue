@@ -76,8 +76,6 @@
 </template>
 
 <script>
-import { InMemoryCache } from "apollo-cache-inmemory";
-
 export default {
   name: "child",
   props: ["childData"],
@@ -100,7 +98,6 @@ export default {
     },
     alertCountDownChanged(dismissCountDown) {
       this.alert.dismissCountDown = dismissCountDown;
-      this.$refs.financialAdvisorInput.focus();
     },
     doApply() {
       this.$emit("apply", this.childData);

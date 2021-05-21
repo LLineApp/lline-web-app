@@ -30,7 +30,7 @@
     </b-form-group>
 
     <b-form-group
-      v-if="this.filledByAdvisor"
+      v-if="this.isClientData"
       id="cpf-group"
       label="CPF"
       label-for="cpf-input"
@@ -122,7 +122,7 @@ import {
 
 export default {
   name: "email",
-  props: ["recordedData", "showButtons", "filledByAdvisor"],
+  props: ["recordedData", "showButtons", "isClientData"],
   data() {
     return {
       profileData: {
@@ -145,13 +145,16 @@ export default {
 
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
+      if (this.profileData.fullname == "Usuário") {
+        this.profileData.fullname = "";
+      }
       this.profileData.page = 2;
       this.$forceUpdate();
     }
 
     this.fillUpAdvisorData();
 
-    if (!this.filledByAdvisor) {
+    if (!this.isClientData) {
       this.checkIfUserIsAdvisor();
     }
     this.$emit("setActiveComponent", this.$options.name);
@@ -190,7 +193,7 @@ export default {
         .trim();
     },
     fillUpAdvisorData() {
-      if ((this.advisorsLink || this.filledByAdvisor) && this.showButtons) {
+      if ((this.advisorsLink || this.isClientData) && this.showButtons) {
         getAdvisorByLink(this.$cookies.get("token"), this.advisorsLink)
           .then((data) => {
             if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {

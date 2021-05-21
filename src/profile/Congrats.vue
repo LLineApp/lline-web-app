@@ -11,7 +11,7 @@
       id="goto-profilesheet"
       class="btn btn-primary"
       v-on:click="routeToProfileSheet"
-      v-if="!this.filledByAdvisor"
+      v-if="!this.isClientData"
     >
       Revisar meu perfil
     </b-button>
@@ -28,7 +28,7 @@
 <script>
 export default {
   name: "congrats",
-  props: ["filledByAdvisor"],
+  props: ["isClientData"],
   data() {
     return {
       title: "Concluído",
@@ -38,7 +38,7 @@ export default {
   },
 
   mounted() {
-    if (this.filledByAdvisor) {
+    if (this.isClientData) {
       this.message =
         "O questionário foi devidamente preenchido. Agora basta pedir para abrir uma conta na LLine.";
     }

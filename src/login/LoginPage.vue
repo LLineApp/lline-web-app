@@ -71,11 +71,9 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { userService } from "../_services/user.service";
-import Footer from "../footer/Footer";
 
 export default {
   data() {
@@ -93,10 +91,9 @@ export default {
   },
   mounted() {
     localStorage.removeItem("user");
+    localStorage.removeItem("vuex");
     Vue.$cookies.remove("token");
     Vue.$cookies.remove("cpf");
-    sessionStorage.removeItem("userData");
-    sessionStorage.removeItem("profileData");
     sessionStorage.removeItem("lastSearchParams");
   },
   methods: {
@@ -121,9 +118,9 @@ export default {
               sessionStorage.setItem("advisorsLink", this.$route.query.advisor);
             }
             if (data.data.tokenAuth.token) {
-                this.$cookies.set("token", data.data.tokenAuth.token);
-                this.$cookies.set("cpf", cpf);
-                this.$router.push("/");
+              this.$cookies.set("token", data.data.tokenAuth.token);
+              this.$cookies.set("cpf", cpf);
+              this.$router.push("/");
             }
           })
           .catch((error) => {
@@ -143,7 +140,9 @@ export default {
       }
     },
   },
-  components: { Footer },
+  components: {
+    Footer: require("../footer/Footer").default,
+  },
 };
 </script>
 

@@ -5,7 +5,7 @@ import HomePage from "../home/HomePage";
 import LoginPage from "../login/LoginPage";
 import RegisterPage from "../register/RegisterPage";
 import ProfileDataSheet from "../profile/ProfileDataSheet";
-import Profile from "../profile/Profile";
+import Client from "../profile/Client";
 import Portfolio from "../advisor/Portfolio";
 import Prospect from "../advisor/Prospect";
 
@@ -18,7 +18,7 @@ export const router = new Router({
     { path: "/login", component: LoginPage },
     { path: "/register", component: RegisterPage },
     { path: "/profile", component: ProfileDataSheet, name: "ProfileDataSheet" },
-    { path: "/new", component: Profile, props: { filledByAdvisor: true } },
+    { path: "/new", component: Client },
     { path: "/portfolio", component: Portfolio },
     { path: "/prospect", component: Prospect },
 

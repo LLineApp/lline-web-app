@@ -1,61 +1,60 @@
 <template>
   <div :key="this.key">
-    <NavBar :key="this.keyNavBar"/>
+    <NavBar :key="this.keyNavBar" />
     <Profile
-      v-if="this.userData.page < this.profilePages"
-      v-bind:currentPage="userData.page"
+      v-if="this.profileData.page < this.profilePages"
+      v-bind:currentPage="profileData.page"
       v-on:paging="updatePage"
     />
   </div>
 </template>
 
 <script>
-import NavBar from "../navbar/NavBar";
-import Profile from "../profile/Profile";
-import {
-  getSomeFieldsFromProfile,
-  handleError,
-} from "../../datasource/profile";
+import { mapActions, mapGetters } from "vuex";
+import { getProfile, handleError } from "../../datasource/profile";
 
 export default {
   name: "home",
-  components: { NavBar, Profile },
+  components: {
+    NavBar: require("../navbar/NavBar").default,
+    Profile: require("../profile/Profile").default,
+  },
   data() {
     return {
       key: 0,
-      keyNavBar:0,
+      keyNavBar: 0,
       profilePages: 19,
-      userData: {
-        page: 0,
-        fullname: "Usuário",
-        isAdvisor: false,
-      },
     };
   },
+  computed: {
+    ...mapGetters("profileData", ["profileData"]),
+  },
   mounted() {
-    if (this.$cookies.get("token")) {
-    getSomeFieldsFromProfile(this.$cookies.get("token"), ["page", "fullname", "isAdvisor"])
-      .then((data) => {
-        const userData = data.data.getProfile[0];
-        if (userData) {
-          this.userData.page = userData.page || 0;
-          this.userData.fullname = userData.fullname || "Usuário";
-          this.userData.isAdvisor = userData.isAdvisor;
-          sessionStorage.setItem("userData", JSON.stringify(this.userData));
-          this.key += 1;
-          this.$forceUpdate();
-        }
-      })
-      .catch((error) => {
-        handleError(error.graphQLErrors[0].message);
-      });
-    }
+    this.loadProfileData(this.$cookies.get("token"), this.$cookies.get("cpf"));
   },
   methods: {
+    ...mapActions("profileData", ["updateProfileData"]),
+
     updatePage(page) {
-      this.userData.page = page;
+      this.updateProfileData({
+        updates: {
+          page: page,
+        },
+      });
       this.key += 1;
       this.keyNavBar += 1;
+    },
+    loadProfileData(token, cpf) {
+      getProfile(token, cpf)
+        .then((data) => {
+          if (data.data.getProfile[0]) {
+            this.updateProfileData({ updates: data.data.getProfile[0] });
+            this.key += 1;
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
     },
   },
 };

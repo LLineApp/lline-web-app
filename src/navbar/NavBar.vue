@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AdvisorLink v-if="ShowAdvLink" v-on:ok="AdvLinkToggle" />
+    <AdvisorLink v-if="showAdvLink" v-on:ok="advLinkToggle" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -22,7 +22,7 @@
           <a href="/prospect"
             ><i class="fa fa-users"></i> Prospectar Novos Clientes</a
           >
-          <a href="#" @click="AdvLinkToggle()"
+          <a href="#" @click="advLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link Assessor</a
           >
         </div>
@@ -58,36 +58,31 @@
 </template>
 
 <script>
-import AdvisorLink from "../advisor/AdvisorLink";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { AdvisorLink },
+  components: {
+    AdvisorLink: require("../advisor/AdvisorLink").default,
+  },
   data() {
     return {
-      ShowAdvLink: false,
-      userData: {
-        fullname: "Usuário",
-        isAdvisor: false,
-      },
+      showAdvLink: false,
     };
   },
   mounted() {
-    const userData = JSON.parse(sessionStorage.getItem("userData"));
-    if (userData) {
-      this.userData = userData;
-    }
     this.setActive();
   },
   computed: {
+    ...mapGetters("profileData", ["profileData"]),
     userFirstName: function() {
-      if (this.userData.fullname) {
-        return this.userData.fullname.split(" ")[0];
+      if (this.profileData.fullname) {
+        return this.profileData.fullname.split(" ")[0];
       } else {
         return "Usuário";
       }
     },
     userIsAdvisor: function() {
-      return this.userData.isAdvisor;
+      return this.profileData.isAdvisor;
     },
   },
   methods: {
@@ -114,15 +109,14 @@ export default {
         }
       }
     },
-    AdvLinkToggle: function() {
-      this.ShowAdvLink = !this.ShowAdvLink;
+    advLinkToggle: function() {
+      this.showAdvLink = !this.showAdvLink;
     },
     logout: function() {
       localStorage.removeItem("user");
+      localStorage.removeItem("vuex");
       this.$cookies.remove("token");
       this.$cookies.remove("cpf");
-      sessionStorage.removeItem("userData");
-      sessionStorage.removeItem("profileData");
       sessionStorage.removeItem("lastSearchParams");
       this.$router.push("/login");
     },

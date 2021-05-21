@@ -93,7 +93,6 @@ export default {
     },
     alertCountDownChanged(dismissCountDown) {
       this.alert.dismissCountDown = dismissCountDown;
-      this.$refs.financialAdvisorInput.focus();
     },
     doApply() {
       this.$emit("apply", this.childData);
