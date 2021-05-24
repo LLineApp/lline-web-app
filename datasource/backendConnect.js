@@ -35,8 +35,8 @@ export function connectToBackend(backendUri) {
       mode: "cors",
     },
     onError: ({ networkError, graphQLErrors }) => {
-      console.log("graphQLErrors", graphQLErrors);
-      console.log("networkError", networkError);
+      console.error("graphQLErrors", graphQLErrors);
+      console.error("networkError", networkError);
     },
   });
 
@@ -45,7 +45,7 @@ export function connectToBackend(backendUri) {
     cache: new InMemoryCache(),
     connectToDevTools: true,
     onError: (e) => {
-      console.log(e);
+      console.error(e);
     },
     headers: {
       Accept: "application/json",

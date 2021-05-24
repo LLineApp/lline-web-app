@@ -5,16 +5,21 @@ export function sanitize(data) {
   delete data["__typename"];
 
   if (data["financialAdvisor"]) {
+    delete data["financialAdvisor"]["__typename"];
     if (Object.keys(data["financialAdvisor"]).length === 0) {
       delete data["financialAdvisor"];
     }
-    delete data["financialAdvisor"]["__typename"];
   }
   for (var item in data) {
     if (data[item] == null) {
       delete data[item];
-    }
-    if (Array.isArray(data[item])) {
+    } else if (data[item] == undefined) {
+      delete data[item];
+    } else if (["phones", "advisors", "investorExperiences"].includes(item)) {
+      if (!data[item].length) {
+        delete data[item];
+      }
+    } else if (Array.isArray(data[item])) {
       const sanitizedItem = [];
       data[item].forEach((element) => {
         delete element["key"];
@@ -45,7 +50,9 @@ export function sanitize(data) {
           }
         } else sanitizedItem.push(element);
       });
-      data[item] = sanitizedItem;
+      if (sanitizedItem.length) {
+        data[item] = sanitizedItem;
+      }
     }
   }
   return data;

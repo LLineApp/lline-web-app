@@ -132,10 +132,9 @@ export default {
     },
     alertCountDownChanged(dismissCountDown) {
       this.alert.dismissCountDown = dismissCountDown;
-      this.$refs.financialAdvisorInput.focus();
     },
     doApply() {
-      this.$emit("apply", this.childData);
+      this.$emit("apply", this.immovablePropertyData);
       this.alert.dismissCountDown = this.alert.dismissSecs;
     },
   },
