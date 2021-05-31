@@ -177,6 +177,7 @@ export default {
   computed: {
     ...mapState("account", ["status"]),
     ...mapGetters("advisorData", ["advisorData"]),
+    ...mapGetters("loginData", ["loginData"]),
     invalidAdvisorName: function() {
       return (
         (this.advisorId == 0 &&
@@ -252,7 +253,7 @@ export default {
       this.$refs.financialAdvisorInput.focus();
     },
     loadAdvisorsList() {
-      getAllAdvisors(this.$cookies.get("token"))
+      getAllAdvisors(this.loginData.token)
         .then((data) => {
           if (data.data.getAdvisors.advisorsList) {
             this.advisorsList = data.data.getAdvisors.advisorsList;

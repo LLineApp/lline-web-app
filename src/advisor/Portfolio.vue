@@ -49,6 +49,8 @@
 <script>
 import NavBar from "../navbar/NavBar";
 import { getAdvisorsPortfolio, handleError } from "../../datasource/profile";
+import { mapGetters } from "vuex";
+
 export default {
   name: "portfolio",
   components: { NavBar },
@@ -98,13 +100,16 @@ export default {
     }
     this.doSearch();
   },
+  computed: {
+    ...mapGetters("loginData", ["loginData"]),
+  },
   methods: {
     newSearch() {
       this.currentPage = 1;
       this.doSearch();
     },
     doSearch() {
-      getAdvisorsPortfolio(this.$cookies.get("token"), this.currentPage, this.search)
+      getAdvisorsPortfolio(this.loginData.token, this.currentPage, this.search)
         .then((data) => {
           if (data.data.getAdvisorsPortfolio) {
             this.currentPage = data.data.getAdvisorsPortfolio.currentPage;

@@ -94,13 +94,11 @@ export default {
   mounted() {
     localStorage.removeItem("user");
     localStorage.removeItem("vuex");
-    Vue.$cookies.remove("token");
-    Vue.$cookies.remove("cpf");
     sessionStorage.removeItem("lastSearchParams");
   },
   methods: {
-    ...mapActions("account", ["login", "logout"]),
     ...mapActions("advisorData", ["updateAdvisorData"]),
+    ...mapActions("loginData", ["updateLoginData"]),
     handleSubmit(e) {
       this.submitted = true;
       const { cpf, password } = this;
@@ -122,8 +120,12 @@ export default {
               });
             }
             if (data.data.tokenAuth.token) {
-              this.$cookies.set("token", data.data.tokenAuth.token);
-              this.$cookies.set("cpf", cpf);
+              this.updateLoginData({
+                updates: {
+                  token: data.data.tokenAuth.token,
+                  cpf: cpf,
+                },
+              });
               this.$router.push("/");
             }
           })

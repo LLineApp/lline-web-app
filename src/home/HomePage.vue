@@ -28,9 +28,19 @@ export default {
   },
   computed: {
     ...mapGetters("profileData", ["profileData"]),
+    ...mapGetters("loginData", ["loginData"]),
   },
   mounted() {
-    this.loadProfileData(this.$cookies.get("token"), this.$cookies.get("cpf"));
+    getProfile(this.loginData.token, this.loginData.cpf)
+      .then((data) => {
+        if (data.data.getProfile[0]) {
+          this.updateProfileData({ updates: data.data.getProfile[0] });
+          this.key += 1;
+        }
+      })
+      .catch((error) => {
+        handleError(error.graphQLErrors[0].message);
+      });
   },
   methods: {
     ...mapActions("profileData", ["updateProfileData"]),
@@ -43,18 +53,6 @@ export default {
       });
       this.key += 1;
       this.keyNavBar += 1;
-    },
-    loadProfileData(token, cpf) {
-      getProfile(token, cpf)
-        .then((data) => {
-          if (data.data.getProfile[0]) {
-            this.updateProfileData({ updates: data.data.getProfile[0] });
-            this.key += 1;
-          }
-        })
-        .catch((error) => {
-          handleError(error.graphQLErrors[0].message);
-        });
     },
   },
 };

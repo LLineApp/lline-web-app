@@ -164,6 +164,7 @@ export default {
   computed: {
     ...mapState("account", ["status"]),
     ...mapGetters("advisorData", ["advisorData"]),
+    ...mapGetters("loginData", ["loginData"]),
     formatDate(value) {
       return moment(value).format("DD/MM/YYYY");
     },
@@ -192,7 +193,7 @@ export default {
     },
     fillUpAdvisorData() {
       if ((this.advisorData.link || this.isClientData) && this.showButtons) {
-        getAdvisorByLink(this.$cookies.get("token"), this.advisorData.link)
+        getAdvisorByLink(this.loginData.token, this.advisorData.link)
           .then((data) => {
             const advisor = data.data.setAdvisorsLink.advisorsLinkData.advisor;
             if (advisor) {
@@ -252,7 +253,7 @@ export default {
         .catch((err) => {});
     },
     checkIfUserIsAdvisor() {
-      getSomeFieldsFromProfile(this.$cookies.get("token"), ["isAdvisor"])
+      getSomeFieldsFromProfile(this.loginData.token, ["isAdvisor"])
         .then((data) => {
           if (data.data.getProfile[0]) {
             this.isAdvisor = data.data.getProfile[0].isAdvisor;
@@ -264,7 +265,7 @@ export default {
     },
     checkIfEmailIsBeingUsed() {
       if (this.profileData.email)
-        getAnyProfile(this.$cookies.get("token"), this.profileData.email)
+        getAnyProfile(this.loginData.token, this.profileData.email)
           .then((data) => {
             if (data.data.getAnyProfile) {
               if (data.data.getAnyProfile.totalCount > 0) {
@@ -299,7 +300,7 @@ export default {
     },
     checkIfCPFIsBeingUsed() {
       if (this.profileData.cpf)
-        getAnyProfile(this.$cookies.get("token"), this.profileData.cpf)
+        getAnyProfile(this.loginData.token, this.profileData.cpf)
           .then((data) => {
             if (data.data.getAnyProfile) {
               if (data.data.getAnyProfile.totalCount > 0) {

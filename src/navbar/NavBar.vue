@@ -6,24 +6,25 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <div class="topnav" id="main-top-nav">
-      <a href="/home" id="home" class="a">Home</a>
+      <router-link to="/home" id="home" class="a">Início</router-link>
       <div id="advisor-div" class="dropdown">
         <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="/new"
-            ><i class="fa fa-user-plus"></i> Incluir Novo Cliente</a
+          <router-link to="/new"
+            ><i class="fa fa-user-plus"></i> Incluir Novo Cliente</router-link
           >
-          <a href="/portfolio"
-            ><i class="fa fa-users"></i> Carteira de Clientes</a
+          <router-link to="/portfolio"
+            ><i class="fa fa-users"></i> Carteira de Clientes</router-link
           >
-          <a href="/prospect"
-            ><i class="fa fa-users"></i> Prospectar Novos Clientes</a
+          <router-link to="/prospect"
+            ><i class="fa fa-users"></i> Prospectar Novos Clientes</router-link
           >
-          <a href="#" @click="advLinkToggle()"
-            ><i class="fa fa-external-link-square"></i> Link Assessor</a
+          <router-link to="" @click.native="advLinkToggle()"
+            ><i class="fa fa-external-link-square"></i> Link
+            Assessor</router-link
           >
         </div>
       </div>
@@ -41,8 +42,12 @@
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="/profile"><i class="fa fa-user"></i> Perfil</a>
-          <a href="#" @click="logout()"><i class="fa fa-sign-out"></i> Sair</a>
+          <router-link to="/profile"
+            ><i class="fa fa-user"></i> Perfil</router-link
+          >
+          <router-link to="/login"
+            ><i class="fa fa-sign-out"></i> Sair</router-link
+          >
         </div>
       </div>
       <a
@@ -111,14 +116,6 @@ export default {
     },
     advLinkToggle: function() {
       this.showAdvLink = !this.showAdvLink;
-    },
-    logout: function() {
-      localStorage.removeItem("user");
-      localStorage.removeItem("vuex");
-      this.$cookies.remove("token");
-      this.$cookies.remove("cpf");
-      sessionStorage.removeItem("lastSearchParams");
-      this.$router.push("/login");
     },
   },
 };

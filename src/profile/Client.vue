@@ -161,6 +161,7 @@
 
 <script>
 import { setProfile } from "../../datasource/profile";
+import { mapGetters } from "vuex";
 
 export default {
   name: "client",
@@ -206,14 +207,16 @@ export default {
     SideMenu: require("../profile/SideMenu").default,
     Congrats: require("../profile/Congrats").default,
   },
+  computed: {
+    ...mapGetters("loginData", ["loginData"]),
+  },
   methods: {
     feedProfileData(portionProfileData) {
-
       if (!portionProfileData.cpf) {
         portionProfileData.cpf = this.profileData.cpf;
       }
       Object.assign(this.profileData, portionProfileData);
-      setProfile(this.$cookies.get("token"), portionProfileData).then(
+      setProfile(this.loginData.token, portionProfileData).then(
         (data) => {
           if (!this.profileData.cpf) {
             this.profileData.cpf = data.data.setProfile.profile.cpf;
