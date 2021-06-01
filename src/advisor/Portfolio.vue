@@ -11,7 +11,7 @@
       <b-input-group id="search-group">
         <b-form-input
           id="search-input"
-          v-model="search"
+          v-model="searchData.filter"
           v-on:keyup.enter="newSearch()"
         />
         <b-input-group-append>
@@ -23,16 +23,16 @@
 
       <b-pagination
         id="pagination"
-        :key="currentPage"
+        :key="searchData.page"
         first-number
         last-number
         per-page="10"
-        v-model="currentPage"
-        :total-rows="totalRows"
+        :value="searchData.page"
+        :total-rows="searchData.totalRows"
         v-on:input="doSearch"
       ></b-pagination>
 
-      <b-table hover :items="items" :fields="fields" id="table">
+      <b-table hover :items="this.searchData.items" :fields="fields" id="table">
         <template #cell(showProfile)="item">
           <b-button
             id="show-client-profile-button"
@@ -49,16 +49,13 @@
 <script>
 import NavBar from "../navbar/NavBar";
 import { getAdvisorsPortfolio, handleError } from "../../datasource/profile";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "portfolio",
   components: { NavBar },
   data() {
     return {
-      search: "",
-      currentPage: 1,
-      totalRows: 1,
       fields: [
         {
           key: "fullname",
@@ -81,55 +78,52 @@ export default {
           sortable: false,
         },
       ],
-      items: [
-        {
-          id: 0,
-          fullname: "",
-          email: "",
-          preferredContact: "",
-          cpf: "",
-        },
-      ],
     };
   },
   mounted() {
-    const params = JSON.parse(sessionStorage.getItem("lastSearchParams"));
-    if (params) {
-      this.search = params.search, 
-      this.currentPage = params.currentPage;
+    if (this.searchData.items.length == 0) {
+      this.search();
     }
-    this.doSearch();
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
+    ...mapGetters("searchData", ["searchData"]),
   },
   methods: {
+    ...mapActions("searchData", ["updateSearchData"]),
     newSearch() {
-      this.currentPage = 1;
-      this.doSearch();
+      this.doSearch(1);
     },
-    doSearch() {
-      getAdvisorsPortfolio(this.loginData.token, this.currentPage, this.search)
+    doSearch(page) {
+      this.updateSearchData({
+        updates: {
+          page: page,
+        },
+      });
+      this.search();
+    },
+    search() {
+      getAdvisorsPortfolio(
+        this.loginData.token,
+        this.searchData.page,
+        this.searchData.filter
+      )
         .then((data) => {
           if (data.data.getAdvisorsPortfolio) {
-            this.currentPage = data.data.getAdvisorsPortfolio.currentPage;
-            this.totalRows = data.data.getAdvisorsPortfolio.totalCount;
-            this.items = data.data.getAdvisorsPortfolio.portfolio;
+            this.updateSearchData({
+              updates: {
+                page: data.data.getAdvisorsPortfolio.currentPage,
+                totalRows: data.data.getAdvisorsPortfolio.totalCount,
+                items: data.data.getAdvisorsPortfolio.portfolio,
+              },
+            });
           }
         })
         .catch((error) => {
           handleError(error.graphQLErrors[0].message);
         });
     },
-    saveSearchParams() {
-      const params = {
-        search: this.search,
-        currentPage: this.currentPage,
-      };
-      sessionStorage.setItem("lastSearchParams", JSON.stringify(params));
-    },
     showClientProfile(cpf) {
-      this.saveSearchParams();
       this.$router.push({
         name: "ProfileDataSheet",
         params: { clientCpf: cpf },
