@@ -51,6 +51,7 @@
         <Email
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
+          v-bind:isClientData="isClientProfile"
           v-on:done="feedProfileData"
           v-if="this.page == 2"
         />
@@ -160,7 +161,6 @@ export default {
     return {
       key: 0,
       page: 2,
-      isClientProfile: false,
       title: "Estes são os seus dados",
       activeComponentName: "",
       showAlert: false,
@@ -176,12 +176,7 @@ export default {
     };
   },
   created() {
-    const cpf = this.$route.params.clientCpf;
-    if (cpf) {
-      this.isClientProfile = true;
-    }
-
-    getProfile(this.loginData.token, cpf)
+    getProfile(this.loginData.token, this.$route.params.clientCpf)
       .then((data) => {
         this.profileData = data.data.getProfile[0];
         if (this.isClientProfile) {
@@ -203,6 +198,9 @@ export default {
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
+    isClientProfile: function() {
+      return Boolean(this.$route.params.clientCpf);
+    },
   },
   methods: {
     goBack() {

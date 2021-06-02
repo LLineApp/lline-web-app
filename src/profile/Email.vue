@@ -30,7 +30,7 @@
     </b-form-group>
 
     <b-form-group
-      v-if="this.isClientData"
+      v-if="isClientData"
       id="cpf-group"
       label="CPF"
       label-for="cpf-input"
