@@ -8,8 +8,7 @@ import { account } from "./account.module";
 import { users } from "./users.module";
 import { profileData } from "./profile.module";
 import { advisorData } from "./advisor.module";
-
-//localhost:8080/login?advisor=Pbz7YJLA75cVUGKc6kU4dw
+import { loginData } from "./login.module";
 
 // const ls = new SecureLS({ isCompression: false });
 
@@ -22,6 +21,7 @@ export const store = new Vuex.Store({
     users,
     profileData,
     advisorData,
+    loginData,
   },
   plugins: [
     createPersistedState(),
