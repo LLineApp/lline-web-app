@@ -6,7 +6,7 @@
         <div id="banner-div">
           <img
             id="banner"
-            src="https://res.cloudinary.com/tiagogbt/image/upload/v1612053768/wise-advisors_logo-1-700x144_bbgdho.png"
+            src="https://res.cloudinary.com/tiagogbt/image/upload/v1622598334/LogoWise_cfmsww.png"
           />
         </div>
         <div id="text-div">
@@ -43,6 +43,9 @@
   float: left;
   width: 50% ;
   height: 100%;
+}
+#banner-div{
+  padding-left: 10%;
 }
 #banner {
   padding-left: 10%;
