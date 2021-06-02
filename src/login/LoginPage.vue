@@ -94,7 +94,6 @@ export default {
   mounted() {
     localStorage.removeItem("user");
     localStorage.removeItem("vuex");
-    sessionStorage.removeItem("lastSearchParams");
   },
   methods: {
     ...mapActions("advisorData", ["updateAdvisorData"]),

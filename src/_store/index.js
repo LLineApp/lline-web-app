@@ -9,6 +9,7 @@ import { users } from "./users.module";
 import { profileData } from "./profile.module";
 import { advisorData } from "./advisor.module";
 import { loginData } from "./login.module";
+import { searchData } from "./search.module";
 
 // const ls = new SecureLS({ isCompression: false });
 
@@ -22,6 +23,7 @@ export const store = new Vuex.Store({
     profileData,
     advisorData,
     loginData,
+    searchData,
   },
   plugins: [
     createPersistedState(),
