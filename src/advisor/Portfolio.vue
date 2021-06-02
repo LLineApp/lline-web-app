@@ -32,7 +32,7 @@
         v-on:input="doSearch"
       ></b-pagination>
 
-      <b-table hover :items="this.searchData.items" :fields="fields" id="table">
+      <b-table hover :items="searchData.items" :fields="fields" id="table">
         <template #cell(showProfile)="item">
           <b-button
             id="show-client-profile-button"
