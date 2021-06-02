@@ -97,11 +97,16 @@ export default {
   },
   methods: {
     ...mapActions("account", ["register"]),
+    ...mapActions("advisorData", ["updateAdvisorData"]),
     handleSubmit(e) {
       e.preventDefault();
       this.submitted = true;
       if (this.$route.query.advisor) {
-        sessionStorage.setItem("advisorsLink", this.$route.query.advisor);
+        this.updateAdvisorData({
+          updates: {
+            link: this.$route.query.advisor,
+          },
+        });
       }
       this.$validator.validate().then((valid) => {
         if (valid) {

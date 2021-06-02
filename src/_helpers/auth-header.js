@@ -1,10 +1,7 @@
-export function authHeader() {
-    // return authorization header with jwt token
-    let token = Vue.$cookies.get("token");
+import { loginData } from "../_store/login.module";
 
-    if (token) {
-        return { 'Authorization': 'Bearer ' + token };
-    } else {
-        return {};
-    }
+export function authHeader() {
+  return loginData.state.data.token
+    ? { Authorization: "Bearer " + loginData.state.data.token }
+    : {};
 }

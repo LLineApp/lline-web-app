@@ -153,6 +153,8 @@
 
 <script>
 import { getProfile, setProfile } from "../../datasource/profile";
+import { mapGetters } from "vuex";
+
 export default {
   name: "profileDataSheet",
   data() {
@@ -174,7 +176,7 @@ export default {
     };
   },
   created() {
-    getProfile(this.$cookies.get("token"), this.$route.params.clientCpf)
+    getProfile(this.loginData.token, this.$route.params.clientCpf)
       .then((data) => {
         this.profileData = data.data.getProfile[0];
         if (this.isClientProfile) {
@@ -195,6 +197,7 @@ export default {
       });
   },
   computed: {
+    ...mapGetters("loginData", ["loginData"]),
     isClientProfile: function() {
       return Boolean(this.$route.params.clientCpf);
     },
@@ -211,7 +214,7 @@ export default {
       this.$forceUpdate();
       this.profileData.page = 19;
       delete this.profileData.financialAdvisor;
-      setProfile(this.$cookies.get("token"), this.profileData).then((data) => {
+      setProfile(this.loginData.token, this.profileData).then((data) => {
         this.showAlert = true;
       });
     },

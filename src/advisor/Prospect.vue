@@ -31,6 +31,8 @@
 <script>
 import NavBar from "../navbar/NavBar";
 import { getProspectProfile, handleError } from "../../datasource/profile";
+import { mapGetters } from "vuex";
+
 export default {
   name: "prospect",
   components: { NavBar },
@@ -69,9 +71,12 @@ export default {
   mounted() {
     this.doSearch();
   },
+  computed: {
+    ...mapGetters("loginData", ["loginData"]),
+  },
   methods: {
     doSearch() {
-      getProspectProfile(this.$cookies.get("token"), this.currentPage, this.search)
+      getProspectProfile(this.loginData.token, this.currentPage, this.search)
         .then((data) => {
           if (data.data.getProspectProfile) {
             this.currentPage = data.data.getProspectProfile.currentPage;

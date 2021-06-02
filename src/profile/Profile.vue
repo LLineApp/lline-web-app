@@ -196,8 +196,8 @@ export default {
     }
   },
   created() {
-    if (this.$cookies.get("token")) {
-      getProfile(this.$cookies.get("token"), this.$cookies.get("cpf"))
+    if (this.loginData.token) {
+      getProfile(this.loginData.token, this.loginData.cpf)
         .then((data) => {
           const profileData = {};
           profileData["page"] = 0;
@@ -249,6 +249,7 @@ export default {
   },
   computed: {
     ...mapGetters("profileData", ["profileData"]),
+    ...mapGetters("loginData", ["loginData"]),
   },
   methods: {
     ...mapActions("profileData", ["updateProfileData"]),
@@ -257,7 +258,7 @@ export default {
         portionProfileData["cpf"] = this.profileData.cpf;
       }
       if (!portionProfileData["cpf"]) {
-        portionProfileData["cpf"] = this.$cookies.get("cpf");
+        portionProfileData["cpf"] = this.loginData.cpf;
       }
       const data = { ...this.profileData, ...portionProfileData };
       this.updateProfileData({
@@ -268,7 +269,7 @@ export default {
         delete portionProfileData.financialAdvisor["id"];
         delete portionProfileData.financialAdvisor["__typename"];
       }
-      setProfile(this.$cookies.get("token"), portionProfileData).then(
+      setProfile(this.loginData.token, portionProfileData).then(
         (data) => {
           if (!this.profileData.cpf) {
             this.updateProfileData({

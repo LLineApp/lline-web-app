@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { parsePhoneNumber } from "libphonenumber-js";
 import {
@@ -136,13 +136,10 @@ export default {
       },
       submitted: false,
       phoneInput: "",
-      advisorsLink: null,
       isAdvisor: false,
     };
   },
   mounted() {
-    this.advisorsLink = sessionStorage.getItem("advisorsLink");
-
     if (this.recordedData) {
       Object.assign(this.profileData, this.recordedData);
       if (this.profileData.fullname == "Usuário") {
@@ -166,6 +163,8 @@ export default {
   },
   computed: {
     ...mapState("account", ["status"]),
+    ...mapGetters("advisorData", ["advisorData"]),
+    ...mapGetters("loginData", ["loginData"]),
     formatDate(value) {
       return moment(value).format("DD/MM/YYYY");
     },
@@ -193,21 +192,18 @@ export default {
         .trim();
     },
     fillUpAdvisorData() {
-      if ((this.advisorsLink || this.isClientData) && this.showButtons) {
-        getAdvisorByLink(this.$cookies.get("token"), this.advisorsLink)
+      if ((this.advisorData.link || this.isClientData) && this.showButtons) {
+        getAdvisorByLink(this.loginData.token, this.advisorData.link)
           .then((data) => {
-            if (data.data.setAdvisorsLink.advisorsLinkData.advisor) {
-              this.profileData["advisors"] = [
-                parseInt(data.data.setAdvisorsLink.advisorsLinkData.advisor.id),
-              ];
+            const advisor = data.data.setAdvisorsLink.advisorsLinkData.advisor;
+            if (advisor) {
+              this.profileData["advisors"] = [parseInt(advisor.id)];
 
-              this.profileData["financialAdvisor"] = {};
-              this.profileData.financialAdvisor["fullname"] =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.fullname;
-              this.profileData.financialAdvisor["register"] =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.register;
-              this.profileData.financialAdvisor["company"] =
-                data.data.setAdvisorsLink.advisorsLinkData.advisor.company;
+              this.profileData["financialAdvisor"] = {
+                fullname: advisor.fullname,
+                register: advisor.register,
+                company: advisor.company,
+              };
 
               this.profileData.acceptFinancialAdvisorContact = Boolean(
                 this.profileData.financialAdvisor.fullname
@@ -257,7 +253,7 @@ export default {
         .catch((err) => {});
     },
     checkIfUserIsAdvisor() {
-      getSomeFieldsFromProfile(this.$cookies.get("token"), ["isAdvisor"])
+      getSomeFieldsFromProfile(this.loginData.token, ["isAdvisor"])
         .then((data) => {
           if (data.data.getProfile[0]) {
             this.isAdvisor = data.data.getProfile[0].isAdvisor;
@@ -269,7 +265,7 @@ export default {
     },
     checkIfEmailIsBeingUsed() {
       if (this.profileData.email)
-        getAnyProfile(this.$cookies.get("token"), this.profileData.email)
+        getAnyProfile(this.loginData.token, this.profileData.email)
           .then((data) => {
             if (data.data.getAnyProfile) {
               if (data.data.getAnyProfile.totalCount > 0) {
@@ -304,7 +300,7 @@ export default {
     },
     checkIfCPFIsBeingUsed() {
       if (this.profileData.cpf)
-        getAnyProfile(this.$cookies.get("token"), this.profileData.cpf)
+        getAnyProfile(this.loginData.token, this.profileData.cpf)
           .then((data) => {
             if (data.data.getAnyProfile) {
               if (data.data.getAnyProfile.totalCount > 0) {
