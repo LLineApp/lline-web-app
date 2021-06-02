@@ -72,7 +72,8 @@
 
 <script>
 import Vue from "vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
+
 import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
 
 export default {
@@ -88,6 +89,7 @@ export default {
   },
   computed: {
     ...mapState("account", ["status"]),
+    ...mapGetters("advisorData", ["advisorData"]),
   },
   mounted() {
     localStorage.removeItem("user");
@@ -98,6 +100,7 @@ export default {
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),
+    ...mapActions("advisorData", ["updateAdvisorData"]),
     handleSubmit(e) {
       this.submitted = true;
       const { cpf, password } = this;
@@ -111,11 +114,12 @@ export default {
             },
           })
           .then((data) => {
-            if (
-              !sessionStorage.getItem("advisorsLink") &&
-              this.$route.query.advisor
-            ) {
-              sessionStorage.setItem("advisorsLink", this.$route.query.advisor);
+            if (!this.advisorData.link && this.$route.query.advisor) {
+              this.updateAdvisorData({
+                updates: {
+                  link: this.$route.query.advisor,
+                },
+              });
             }
             if (data.data.tokenAuth.token) {
               this.$cookies.set("token", data.data.tokenAuth.token);

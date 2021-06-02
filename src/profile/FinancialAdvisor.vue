@@ -79,7 +79,7 @@
     >
       Concluir
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
+    <b-img v-show="status.registering" :src="registering" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import { REGISTERING } from "../constants/base64";
 import { getAllAdvisors, handleError } from "../../datasource/profile";
 
@@ -112,6 +112,7 @@ export default {
           company: "",
         },
       },
+      registering: REGISTERING,
       advisorId: 0,
       alreadyHasFinancialAdvisor: false,
       doYouHaveFinancialAdvisor: false,
@@ -144,7 +145,7 @@ export default {
       loadList = false;
       this.$forceUpdate();
     }
-    if (sessionStorage.getItem("advisorsLink")) {
+    if (this.advisorData.link) {
       if (this.profileData.financialAdvisor.fullname) {
         this.doYouHaveFinancialAdvisor = true;
         this.profileData.acceptFinancialAdvisorContact = true;
@@ -155,7 +156,11 @@ export default {
         this.whatIsHisCompanyLabel = "A operadora é";
       }
 
-      sessionStorage.removeItem("advisorsLink");
+      this.updateAdvisorData({
+        updates: {
+          link: "",
+        },
+      });
       loadList = false;
       this.$forceUpdate();
     }
@@ -171,6 +176,7 @@ export default {
   },
   computed: {
     ...mapState("account", ["status"]),
+    ...mapGetters("advisorData", ["advisorData"]),
     invalidAdvisorName: function() {
       return (
         (this.advisorId == 0 &&
@@ -205,6 +211,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("advisorData", ["updateAdvisorData"]),
     setLabelsToAdvisorsLink: function() {
       this.intro = "Que legal! Você já tem um assessor financeiro crendenciado";
       this.whatIsHisNameLabel = "O nome dele é";
