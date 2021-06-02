@@ -51,6 +51,7 @@
         <Email
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
+          v-bind:isClientData="isClientProfile"
           v-on:done="feedProfileData"
           v-if="this.page == 2"
         />
@@ -152,13 +153,14 @@
 
 <script>
 import { getProfile, setProfile } from "../../datasource/profile";
+import { mapGetters } from "vuex";
+
 export default {
   name: "profileDataSheet",
   data() {
     return {
       key: 0,
       page: 2,
-      isClientProfile: false,
       title: "Estes são os seus dados",
       activeComponentName: "",
       showAlert: false,
@@ -174,12 +176,7 @@ export default {
     };
   },
   created() {
-    const cpf = this.$route.params.clientCpf;
-    if (cpf) {
-      this.isClientProfile = true;
-    }
-
-    getProfile(this.$cookies.get("token"), cpf)
+    getProfile(this.loginData.token, this.$route.params.clientCpf)
       .then((data) => {
         this.profileData = data.data.getProfile[0];
         if (this.isClientProfile) {
@@ -199,6 +196,12 @@ export default {
         this.$toasted.error(message, options);
       });
   },
+  computed: {
+    ...mapGetters("loginData", ["loginData"]),
+    isClientProfile: function() {
+      return Boolean(this.$route.params.clientCpf);
+    },
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
@@ -211,7 +214,7 @@ export default {
       this.$forceUpdate();
       this.profileData.page = 19;
       delete this.profileData.financialAdvisor;
-      setProfile(this.$cookies.get("token"), this.profileData).then((data) => {
+      setProfile(this.loginData.token, this.profileData).then((data) => {
         this.showAlert = true;
       });
     },

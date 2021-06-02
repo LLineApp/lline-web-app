@@ -15,6 +15,8 @@
 
 <script>
 import { getAdvisorLink } from "../../datasource/profile";
+import { mapGetters } from "vuex";
+
 export default {
   name: "advisor-link",
   data() {
@@ -23,7 +25,7 @@ export default {
     };
   },
   mounted() {
-    getAdvisorLink(this.$cookies.get("token"), )
+    getAdvisorLink(this.loginData.token)
       .then((data) => {
         if (data.data.setAdvisorsLink.advisorsLinkData.link) {
           const protocol = window.location.protocol;
@@ -46,6 +48,9 @@ export default {
 
         this.$toasted.error(message, options);
       });
+  },
+  computed: {
+    ...mapGetters("loginData", ["loginData"]),
   },
   methods: {
     copyLink: function () {
