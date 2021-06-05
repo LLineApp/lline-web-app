@@ -57,11 +57,11 @@
           <button
             id="submit-register-button"
             class="btn btn-primary"
-            :disabled="status.registering"
+            :disabled="submitted"
           >
             Cadastrar
           </button>
-          <img v-show="status.registering" src="REGISTERING" />
+          <img v-show="submitted" src="REGISTERING" />
           <router-link id="cancel-button" to="/login" class="btn btn-link"
             >Cancelar</router-link
           >
@@ -92,11 +92,7 @@ export default {
   apollo: {
     $client: "authClient",
   },
-  computed: {
-    ...mapState("account", ["status"]),
-  },
   methods: {
-    ...mapActions("account", ["register"]),
     ...mapActions("advisorData", ["updateAdvisorData"]),
     handleSubmit(e) {
       e.preventDefault();

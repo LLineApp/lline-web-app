@@ -52,12 +52,12 @@
           <button
             id="login-button"
             class="btn btn-primary"
-            :disabled="status.loggingIn"
+            :disabled="submitted"
           >
             Entrar
           </button>
           <img
-            v-show="status.loggingIn"
+            v-show="submitted"
             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
           />
           <router-link id="register-button" to="/register" class="btn btn-link"
@@ -71,9 +71,7 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { mapState, mapActions, mapGetters } from "vuex";
-
+import { mapActions, mapGetters } from "vuex";
 import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
 
 export default {
@@ -88,11 +86,9 @@ export default {
     $client: "authClient",
   },
   computed: {
-    ...mapState("account", ["status"]),
     ...mapGetters("advisorData", ["advisorData"]),
   },
   mounted() {
-    localStorage.removeItem("user");
     localStorage.removeItem("vuex");
   },
   methods: {
@@ -129,6 +125,7 @@ export default {
             }
           })
           .catch((error) => {
+            this.submitted = false;
             const message = error.graphQLErrors[0].message;
             const options = {
               position: "top-center",
