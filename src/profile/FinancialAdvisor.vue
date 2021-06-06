@@ -79,7 +79,6 @@
     >
       Concluir
     </b-button>
-    <b-img v-show="status.registering" :src="registering" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -93,8 +92,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-import { REGISTERING } from "../constants/base64";
+import { mapGetters, mapActions } from "vuex";
 import { getAllAdvisors, handleError } from "../../datasource/profile";
 
 export default {
@@ -112,7 +110,6 @@ export default {
           company: "",
         },
       },
-      registering: REGISTERING,
       advisorId: 0,
       alreadyHasFinancialAdvisor: false,
       doYouHaveFinancialAdvisor: false,
@@ -175,7 +172,6 @@ export default {
     }
   },
   computed: {
-    ...mapState("account", ["status"]),
     ...mapGetters("advisorData", ["advisorData"]),
     ...mapGetters("loginData", ["loginData"]),
     invalidAdvisorName: function() {

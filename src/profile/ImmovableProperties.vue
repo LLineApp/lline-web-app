@@ -34,7 +34,6 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -45,9 +44,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { REGISTERING } from "../constants/base64";
 import ImmovableProperty from "../profile/ImmovableProperty";
 
 export default {
@@ -84,9 +80,6 @@ export default {
     if (!this.showButtons) {
       this.$emit("done", this.profileData);
     }
-  },
-  computed: {
-    ...mapState("account", ["status"]),
   },
   methods: {
     addImmovableProperty() {

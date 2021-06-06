@@ -61,7 +61,7 @@
           >
             Cadastrar
           </button>
-          <img v-show="submitted" src="REGISTERING" />
+          <img v-show="submitted" :src="registering" />
           <router-link id="cancel-button" to="/login" class="btn btn-link"
             >Cancelar</router-link
           >
@@ -73,9 +73,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import { CREATE_USER } from "../constants/graphql";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { REGISTERING } from "../constants/base64";
 import Footer from "../footer/Footer";
 
@@ -87,6 +86,7 @@ export default {
         password: "",
       },
       submitted: false,
+      registering: REGISTERING,
     };
   },
   apollo: {

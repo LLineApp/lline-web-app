@@ -153,7 +153,6 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" :src="registering" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -164,9 +163,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { REGISTERING } from "../constants/base64";
 import { formatNumericField } from "../_helpers/formaters";
 
 export default {
@@ -190,7 +186,6 @@ export default {
         privateSecurityCompanyValue: null,
         privateSecurityCurrentBalance: null,
       },
-      registering: REGISTERING,
       companyHasPrivateSecurity: false,
       yesNo: [
         { text: "Não", value: false },
@@ -207,9 +202,6 @@ export default {
       this.$forceUpdate();
     }
     this.$emit("setActiveComponent", this.$options.name);
-  },
-  computed: {
-    ...mapState("account", ["status"]),
   },
   methods: {
     formatNumericField(value) {
