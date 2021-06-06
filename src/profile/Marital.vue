@@ -53,7 +53,6 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" src="REGISTERING" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -64,10 +63,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { REGISTERING } from "../constants/base64";
-
 export default {
   name: "marital",
   props: ["recordedData", "showButtons"],
@@ -104,7 +99,6 @@ export default {
     }
   },
   computed: {
-    ...mapState("account", ["status"]),
     hasSpouse: function() {
       return ["Casado(a)", "União estável"].includes(
         this.profileData.maritalStatus
