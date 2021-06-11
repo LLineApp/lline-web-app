@@ -18,7 +18,6 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" :src="registering" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -29,9 +28,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { REGISTERING } from "../constants/base64";
 import InvestorExperience from "../profile/InvestorExperience";
 import { INVESTOR_EXPERIENCE_OPTIONS } from "../constants/arrays";
 
@@ -42,7 +38,6 @@ export default {
     return {
       key: 0,
       investorExperienceOptions: INVESTOR_EXPERIENCE_OPTIONS,
-      registering: REGISTERING,
       profileData: {
         page: 10,
         investorExperiences: [],
@@ -64,9 +59,6 @@ export default {
     if (!this.showButtons) {
       this.$emit("done", this.profileData);
     }
-  },
-  computed: {
-    ...mapState("account", ["status"]),
   },
   methods: {
     applyInvestorExperience(kind, value) {

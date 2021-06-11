@@ -25,7 +25,6 @@
     >
       Confirmar
     </b-button>
-    <b-img v-show="status.registering" :src="registering" />
     <b-button id="back" v-if="showButtons" v-on:click="$emit('back')"
       >Voltar</b-button
     >
@@ -36,9 +35,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { REGISTERING } from "../constants/base64";
 import Insurance from "../profile/Insurance";
 import { INSURANCE_OPTIONS } from "../constants/arrays";
 
@@ -49,7 +45,6 @@ export default {
     return {
       key: 0,
       insurancesOptions: INSURANCE_OPTIONS,
-      registering: REGISTERING,
       profileData: {
         page: 11,
         insurances: [],
@@ -69,9 +64,6 @@ export default {
     if (!this.showButtons) {
       this.$emit("done", this.profileData);
     }
-  },
-  computed: {
-    ...mapState("account", ["status"]),
   },
   methods: {
     applyInsurance(insurance) {

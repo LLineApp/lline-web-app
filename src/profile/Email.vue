@@ -111,8 +111,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { mapGetters } from "vuex";
 import { parsePhoneNumber } from "libphonenumber-js";
 import {
   getAdvisorByLink,
@@ -162,7 +161,6 @@ export default {
     }
   },
   computed: {
-    ...mapState("account", ["status"]),
     ...mapGetters("advisorData", ["advisorData"]),
     ...mapGetters("loginData", ["loginData"]),
     formatDate(value) {
