@@ -20,6 +20,10 @@
       />
     </div>
     <div id="data-div">
+      <Alert :variant="alert.variant" v-bind:showAlert.sync="alert.show"
+        ><p>{{ this.alert.message }}</p>
+        <p v-if="alert.errorMessage">{{ this.alert.errorMessage }}</p>
+      </Alert>
       <h2 id="register-message">Cadastro</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
@@ -76,7 +80,6 @@
 import { mapActions } from "vuex";
 import { CREATE_USER } from "../constants/graphql";
 import { REGISTERING } from "../constants/base64";
-import Footer from "../footer/Footer";
 
 export default {
   data() {
@@ -87,6 +90,12 @@ export default {
       },
       submitted: false,
       registering: REGISTERING,
+      alert: {
+        show: false,
+        variant: "",
+        message: "",
+        errorMessage: "",
+      },
     };
   },
   apollo: {
@@ -115,13 +124,37 @@ export default {
               },
             })
             .then((data) => {
-              this.$router.push("/login");
+              this.showAlertSuccess(() => {
+                this.$router.push("/login");
+              });
+            })
+            .catch((error) => {
+              this.showAlertError(error);
+              this.submitted = false;
+              this.user.cpf = "";
+              this.user.password = "";
             });
         }
       });
     },
+    showAlertSuccess(callback) {
+      this.alert.variant = "success";
+      this.alert.message = "O registro foi efetuado com sucesso";
+      this.alert.errorMessage = "";
+      this.alert.show = true;
+      setTimeout(callback, 5000);
+    },
+    showAlertError(e) {
+      this.alert.variant = "warning";
+      this.alert.message = "Não foi possível efetuar o registro.";
+      this.alert.errorMessage = e.message;
+      this.alert.show = true;
+    },
   },
-  components: { Footer },
+  components: {
+    Footer: require("../footer/Footer").default,
+    Alert: require("../components/Alert").default,
+  },
 };
 </script>
 
