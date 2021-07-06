@@ -2,31 +2,16 @@ import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-const development = {
-  AUTH_URI: "http://127.0.0.1:8001/graphql/",
-  PROFILE_URI: "http://127.0.0.1:8000/graphql/",
-};
-
-const production = {
-  AUTH_URI: "https://lline-auth.herokuapp.com/graphql/",
-  PROFILE_URI: "https://llinebknd.herokuapp.com/graphql/",
-};
-
-export const authURI =
+const profileURI =
   process.env.NODE_ENV === "development"
-    ? development.AUTH_URI
-    : production.AUTH_URI;
-export const profileURI =
-  process.env.NODE_ENV === "development"
-    ? development.PROFILE_URI
-    : production.PROFILE_URI;
+    ? "http://127.0.0.1:8000/graphql/"
+    : "https://llinebknd.herokuapp.com/graphql/";
 
-export function connectToBackend(backendUri) {
+export function connectToBackend() {
   const httpLink = new HttpLink({
-    uri: backendUri,
+    uri: profileURI,
     useGETForQueries: false,
     credentials: "include",
-    // method: "POST",
     headers: {
       Accept: "application/json",
       "content-type": "application/json",

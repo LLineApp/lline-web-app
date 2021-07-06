@@ -82,9 +82,6 @@ export default {
       submitted: false,
     };
   },
-  apollo: {
-    $client: "authClient",
-  },
   computed: {
     ...mapGetters("advisorData", ["advisorData"]),
   },

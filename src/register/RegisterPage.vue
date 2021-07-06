@@ -98,9 +98,6 @@ export default {
       },
     };
   },
-  apollo: {
-    $client: "authClient",
-  },
   methods: {
     ...mapActions("advisorData", ["updateAdvisorData"]),
     handleSubmit(e) {

@@ -10,12 +10,12 @@ import {
   GET_ADVISORS,
   GET_ANY_PROFILE,
 } from "../src/constants/graphql";
-import { connectToBackend, profileURI } from "./backendConnect";
+import { connectToBackend } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
 
 export async function setProfile(token, profileInput) {
   const data = sanitize(profileInput);
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: SET_PROFILE,
     variables: {
@@ -26,7 +26,7 @@ export async function setProfile(token, profileInput) {
 }
 
 export async function getProfile(token, cpf) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   var mutation = GET_PROFILE;
   const variables = {
     token: token,
@@ -42,7 +42,7 @@ export async function getProfile(token, cpf) {
 }
 
 export async function getAdvisorsPortfolio(token, page, search) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_ADVISORS_PORTFOLIO,
     variables: {
@@ -54,7 +54,7 @@ export async function getAdvisorsPortfolio(token, page, search) {
 }
 
 export async function getAnyProfile(token, search) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_ANY_PROFILE,
     variables: {
@@ -65,7 +65,7 @@ export async function getAnyProfile(token, search) {
 }
 
 export async function getProspectProfile(token, page, search) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_PROSPECT_PROFILE,
     variables: {
@@ -77,7 +77,7 @@ export async function getProspectProfile(token, page, search) {
 }
 
 export async function getAllAdvisors(token) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_ADVISORS,
     variables: {
@@ -89,7 +89,7 @@ export async function getAllAdvisors(token) {
 }
 
 export async function getAdvisorByLink(token, advisorsLink) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_ADVISOR_BY_LINK,
     variables: {
@@ -100,7 +100,7 @@ export async function getAdvisorByLink(token, advisorsLink) {
 }
 
 export async function getAdvisorLink(token) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_ADVISOR_LINK,
     variables: {
@@ -110,7 +110,7 @@ export async function getAdvisorLink(token) {
 }
 
 export async function getSomeFieldsFromProfile(token, fields) {
-  const conn = connectToBackend(profileURI);
+  const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_PROFILE_FIELDS(fields.join("\n")),
     variables: {
