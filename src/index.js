@@ -10,11 +10,7 @@ import Toasted from "vue-toasted";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 //  import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap-vue/dist/bootstrap-vue.css';
-import {
-  connectToBackend,
-  authURI,
-  profileURI,
-} from "../datasource/backendConnect";
+import { connectToBackend } from "../datasource/backendConnect";
 
 Vue.config.productionTip = false;
 
@@ -28,11 +24,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 const apolloProvider = new VueApollo({
-  clients: {
-    authClient: connectToBackend(authURI),
-    profileClient: connectToBackend(profileURI),
-  },
-  defaultClient: connectToBackend(authURI),
+  defaultClient: connectToBackend(),
 });
 
 const options = {
