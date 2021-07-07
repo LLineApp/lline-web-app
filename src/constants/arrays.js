@@ -27,7 +27,7 @@ export const SIDE_MENU_ITEMS = [
     page: 6,
   },
   {
-    text: "Bens Imóveis",
+    text: "Patrimônio Imobilizado",
     name: "immovableProperties",
     style: "",
     page: 7,

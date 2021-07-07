@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <h1>Patrimônios (Bens, veículos e Imóveis)</h1>
+    <h1>Patrimônio Imobilizado</h1>
 
     <ul id="immovableProperties">
       <li
