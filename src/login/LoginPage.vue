@@ -37,6 +37,9 @@
         </div>
         <div class="form-group">
           <label htmlFor="password">Senha</label>
+          <a :href="passwordResetURI" target="_blank" id="reset-password">
+            Esqueci minha senha
+          </a>
           <input
             id="input-password"
             type="password"
@@ -73,6 +76,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { TOKEN_AUTH_MUTATION } from "../constants/graphql";
+import { backendURI } from "../_helpers/backend.js";
 
 export default {
   data() {
@@ -84,6 +88,9 @@ export default {
   },
   computed: {
     ...mapGetters("advisorData", ["advisorData"]),
+    passwordResetURI() {
+      return backendURI("password_reset/");
+    },
   },
   mounted() {
     localStorage.removeItem("vuex");
@@ -148,6 +155,11 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
+#reset-password {
+  font-family: "Raleway", sans-serif;
+  font-size: 10pt;
+  padding-left: 9%;
+}
 #background,
 #background-color {
   position: fixed;
