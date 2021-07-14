@@ -1,15 +1,11 @@
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
-
-const profileURI =
-  process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:8000/graphql/"
-    : "https://llinebknd.herokuapp.com/graphql/";
+import { backendURI } from "../src/_helpers/backend.js";
 
 export function connectToBackend() {
   const httpLink = new HttpLink({
-    uri: profileURI,
+    uri: backendURI("graphql/"),
     useGETForQueries: false,
     credentials: "include",
     headers: {
