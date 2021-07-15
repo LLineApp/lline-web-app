@@ -31,15 +31,10 @@
             class="form-control"
             :class="{ 'is-invalid': submitted && !cpf }"
           />
-          <div v-show="submitted && !cpf" class="invalid-feedback">
-            Informe seu CPF
-          </div>
+          <div v-show="submitted && !cpf" class="invalid-feedback">Informe seu CPF</div>
         </div>
         <div class="form-group">
           <label htmlFor="password">Senha</label>
-          <a :href="passwordResetURI" target="_blank" id="reset-password">
-            Esqueci minha senha
-          </a>
           <input
             id="input-password"
             type="password"
@@ -52,11 +47,7 @@
           </div>
         </div>
         <div class="form-group">
-          <button
-            id="login-button"
-            class="btn btn-primary"
-            :disabled="submitted"
-          >
+          <button id="login-button" class="btn btn-primary" :disabled="submitted">
             Entrar
           </button>
           <img
@@ -66,6 +57,11 @@
           <router-link id="register-button" to="/register" class="btn btn-link"
             >Ainda não estou cadastrado</router-link
           >
+        </div>
+        <div class="form-group">
+          <a :href="passwordResetURI" target="_blank" id="reset-password">
+            Esqueci minha senha
+          </a>
         </div>
       </form>
     </div>
@@ -157,8 +153,8 @@ export default {
 
 #reset-password {
   font-family: "Raleway", sans-serif;
-  font-size: 10pt;
-  padding-left: 9%;
+  font-size: 11pt;
+  color: white;
 }
 #background,
 #background-color {
