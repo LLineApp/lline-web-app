@@ -9,6 +9,7 @@ import {
   GET_ADVISOR_LINK,
   GET_ADVISORS,
   GET_ANY_PROFILE,
+  GET_ADVISORS_BY_CLIENT,
 } from "../src/constants/graphql";
 import { connectToBackend } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
@@ -84,6 +85,17 @@ export async function getAllAdvisors(token) {
       token: token,
       page: -1,
       containing: "",
+    },
+  });
+}
+
+export async function getAllAdvisorsByClient(token, cpf) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: GET_ADVISORS_BY_CLIENT,
+    variables: {
+      token: token,
+      cpf: cpf,
     },
   });
 }
