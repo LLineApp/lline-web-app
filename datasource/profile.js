@@ -9,7 +9,6 @@ import {
   GET_ADVISOR_LINK,
   GET_ADVISORS,
   GET_ANY_PROFILE,
-  GET_ADVISORS_BY_CLIENT,
   ADD_ADVISOR_TO_CLIENT,
   REMOVE_ADVISOR_FROM_PROFILE,
   CHANGE_MAIN_ADVISOR_OF_PROFILE,
@@ -95,7 +94,7 @@ export async function getAllAdvisors(token) {
 export async function getAllAdvisorsByClient(token, cpf) {
   const conn = connectToBackend();
   return await conn.mutate({
-    mutation: GET_ADVISORS_BY_CLIENT,
+    mutation: GET_CLIENT_PROFILE,
     variables: {
       token: token,
       cpf: cpf,

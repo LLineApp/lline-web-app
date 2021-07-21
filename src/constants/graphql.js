@@ -136,6 +136,13 @@ export const GET_PROFILE = gql`
         value
         tx
       }
+      advisors {
+        fullname
+        register
+        company
+        cpf
+        mainAdvisor
+      }
     }
   }
 `;
@@ -234,6 +241,13 @@ export const GET_CLIENT_PROFILE = gql`
         kind
         value
         tx
+      }
+      advisors {
+        fullname
+        register
+        company
+        cpf
+        mainAdvisor
       }
     }
   }
@@ -335,20 +349,6 @@ export const GET_ADVISORS = gql`
         cpf
         register
         company
-      }
-    }
-  }
-`;
-
-export const GET_ADVISORS_BY_CLIENT = gql`
-  query getProfileQuery($token: String!, $cpf: String) {
-    getProfile(token: $token, cpf: $cpf) {
-      advisors {
-        fullname
-        register
-        company
-        cpf
-        mainAdvisor
       }
     }
   }

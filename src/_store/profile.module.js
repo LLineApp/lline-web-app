@@ -19,7 +19,13 @@ const state = {
     phones: [],
     preferredContact: "",
     acceptFinancialAdvisorContact: false,
-    advisors: [],
+    advisors: [{
+      fullname: "",
+      register: "",
+      company: "",
+      cpf: "",
+      mainAdvisor: false,
+    }],
     financialAdvisor: {
       fullname: "",
       register: "0",
