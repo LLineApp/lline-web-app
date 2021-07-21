@@ -353,3 +353,36 @@ export const GET_ADVISORS_BY_CLIENT = gql`
     }
   }
 `;
+
+export const ADD_ADVISOR_TO_CLIENT = gql`
+  mutation addAdvisorToProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
+    addAdvisorToProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
+      message{
+        id,
+        text
+      }
+    }
+  }
+`;
+
+export const REMOVE_ADVISOR_FROM_PROFILE = gql`
+  mutation removeAdvisorFromProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
+    removeAdvisorFromProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
+      message{
+        id,
+        text
+      }
+    }
+  }
+`;
+
+export const CHANGE_MAIN_ADVISOR_OF_PROFILE = gql`
+  mutation changeMainAdvisorOfProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
+    changeMainAdvisorOfProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
+      message{
+        id,
+        text
+      }
+    }
+  }
+`;
