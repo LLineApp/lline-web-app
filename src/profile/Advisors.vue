@@ -18,12 +18,18 @@
           <b-button
             v-if="!row.item.mainAdvisor"
             size="sm"
-            @click="info(row.item, row.index, $event.target)"
+            @click="removeAdvisor(recordedData.id, recordedData.advisors[row.index].id)"
             class="mr-1"
           >
             Remover
           </b-button>
-          <b-button size="sm" @click="changeMainAdvisor(2, 52)" class="mr-1">
+          <b-button
+            size="sm"
+            @click="
+              changeMainAdvisor(recordedData.id, recordedData.advisors[row.index].id)
+            "
+            class="mr-1"
+          >
             Tornar Principal
           </b-button>
         </template>
@@ -47,7 +53,7 @@
       <b-button
         id="add-advisor"
         size="sm"
-        @click="info(row.item, row.index, $event.target)"
+        @click="addAdvisor(recordedData.id)"
         class="mr-1"
       >
         Adicionar Assessor
@@ -57,9 +63,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import {
-  getAllAdvisorsByClient,
   getAllAdvisors,
   addAdvisorToClient,
   removeAdvisorFromProfile,
@@ -75,7 +80,6 @@ export default {
       fields: [
         { key: "fullname", label: "Nome" },
         { key: "company", label: "Empresa" },
-        { key: "mainAdvisor", label: "Principal" },
         { key: "actions", label: "Ações" },
       ],
       advisorsListKey: 0,
@@ -106,6 +110,24 @@ export default {
           alert(data.data.changeMainAdvisorOfProfile.message.text);
         }
       );
+      this.$emit("changeAdv");
+    },
+    removeAdvisor(profileid, advisorid) {
+      removeAdvisorFromProfile(this.loginData.token, profileid, advisorid).then(
+        (data) => {
+          alert(data.data.removeAdvisorFromProfile.message.text);
+        }
+      );
+      this.$emit("changeAdv");
+    },
+    addAdvisor(profileid) {
+      var advisorInput = document.getElementById("financialAdvisor-input").value;
+      var advisorId = document.querySelector(
+        "#advisors-list option[value='" + advisorInput + "']"
+      ).dataset.id;
+      addAdvisorToClient(this.loginData.token, profileid, advisorId).then((data) => {
+        alert(data.data.addAdvisorToProfile.message.text);
+      });
       this.$emit("changeAdv");
     },
   },

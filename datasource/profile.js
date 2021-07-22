@@ -91,17 +91,6 @@ export async function getAllAdvisors(token) {
   });
 }
 
-export async function getAllAdvisorsByClient(token, cpf) {
-  const conn = connectToBackend();
-  return await conn.mutate({
-    mutation: GET_CLIENT_PROFILE,
-    variables: {
-      token: token,
-      cpf: cpf,
-    },
-  });
-}
-
 export async function getAdvisorByLink(token, advisorsLink) {
   const conn = connectToBackend();
   return await conn.mutate({
