@@ -9,6 +9,9 @@ import {
   GET_ADVISOR_LINK,
   GET_ADVISORS,
   GET_ANY_PROFILE,
+  ADD_ADVISOR_TO_CLIENT,
+  REMOVE_ADVISOR_FROM_PROFILE,
+  CHANGE_MAIN_ADVISOR_OF_PROFILE,
 } from "../src/constants/graphql";
 import { connectToBackend } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
@@ -128,4 +131,40 @@ export function handleError(message) {
   };
 
   this.$toasted.error(message, options);
+}
+
+export async function addAdvisorToClient(token, profile_id, advisor_id) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: ADD_ADVISOR_TO_CLIENT,
+    variables: {
+      token: token,
+      profile_id: profile_id,
+      advisor_id: advisor_id,
+    },
+  });
+}
+
+export async function removeAdvisorFromProfile(token, profile_id, advisor_id) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: REMOVE_ADVISOR_FROM_PROFILE,
+    variables: {
+      token: token,
+      profile_id: profile_id,
+      advisor_id: advisor_id,
+    },
+  });
+}
+
+export async function changeMainAdvisorOfProfile(token, profile_id, advisor_id) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: CHANGE_MAIN_ADVISOR_OF_PROFILE,
+    variables: {
+      token: token,
+      profile_id: profile_id,
+      advisor_id: advisor_id,
+    },
+  });
 }

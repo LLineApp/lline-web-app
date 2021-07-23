@@ -44,8 +44,7 @@
       />
       <div id="datasheet">
         <Alert variant="warning" v-bind:showAlert.sync="showAlert"
-          >Os dados de {{ profileData.fullname }} foram gravado com
-          sucesso</Alert
+          >Os dados de {{ profileData.fullname }} foram gravado com sucesso</Alert
         >
         <p>{{ this.title }}</p>
         <Email
@@ -140,10 +139,12 @@
           v-on:done="feedProfileData"
           v-if="this.page == 17"
         />
-        <FinancialAdvisor
+        <Advisors
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
+          v-bind:showButtons="this.isClientProfile"
           v-on:done="feedProfileData"
+          v-on:changeAdv="loadProfile()"
           v-if="this.page == 18"
         />
       </div>
@@ -176,33 +177,35 @@ export default {
     };
   },
   created() {
-    getProfile(this.loginData.token, this.$route.params.clientCpf)
-      .then((data) => {
-        this.profileData = data.data.getProfile[0];
-        if (this.isClientProfile) {
-          this.title = `Estes são os dados de ${this.profileData.fullname}`;
-        }
-        this.key += 1;
-      })
-      .catch((error) => {
-        const message = error.graphQLErrors[0].message;
-        const options = {
-          position: "top-center",
-          duration: 4000,
-          fullWidth: true,
-          closeOnSwipe: true,
-        };
-
-        this.$toasted.error(message, options);
-      });
+    this.loadProfile();
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
-    isClientProfile: function() {
+    isClientProfile: function () {
       return Boolean(this.$route.params.clientCpf);
     },
   },
   methods: {
+    loadProfile() {
+      getProfile(this.loginData.token, this.$route.params.clientCpf)
+        .then((data) => {
+          this.profileData = data.data.getProfile[0];
+          if (this.isClientProfile) {
+            this.title = `Estes são os dados de ${this.profileData.fullname}`;
+          }
+          this.key += 1;
+        })
+        .catch((error) => {
+          const message = error.graphQLErrors[0].message;
+          const options = {
+            position: "top-center",
+            duration: 4000,
+            fullWidth: true,
+            closeOnSwipe: true,
+          };
+          this.$toasted.error(message, options);
+        });
+    },
     goBack() {
       this.$router.go(-1);
     },
@@ -244,7 +247,7 @@ export default {
     // FixedIncomeSecurities: require("./FixedIncomeSecurities").default,
     Knowledge: require("./Knowledge.vue").default,
     AdditionalInformations: require("./AdditionalInformations").default,
-    FinancialAdvisor: require("./FinancialAdvisor").default,
+    Advisors: require("./Advisors").default,
     SideMenu: require("./SideMenu").default,
     Alert: require("../components/Alert").default,
   },
