@@ -137,6 +137,7 @@ export const GET_PROFILE = gql`
         tx
       }
       advisors {
+        id
         fullname
         register
         company
@@ -243,6 +244,7 @@ export const GET_CLIENT_PROFILE = gql`
         tx
       }
       advisors {
+        id
         fullname
         register
         company

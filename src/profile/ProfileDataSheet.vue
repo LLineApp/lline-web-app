@@ -142,6 +142,7 @@
         <Advisors
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
+          v-bind:showButtons="this.isClientProfile"
           v-on:done="feedProfileData"
           v-on:changeAdv="loadProfile()"
           v-if="this.page == 18"
