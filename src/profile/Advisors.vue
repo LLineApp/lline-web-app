@@ -117,16 +117,16 @@ export default {
         advisorid
       ).then((data) => {
         alert(data.data.changeMainAdvisorOfProfile.message.text);
+        this.$emit("changeAdv");
       });
-      this.$emit("changeAdv");
     },
     removeAdvisor(profileid, advisorid) {
       removeAdvisorFromProfile(this.loginData.token, profileid, advisorid).then(
         (data) => {
           alert(data.data.removeAdvisorFromProfile.message.text);
+          this.$emit("changeAdv");
         }
       );
-      this.$emit("changeAdv");
     },
     addAdvisor(profileid) {
       var advisorInput = document.getElementById("financialAdvisor-input")
@@ -137,9 +137,9 @@ export default {
       addAdvisorToClient(this.loginData.token, profileid, advisorId).then(
         (data) => {
           alert(data.data.addAdvisorToProfile.message.text);
+          this.$emit("changeAdv");
         }
       );
-      this.$emit("changeAdv");
     },
   },
   computed: {
@@ -150,7 +150,7 @@ export default {
       listOfFields.push({ key: "fullname", label: "Nome" });
       listOfFields.push({ key: "company", label: "Empresa" });
 
-      if(this.showButtons) {
+      if (this.showButtons) {
         listOfFields.push({ key: "actions", label: "Ações" });
       }
       return listOfFields;
