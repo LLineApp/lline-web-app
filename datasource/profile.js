@@ -12,6 +12,7 @@ import {
   ADD_ADVISOR_TO_CLIENT,
   REMOVE_ADVISOR_FROM_PROFILE,
   CHANGE_MAIN_ADVISOR_OF_PROFILE,
+  GET_ADVISOR_PORTFOLIO_BY_CPF,
 } from "../src/constants/graphql";
 import { connectToBackend } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
@@ -165,6 +166,18 @@ export async function changeMainAdvisorOfProfile(token, profile_id, advisor_id) 
       token: token,
       profile_id: profile_id,
       advisor_id: advisor_id,
+    },
+  });
+}
+
+export async function GetAdvisorPortfolioByCpf(token, cpf, containing) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: GET_ADVISOR_PORTFOLIO_BY_CPF,
+    variables: {
+      token: token,
+      cpf: cpf,
+      containing: containing,
     },
   });
 }

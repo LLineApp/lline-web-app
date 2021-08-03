@@ -21,12 +21,13 @@
           v-bind:data-company="advisor.company"
           v-bind:data-fullname="advisor.fullname"
           v-bind:data-register="advisor.register"
+          v-bind:data-cpf="advisor.cpf"
           v-bind:value="advisor.id + ' - ' + advisor.fullname"
         ></option>
       </datalist>
-      <b-button id="search-clients" size="sm" @click="" class="mr-1">
+      <b-button id="search-clients" size="sm" @click="getClientList()" class="mr-1">
         Consultar Clientes </b-button
-      ><b-table hover :items="searchData.items" :fields="fields" id="table">
+      ><b-table hover :items="clientAdvisorsList" :fields="fields" id="table">
         <template #cell(showProfile)="item">
           <b-button
             id="show-client-profile-button"
@@ -45,7 +46,7 @@ import NavBar from "../navbar/NavBar";
 import { mapGetters } from "vuex";
 import {
   getAllAdvisors,
-  getAdvisorsPortfolio,
+  GetAdvisorPortfolioByCpf,
   handleError,
 } from "../../datasource/profile";
 
@@ -57,6 +58,8 @@ export default {
     return {
       advisorsListKey: 0,
       advisorsList: [],
+      clientAdvisorsListKey: 0,
+      clientAdvisorsList: [],
       fields: [
         {
           key: "fullname",
@@ -64,13 +67,8 @@ export default {
           sortable: true,
         },
         {
-          key: "email",
-          label: "E-mail",
-          sortable: true,
-        },
-        {
-          key: "preferredContact",
-          label: "Telefone",
+          key: "cpf",
+          label: "CPF",
           sortable: true,
         },
         {
@@ -86,8 +84,6 @@ export default {
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
-    ...mapGetters("searchData", ["searchData"]),
-    ...mapGetters("profileData", ["profileData"]),
   },
   methods: {
     showClientProfile(cpf) {
@@ -108,7 +104,22 @@ export default {
           handleError(error.graphQLErrors[0].message);
         });
     },
-    getClientList(cpf) {},
+    getClientList() {
+      var advisorInput = document.getElementById("financialAdvisor-input").value;
+      var advisorCpf = document.querySelector(
+        "#advisors-list option[value='" + advisorInput + "']"
+      ).dataset.cpf;
+      GetAdvisorPortfolioByCpf(this.loginData.token, advisorCpf, "")
+        .then((data) => {
+          if (data.data.getClientsPortfolioFromAdvisor.portfolio) {
+            this.clientAdvisorsList = data.data.getClientsPortfolioFromAdvisor.portfolio;
+            this.$forceUpdate();
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
+    },
   },
 };
 </script>

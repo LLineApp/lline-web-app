@@ -388,3 +388,15 @@ export const CHANGE_MAIN_ADVISOR_OF_PROFILE = gql`
     }
   }
 `;
+
+export const GET_ADVISOR_PORTFOLIO_BY_CPF = gql`
+  mutation getClientsPortfolioFromAdvisorQuery($token: String!, $cpf: String, $containing: String){
+    getClientsPortfolioFromAdvisor(token: $token, cpf: $cpf, containing: $containing){
+      portfolio {
+        id
+        cpf
+        fullname
+      }
+    }
+  }
+`;
