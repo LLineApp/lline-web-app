@@ -45,6 +45,7 @@ export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
       isAdvisor
+      level
       page
       id
       cpf
@@ -152,6 +153,7 @@ export const GET_CLIENT_PROFILE = gql`
   query getProfileQuery($token: String!, $cpf: String) {
     getProfile(token: $token, cpf: $cpf) {
       isAdvisor
+      level
       page
       id
       cpf

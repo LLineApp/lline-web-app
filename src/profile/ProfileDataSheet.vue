@@ -142,7 +142,7 @@
         <Advisors
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
-          v-bind:showButtons="this.isClientProfile"
+          v-bind:showButtons="this.isClientProfile & !this.isManager"
           v-on:done="feedProfileData"
           v-on:changeAdv="loadProfile()"
           v-if="this.page == 18"
@@ -181,8 +181,12 @@ export default {
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
+    ...mapGetters({userData: "profileData/profileData"}),
     isClientProfile: function () {
       return Boolean(this.$route.params.clientCpf);
+    },
+    isManager: function() {
+      return this.userData.level == 2;
     },
   },
   methods: {
