@@ -18,12 +18,7 @@
           <b-button
             v-if="!row.item.mainAdvisor && showButtons"
             size="sm"
-            @click="
-              removeAdvisor(
-                recordedData.id,
-                recordedData.advisors[row.index].id
-              )
-            "
+            @click="removeAdvisor(recordedData.id, recordedData.advisors[row.index].id)"
             class="mr-1"
           >
             Remover
@@ -31,10 +26,7 @@
           <b-button
             size="sm"
             @click="
-              changeMainAdvisor(
-                recordedData.id,
-                recordedData.advisors[row.index].id
-              )
+              changeMainAdvisor(recordedData.id, recordedData.advisors[row.index].id)
             "
             class="mr-1"
             v-if="showButtons"
@@ -111,14 +103,12 @@ export default {
         });
     },
     changeMainAdvisor(profileid, advisorid) {
-      changeMainAdvisorOfProfile(
-        this.loginData.token,
-        profileid,
-        advisorid
-      ).then((data) => {
-        alert(data.data.changeMainAdvisorOfProfile.message.text);
-        this.$emit("changeAdv");
-      });
+      changeMainAdvisorOfProfile(this.loginData.token, profileid, advisorid).then(
+        (data) => {
+          alert(data.data.changeMainAdvisorOfProfile.message.text);
+          this.$emit("changeAdv");
+        }
+      );
     },
     removeAdvisor(profileid, advisorid) {
       removeAdvisorFromProfile(this.loginData.token, profileid, advisorid).then(
@@ -129,17 +119,14 @@ export default {
       );
     },
     addAdvisor(profileid) {
-      var advisorInput = document.getElementById("financialAdvisor-input")
-        .value;
+      var advisorInput = document.getElementById("financialAdvisor-input").value;
       var advisorId = document.querySelector(
         "#advisors-list option[value='" + advisorInput + "']"
       ).dataset.id;
-      addAdvisorToClient(this.loginData.token, profileid, advisorId).then(
-        (data) => {
-          alert(data.data.addAdvisorToProfile.message.text);
-          this.$emit("changeAdv");
-        }
-      );
+      addAdvisorToClient(this.loginData.token, profileid, advisorId).then((data) => {
+        alert(data.data.addAdvisorToProfile.message.text);
+        this.$emit("changeAdv");
+      });
     },
   },
   computed: {

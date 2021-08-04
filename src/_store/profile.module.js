@@ -3,6 +3,7 @@ const state = {
     page: 0,
     fullname: "Usuário",
     isAdvisor: false,
+    level: null,
     additionalInfo: "",
     children: [
       {

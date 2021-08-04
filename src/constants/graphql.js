@@ -45,6 +45,7 @@ export const GET_PROFILE = gql`
   query getProfileQuery($token: String!) {
     getProfile(token: $token) {
       isAdvisor
+      level
       page
       id
       cpf
@@ -152,6 +153,7 @@ export const GET_CLIENT_PROFILE = gql`
   query getProfileQuery($token: String!, $cpf: String) {
     getProfile(token: $token, cpf: $cpf) {
       isAdvisor
+      level
       page
       id
       cpf
@@ -384,6 +386,71 @@ export const CHANGE_MAIN_ADVISOR_OF_PROFILE = gql`
       message{
         id,
         text
+      }
+    }
+  }
+`;
+
+export const GET_ADVISOR_PORTFOLIO_BY_CPF = gql`
+  query getClientsPortfolioFromAdvisorQuery($token: String!, $cpf: String, $containing: String) {
+    getClientsPortfolioFromAdvisor(token: $token, cpf: $cpf, containing: $containing) {
+      portfolio{id
+        cpf
+        email
+        fullname
+        birthdate
+        preferredContact
+        maritalStatus
+        maritalHowManyYears
+        spouseName
+        spouseOccupation
+        parentsAreThemSupportedByYou
+        parentsHowMuchYouSuportThem
+        parentsIsThereAPossibilityOfInheritance
+        parentsOfWhom
+        parentsWhatIsTheEstimatedValue
+        occupation
+        role
+        companyName
+        businessEmail
+        businessKind
+        businessField
+        businessPhones
+        companyHasPrivateInsurance
+        socialSecurityValue
+        privateSecurityYourValue
+        privateSecurityCompanyValue
+        privateSecurityCurrentBalance
+        incomeTaxDeclarationType
+        monthlyExpenses
+        costsWithDependents
+        howMuchYouSave
+        debtLoans
+        partnerInCompany
+        health
+        plansAndProjects
+        currentInvestmentProcess
+        followEconomicNews
+        acceptsInfoAboutCourses
+        haveFinancialConcerns
+        additionalInfo
+        portfolioIncome
+        financialAdvisor {
+          id
+          fullname
+          register
+          company
+          cpf
+        }
+        acceptFinancialAdvisorContact
+        page
+      }
+      advisor {
+        id
+        fullname
+        register
+        company
+        cpf
       }
     }
   }
