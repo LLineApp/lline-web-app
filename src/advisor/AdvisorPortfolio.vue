@@ -26,10 +26,10 @@
         ></option>
       </datalist>
       <b-button id="search-clients" size="sm" @click="getClientList()">
-        Consultar Clientes
+        Consultar
       </b-button>
-      <b-button id="export-data" size="sm" @click="" v-if="clientAdvisorsList.length > 0">
-        Exportar Dados</b-button
+      <b-button id="export-data" size="sm" v-if="clientAdvisorsList.length > 0">
+        Exportar</b-button
       >
       <p>Total de Clientes: {{ clientAdvisorsList.length }}</p>
       <b-table hover :items="clientAdvisorsList" :fields="fields" id="table">
@@ -110,8 +110,8 @@ export default {
         });
     },
     getClientList() {
-      const advisorInput = document.getElementById("financialAdvisor-input").value;
-      const advisorCpf = document.querySelector(
+      var advisorInput = document.getElementById("financialAdvisor-input").value;
+      var advisorCpf = document.querySelector(
         "#advisors-list option[value='" + advisorInput + "']"
       ).dataset.cpf;
       GetAdvisorPortfolioByCpf(this.loginData.token, advisorCpf, "")

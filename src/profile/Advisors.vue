@@ -119,8 +119,8 @@ export default {
       );
     },
     addAdvisor(profileid) {
-      const advisorInput = document.getElementById("financialAdvisor-input").value;
-      const advisorId = document.querySelector(
+      var advisorInput = document.getElementById("financialAdvisor-input").value;
+      var advisorId = document.querySelector(
         "#advisors-list option[value='" + advisorInput + "']"
       ).dataset.id;
       addAdvisorToClient(this.loginData.token, profileid, advisorId).then((data) => {
