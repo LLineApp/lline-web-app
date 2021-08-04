@@ -8,21 +8,28 @@
     <div class="topnav" id="main-top-nav">
       <router-link to="/home" id="home" class="a">Início</router-link>
       <div id="advisor-div" class="dropdown">
-        <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
+        <button
+          id="advisor-btn"
+          class="dropbtn"
+          v-if="userIsAdvisor | userIsManager"
+        >
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <router-link to="/new"
+          <router-link to="/new" v-if="userIsAdvisor"
             ><i class="fa fa-user-plus"></i> Incluir Novo Cliente</router-link
           >
-          <router-link to="/portfolio"
+          <router-link to="/portfolio" v-if="userIsAdvisor"
             ><i class="fa fa-users"></i> Carteira de Clientes</router-link
           >
-          <router-link to="/prospect"
+          <router-link to="/prospect" v-if="userIsAdvisor"
             ><i class="fa fa-users"></i> Prospectar Novos Clientes</router-link
           >
-          <router-link to="" @click.native="advLinkToggle()"
+          <router-link
+            to=""
+            @click.native="advLinkToggle()"
+            v-if="userIsAdvisor"
             ><i class="fa fa-external-link-square"></i> Link
             Assessor</router-link
           >
@@ -87,7 +94,10 @@ export default {
       }
     },
     userIsAdvisor: function() {
-      return this.profileData.isAdvisor;
+      return this.profileData.isAdvisor & (this.profileData.level != 2);
+    },
+    userIsManager: function() {
+      return this.profileData.level == 2;
     },
   },
   methods: {
