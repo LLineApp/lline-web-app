@@ -25,9 +25,14 @@
           v-bind:value="advisor.id + ' - ' + advisor.fullname"
         ></option>
       </datalist>
-      <b-button id="search-clients" size="sm" @click="getClientList()" class="mr-1">
-        Consultar Clientes </b-button
-      ><b-table hover :items="clientAdvisorsList" :fields="fields" id="table">
+      <b-button id="search-clients" size="sm" @click="getClientList()">
+        Consultar Clientes
+      </b-button>
+      <b-button id="export-data" size="sm" @click="" v-if="clientAdvisorsList.length > 0">
+        Exportar Dados</b-button
+      >
+      <p>Total de Clientes: {{ clientAdvisorsList.length }}</p>
+      <b-table hover :items="clientAdvisorsList" :fields="fields" id="table">
         <template #cell(showProfile)="item">
           <b-button
             id="show-client-profile-button"
@@ -105,8 +110,8 @@ export default {
         });
     },
     getClientList() {
-      var advisorInput = document.getElementById("financialAdvisor-input").value;
-      var advisorCpf = document.querySelector(
+      const advisorInput = document.getElementById("financialAdvisor-input").value;
+      const advisorCpf = document.querySelector(
         "#advisors-list option[value='" + advisorInput + "']"
       ).dataset.cpf;
       GetAdvisorPortfolioByCpf(this.loginData.token, advisorCpf, "")
@@ -144,7 +149,8 @@ p {
 }
 
 #show-client-profile-button,
-#search-button {
+#search-clients,
+#export-data {
   right: 0;
   color: black;
   background-color: #26fed5;
@@ -158,7 +164,8 @@ p {
 }
 
 #show-client-profile-button:hover,
-#search-button:hover {
+#search-clients:hover,
+#export-data:hover {
   color: #26fed5;
   background-color: black;
   border-color: black;
@@ -177,8 +184,9 @@ p {
   float: left;
 }
 
-#search-clients {
+#search-clients,
+#export-data {
   margin-left: 1%;
-  margin-bottom: 2%;
+  margin-right: 0;
 }
 </style>
