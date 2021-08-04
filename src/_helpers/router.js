@@ -7,6 +7,7 @@ import RegisterPage from "../register/RegisterPage";
 import ProfileDataSheet from "../profile/ProfileDataSheet";
 import Client from "../profile/Client";
 import Portfolio from "../advisor/Portfolio";
+import AdvisorPortfolio from "../advisor/AdvisorPortfolio";
 import Prospect from "../advisor/Prospect";
 import { store } from "../_store/index";
 
@@ -21,6 +22,7 @@ export const router = new Router({
     { path: "/profile", component: ProfileDataSheet, name: "ProfileDataSheet" },
     { path: "/new", component: Client },
     { path: "/portfolio", component: Portfolio },
+    { path: "/advisorPortfolio", component: AdvisorPortfolio },
     { path: "/prospect", component: Prospect },
 
     { path: "*", redirect: "/" },
