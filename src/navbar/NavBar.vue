@@ -11,28 +11,41 @@
         <button
           id="advisor-btn"
           class="dropbtn"
-          v-if="userIsAdvisor | userIsManager"
+          v-if="userIsAdvisor"
         >
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <router-link to="/new" v-if="userIsAdvisor"
+          <router-link to="/new"
             ><i class="fa fa-user-plus"></i> Incluir Novo Cliente</router-link
           >
-          <router-link to="/portfolio" v-if="userIsAdvisor"
+          <router-link to="/portfolio"
             ><i class="fa fa-users"></i> Carteira de Clientes</router-link
           >
-          <router-link to="/prospect" v-if="userIsAdvisor"
+          <router-link to="/prospect"
             ><i class="fa fa-users"></i> Prospectar Novos Clientes</router-link
           >
           <router-link
             to=""
             @click.native="advLinkToggle()"
-            v-if="userIsAdvisor"
             ><i class="fa fa-external-link-square"></i> Link
             Assessor</router-link
           >
+        </div>
+      </div>
+      <div id="manager-div" class="dropdown">
+        <button
+          id="manager-btn"
+          class="dropbtn"
+          v-if="userIsManager"
+        >
+          Gerente
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <router-link to="/advisorPortfolio"
+            ><i class="fa fa-users"></i> Listar Clientes de um Assessor</router-link>
         </div>
       </div>
       <a
@@ -175,11 +188,8 @@ export default {
   float: right;
 }
 
-#advisor-div {
-  float: left;
-}
-
-#advisor-div {
+#advisor-div, 
+#manager-div {
   float: left;
 }
 
@@ -221,6 +231,7 @@ export default {
 @media screen and (max-width: 600px) {
   #user-name-div,
   #advisor-div,
+  #manager-div,
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -243,7 +254,8 @@ export default {
 
   .topnav.responsive a,
   .topnav.responsive #user-name-div,
-  .topnav.responsive #advisor-div {
+  .topnav.responsive #advisor-div,
+  .topnav.responsive #manager-div {
     float: none;
     display: block;
     text-align: center;
