@@ -127,6 +127,7 @@ export default {
         .then((data) => {
           if (data.data.getAdvisors.advisorsList) {
             this.advisorsList = data.data.getAdvisors.advisorsList;
+            this.advisorsList.sort((a, b) => a.fullname.localeCompare(b.fullname));
             this.$forceUpdate();
           }
         })
