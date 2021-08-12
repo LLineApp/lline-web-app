@@ -22,7 +22,7 @@
           v-bind:data-fullname="advisor.fullname"
           v-bind:data-register="advisor.register"
           v-bind:data-cpf="advisor.cpf"
-          v-bind:value="advisor.id + ' - ' + advisor.fullname"
+          v-bind:value="advisor.fullname + ' (' + advisor.cpf + ')'"
         ></option>
       </datalist>
       <b-button id="search-clients" size="sm" @click="getClientList()">
