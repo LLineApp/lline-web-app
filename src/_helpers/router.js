@@ -31,9 +31,16 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const publicPages = ["/login", "/register"];
-  const authRequired = !publicPages.includes(to.path);
-  if (authRequired && !store.state.loginData.login.token) {
+  if (!publicPages.includes(to.path) && !store.state.loginData.login.token) {
     return next("/login");
+  }
+  const managerExclusivePages = ["/advisorPortfolio"]
+  if (managerExclusivePages.includes(to.path) && !(store.state.profileData.data.level == 2)) {
+    next("/");
+  }
+  const advisorExclusivePages = ["/portfolio", "/prospect"]
+  if (advisorExclusivePages.includes(to.path) && !store.state.profileData.data.isAdvisor) {
+    next("/");
   }
   next();
 });
