@@ -1,7 +1,7 @@
 <template>
   <div :key="this.key">
     <NavBar :key="this.keyNavBar" />
-    <Chart />
+    <Chart v-if="this.profileData.page == this.profilePages"/>
     <Profile
       v-if="this.profileData.page < this.profilePages"
       v-bind:currentPage="profileData.page"
