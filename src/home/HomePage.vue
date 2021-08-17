@@ -1,6 +1,7 @@
 <template>
   <div :key="this.key">
     <NavBar :key="this.keyNavBar" />
+    <Chart />
     <Profile
       v-if="this.profileData.page < this.profilePages"
       v-bind:currentPage="profileData.page"
@@ -18,6 +19,7 @@ export default {
   components: {
     NavBar: require("../navbar/NavBar").default,
     Profile: require("../profile/Profile").default,
+    Chart: require("../home/Chart").default,
   },
   data() {
     return {
