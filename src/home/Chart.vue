@@ -25,10 +25,13 @@ export default {
           zoom: {
             enabled: false,
           },
-        }
+        },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       stroke: {
         curve: 'straight',
@@ -42,9 +45,6 @@ export default {
           colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
           opacity: 0.5,
         },
-      },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
       },
     };
   },
