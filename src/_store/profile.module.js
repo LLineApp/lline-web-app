@@ -101,6 +101,7 @@ const state = {
     privateSecurityYourValue: null,
     privateSecurityCompanyValue: null,
     privateSecurityCurrentBalance: null,
+    targets: [],
   },
 };
 

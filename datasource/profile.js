@@ -13,6 +13,8 @@ import {
   REMOVE_ADVISOR_FROM_PROFILE,
   CHANGE_MAIN_ADVISOR_OF_PROFILE,
   GET_ADVISOR_PORTFOLIO_BY_CPF,
+  GET_PARAMS,
+  ADD_TARGET,
 } from "../src/constants/graphql";
 import { connectToBackend } from "./backendConnect";
 import { sanitize } from "./dataSanitizer";
@@ -117,6 +119,38 @@ export async function getSomeFieldsFromProfile(token, fields) {
   const conn = connectToBackend();
   return await conn.mutate({
     mutation: GET_PROFILE_FIELDS(fields.join("\n")),
+    variables: {
+      token: token,
+    },
+  });
+}
+
+export async function addTarget(
+  token,
+  clientCpf,
+  presentValue,
+  suitability,
+  monthlyInvestment,
+  yearToStartWithdraw
+) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: ADD_TARGET,
+    variables: {
+      token: token,
+      clientCpf: clientCpf,
+      presentValue: presentValue,
+      suitability: suitability,
+      monthlyInvestment: monthlyInvestment,
+      yearToStartWithdraw: yearToStartWithdraw,
+    },
+  });
+}
+
+export async function getParams(token) {
+  const conn = connectToBackend();
+  return await conn.mutate({
+    mutation: GET_PARAMS,
     variables: {
       token: token,
     },
