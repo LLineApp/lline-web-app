@@ -8,6 +8,7 @@ import { profileData } from "./profile.module";
 import { advisorData } from "./advisor.module";
 import { loginData } from "./login.module";
 import { searchData } from "./search.module";
+import { paramsData } from "./params.module";
 
 const secret =
   process.env.NODE_ENV === "development"
@@ -25,10 +26,11 @@ export const store = new Vuex.Store({
     advisorData,
     loginData,
     searchData,
+    paramsData,
   },
   plugins: [
     createPersistedState({
-      paths:["profileData", "advisorData", "loginData"],
+      paths:["profileData", "advisorData", "loginData", "paramsData"],
       storage: {
         getItem: (key) => ls.get(key),
         setItem: (key, value) => ls.set(key, value),

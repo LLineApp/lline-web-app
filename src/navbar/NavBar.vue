@@ -7,6 +7,17 @@
     />
     <div class="topnav" id="main-top-nav">
       <router-link to="/home" id="home" class="a">Início</router-link>
+      <div id="client-div" class="dropdown">
+        <button id="client-btn" class="dropbtn">
+          Clientes
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <router-link to="/targets"
+            ><i class="fa fa-bullseye"></i> Objetivos</router-link
+          >
+        </div>
+      </div>
       <div id="advisor-div" class="dropdown">
         <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
           Assessor
@@ -165,11 +176,8 @@ export default {
   float: right;
 }
 
-#advisor-div {
-  float: left;
-}
-
-#advisor-div {
+#advisor-div,
+#client-div {
   float: left;
 }
 
@@ -211,6 +219,7 @@ export default {
 @media screen and (max-width: 600px) {
   #user-name-div,
   #advisor-div,
+  #client-div,
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -233,6 +242,7 @@ export default {
 
   .topnav.responsive a,
   .topnav.responsive #user-name-div,
+  .topnav.responsive #client-div,
   .topnav.responsive #advisor-div {
     float: none;
     display: block;

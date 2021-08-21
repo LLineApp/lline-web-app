@@ -8,6 +8,7 @@ import ProfileDataSheet from "../profile/ProfileDataSheet";
 import Client from "../profile/Client";
 import Portfolio from "../advisor/Portfolio";
 import Prospect from "../advisor/Prospect";
+import Targets from "../targets/Targets";
 import { store } from "../_store/index";
 
 Vue.use(Router);
@@ -22,6 +23,7 @@ export const router = new Router({
     { path: "/new", component: Client },
     { path: "/portfolio", component: Portfolio },
     { path: "/prospect", component: Prospect },
+    { path: "/targets", component: Targets },
 
     { path: "*", redirect: "/" },
   ],

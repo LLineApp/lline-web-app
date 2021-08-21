@@ -136,6 +136,18 @@ export const GET_PROFILE = gql`
         value
         tx
       }
+      targets {
+        responsibleCpf
+        date
+        presentValue
+        monthlyInvestment
+        suitability {
+          id
+          name
+          interest
+        }
+        yearToStartWithdraw
+      }
     }
   }
 `;
@@ -234,6 +246,18 @@ export const GET_CLIENT_PROFILE = gql`
         kind
         value
         tx
+      }
+      targets {
+        responsibleCpf
+        date
+        presentValue
+        monthlyInvestment
+        suitability {
+          id
+          name
+          interest
+        }
+        yearToStartWithdraw
       }
     }
   }
@@ -335,6 +359,36 @@ export const GET_ADVISORS = gql`
         cpf
         register
         company
+      }
+    }
+  }
+`;
+
+export const ADD_TARGET = gql`
+  mutation addTarget($token: String!, $clientCpf: String!, $presentValue: Float!, $suitability: Int!, $monthlyInvestment: Float!, $yearToStartWithdraw: Int!) {
+    addTarget(token: $token, clientCpf: $clientCpf, presentValue: $presentValue, suitability: $suitability, monthlyInvestment: $monthlyInvestment, yearToStartWithdraw: $yearToStartWithdraw) {
+      targets {
+        date
+        presentValue
+        monthlyInvestment
+        suitability {
+          id
+          name
+          interest
+        }
+        yearToStartWithdraw
+      }
+    }
+  }
+`;
+
+export const GET_PARAMS = gql`
+  query getParams($token: String!) {
+    getParams(token: $token) {
+      suitability {
+        id
+        name
+        interest
       }
     }
   }
