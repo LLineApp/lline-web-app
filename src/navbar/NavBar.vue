@@ -19,7 +19,11 @@
         </div>
       </div>
       <div id="advisor-div" class="dropdown">
-        <button id="advisor-btn" class="dropbtn" v-if="userIsAdvisor">
+        <button
+          id="advisor-btn"
+          class="dropbtn"
+          v-if="userIsAdvisor"
+        >
           Assessor
           <i class="fa fa-caret-down"></i>
         </button>
@@ -33,10 +37,26 @@
           <router-link to="/prospect"
             ><i class="fa fa-users"></i> Prospectar Novos Clientes</router-link
           >
-          <router-link to="" @click.native="advLinkToggle()"
+          <router-link
+            to=""
+            @click.native="advLinkToggle()"
             ><i class="fa fa-external-link-square"></i> Link
             Assessor</router-link
           >
+        </div>
+      </div>
+      <div id="manager-div" class="dropdown">
+        <button
+          id="manager-btn"
+          class="dropbtn"
+          v-if="userIsManager"
+        >
+          Gerente
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <router-link to="/advisorPortfolio"
+            ><i class="fa fa-users"></i> Listar Clientes de um Assessor</router-link>
         </div>
       </div>
       <a
@@ -98,7 +118,10 @@ export default {
       }
     },
     userIsAdvisor: function() {
-      return this.profileData.isAdvisor;
+      return this.profileData.isAdvisor & (this.profileData.level != 2);
+    },
+    userIsManager: function() {
+      return this.profileData.level == 2;
     },
   },
   methods: {
@@ -176,7 +199,8 @@ export default {
   float: right;
 }
 
-#advisor-div,
+#advisor-div, 
+#manager-div,
 #client-div {
   float: left;
 }
@@ -219,6 +243,7 @@ export default {
 @media screen and (max-width: 600px) {
   #user-name-div,
   #advisor-div,
+  #manager-div,
   #client-div,
   .topnav a:not(:first-child) {
     display: none;
@@ -242,8 +267,9 @@ export default {
 
   .topnav.responsive a,
   .topnav.responsive #user-name-div,
+  .topnav.responsive #advisor-div,
   .topnav.responsive #client-div,
-  .topnav.responsive #advisor-div {
+  .topnav.responsive #manager-div {
     float: none;
     display: block;
     text-align: center;
