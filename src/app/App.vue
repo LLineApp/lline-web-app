@@ -14,19 +14,30 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
+import { mapState, mapActions, mapGetters } from "vuex";
+import { getParams } from "../../datasource/profile";
 export default {
   name: "app",
   computed: {
-    ...mapState({
-      alert: (state) => state.alert,
-    }),
+    ...mapState({ alert: (state) => state.alert }),
+    ...mapGetters("loginData", ["loginData"]),
+  },
+  created() {
+    getParams(this.loginData.token)
+      .then((data) => {
+        if (data.data.getParams) {
+          this.updateParamsData({
+            updates: { suitability: data.data.getParams.suitability },
+          });
+        }
+      })
+      .catch((error) => {
+         handleError(error.graphQLErrors[0].message);
+      });
   },
   methods: {
-    ...mapActions({
-      clearAlert: "alert/clear",
-    }),
+    ...mapActions({ clearAlert: "alert/clear" }),
+    ...mapActions("paramsData", ["updateParamsData"]),
   },
   watch: {
     $route(to, from) {
