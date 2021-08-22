@@ -31,7 +31,7 @@ export const SET_PROFILE = gql`
   }
 `;
 
-export const GET_PROFILE_FIELDS = function (fields) {
+export const GET_PROFILE_FIELDS = function(fields) {
   return gql`
   query getSomeFieldsFromProfile($token: String!) {
     getProfile(token: $token) {
@@ -145,6 +145,11 @@ export const GET_PROFILE = gql`
         cpf
         mainAdvisor
       }
+      lifeLine {
+        masterLine {
+          periods
+          amount
+        }
       targets {
         responsibleCpf
         date
@@ -265,6 +270,11 @@ export const GET_CLIENT_PROFILE = gql`
         cpf
         mainAdvisor
       }
+      lifeLine {
+        masterLine {
+          periods
+          amount
+        }
       targets {
         responsibleCpf
         date
@@ -383,10 +393,18 @@ export const GET_ADVISORS = gql`
 `;
 
 export const ADD_ADVISOR_TO_CLIENT = gql`
-  mutation addAdvisorToProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
-    addAdvisorToProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
-      message{
-        id,
+  mutation addAdvisorToProfileMutation(
+    $token: String!
+    $profile_id: Int
+    $advisor_id: Int
+  ) {
+    addAdvisorToProfile(
+      token: $token
+      advisorId: $advisor_id
+      profileId: $profile_id
+    ) {
+      message {
+        id
         text
       }
     }
@@ -394,10 +412,18 @@ export const ADD_ADVISOR_TO_CLIENT = gql`
 `;
 
 export const REMOVE_ADVISOR_FROM_PROFILE = gql`
-  mutation removeAdvisorFromProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
-    removeAdvisorFromProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
-      message{
-        id,
+  mutation removeAdvisorFromProfileMutation(
+    $token: String!
+    $profile_id: Int
+    $advisor_id: Int
+  ) {
+    removeAdvisorFromProfile(
+      token: $token
+      advisorId: $advisor_id
+      profileId: $profile_id
+    ) {
+      message {
+        id
         text
       }
     }
@@ -405,10 +431,18 @@ export const REMOVE_ADVISOR_FROM_PROFILE = gql`
 `;
 
 export const CHANGE_MAIN_ADVISOR_OF_PROFILE = gql`
-  mutation changeMainAdvisorOfProfileMutation($token: String!, $profile_id: Int, $advisor_id: Int) {
-    changeMainAdvisorOfProfile(token: $token, advisorId: $advisor_id, profileId: $profile_id) {
-      message{
-        id,
+  mutation changeMainAdvisorOfProfileMutation(
+    $token: String!
+    $profile_id: Int
+    $advisor_id: Int
+  ) {
+    changeMainAdvisorOfProfile(
+      token: $token
+      advisorId: $advisor_id
+      profileId: $profile_id
+    ) {
+      message {
+        id
         text
       }
     }
@@ -445,9 +479,18 @@ export const GET_PARAMS = gql`
 `;
 
 export const GET_ADVISOR_PORTFOLIO_BY_CPF = gql`
-  query getClientsPortfolioFromAdvisorQuery($token: String!, $cpf: String, $containing: String) {
-    getClientsPortfolioFromAdvisor(token: $token, cpf: $cpf, containing: $containing) {
-      portfolio{id
+  query getClientsPortfolioFromAdvisorQuery(
+    $token: String!
+    $cpf: String
+    $containing: String
+  ) {
+    getClientsPortfolioFromAdvisor(
+      token: $token
+      cpf: $cpf
+      containing: $containing
+    ) {
+      portfolio {
+        id
         cpf
         email
         fullname
@@ -498,12 +541,19 @@ export const GET_ADVISOR_PORTFOLIO_BY_CPF = gql`
         acceptFinancialAdvisorContact
         page
       }
-      advisor {
+      advisors {
         id
         fullname
         register
         company
         cpf
+        mainAdvisor
+      }
+      lifeLine {
+        masterLine {
+          periods
+          amount
+        }
       }
     }
   }
