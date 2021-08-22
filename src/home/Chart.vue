@@ -1,55 +1,75 @@
 <template>
   <div id="main">
     <div id="chart">
-      <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+      <apexchart
+        type="line"
+        height="350"
+        :options="chartOptions"
+        :series="series"
+      ></apexchart>
     </div>
   </div>
 </template>
 
 <script>
-
-import VueApexCharts from 'vue-apexcharts';
+import VueApexCharts from "vue-apexcharts";
+import { mapGetters } from "vuex";
+import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "chart",
   data() {
-    return{
-      series: [{
-        name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-      }],
+    return {
+      series: [],
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'line',
           zoom: {
             enabled: false,
           },
         },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      },
+        xaxis: {
+          categories: [],
+        },
+        yaxis: {
+          labels: {
+            formatter: function(val) {
+              return formatNumericField(val);
+            },
+          },
+        },
       },
       dataLabels: {
         enabled: true,
       },
       stroke: {
-        curve: 'straight',
+        curve: "straight",
       },
       title: {
-        text: 'Product Trends by Month',
-        align: 'left',
+        text: "Product Trends by Month",
+        align: "left",
       },
       grid: {
         row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          colors: ["#f3f3f3", "transparent"],
           opacity: 0.5,
         },
       },
     };
   },
-  components:{
+  components: {
     apexchart: VueApexCharts,
+  },
+  created() {
+    this.series.push({
+      name: "Linha Mestra",
+      data: this.profileData.lifeLine.masterLine.amount,
+    });
+    this.chartOptions.xaxis.categories.push(
+      ...this.profileData.lifeLine.masterLine.periods
+    );
+  },
+  computed: {
+    ...mapGetters("profileData", ["profileData"]),
   },
 };
 </script>
@@ -57,8 +77,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
-#chart{
+#chart {
   margin: 5%;
 }
-
 </style>
