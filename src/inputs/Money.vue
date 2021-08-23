@@ -10,6 +10,7 @@
         lazy-formatter
         :formatter="formatNumericField"
         v-on:blur="$emit('apply', field, inputValue)"
+        :readonly="readonly"
       />
     </b-form-group>
   </div>
@@ -18,17 +19,25 @@
 <script>
 import { formatNumericField } from "../_helpers/formaters";
 export default {
-  props: ["label", "field", "fieldValue"],
+  props: ["label", "field", "fieldValue", "readonly"],
   data() {
     return {
       inputValue: null,
     };
   },
-    mounted() {
-      if (this.fieldValue) {
-        this.inputValue = this.fieldValue;
-      }
+  mounted() {
+    if (this.fieldValue) {
+      this.inputValue = this.fieldValue;
+    }
+  },
+  watch: {
+    fieldValue: {
+      immediate: true,
+      handler(val) {
+        this.inputValue = val;
+      },
     },
+  },
   methods: {
     formatNumericField(value) {
       return formatNumericField(value);

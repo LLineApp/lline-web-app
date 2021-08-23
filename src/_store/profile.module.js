@@ -101,6 +101,13 @@ const state = {
     privateSecurityYourValue: null,
     privateSecurityCompanyValue: null,
     privateSecurityCurrentBalance: null,
+    lifeLine: {
+      masterLine: {
+        periods: [],
+        amount: [],
+      },
+    },
+    targets: [],
   },
 };
 

@@ -25,6 +25,13 @@ export default {
       this.inputMemo = this.text;
     }
   },
-
+    watch: {
+    text: {
+      immediate: true,
+      handler(val) {
+        this.inputMemo = val;
+      },
+    },
+  },
 };
 </script>

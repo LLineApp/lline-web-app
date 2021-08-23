@@ -22,15 +22,24 @@
           v-bind:data-fullname="advisor.fullname"
           v-bind:data-register="advisor.register"
           v-bind:data-cpf="advisor.cpf"
-          v-bind:value="advisor.id + ' - ' + advisor.fullname"
+          v-bind:value="advisor.fullname + ' (' + advisor.cpf + ')'"
         ></option>
       </datalist>
       <b-button id="search-clients" size="sm" @click="getClientList()">
         Consultar
       </b-button>
-      <b-button id="export-data" size="sm" v-if="clientAdvisorsList.length > 0">
-        Exportar</b-button
+      <JsonExcel
+        size="sm"
+        v-if="clientAdvisorsList.length > 0"
+        id="export-data"
+        class="btn btn-default"
+        :data="clientAdvisorsList"
+        :fields="json_fields"
+        worksheet="Clientes"
+        :name="filename"
       >
+        Exportar
+      </JsonExcel>
       <p>Total de Clientes: {{ clientAdvisorsList.length }}</p>
       <b-table hover :items="clientAdvisorsList" :fields="fields" id="table">
         <template #cell(showProfile)="item">
@@ -54,10 +63,11 @@ import {
   GetAdvisorPortfolioByCpf,
   handleError,
 } from "../../datasource/profile";
+import JsonExcel from "vue-json-excel";
 
 export default {
   name: "advisorPortfolio",
-  components: { NavBar },
+  components: { NavBar, JsonExcel },
   props: ["recordedData"],
   data() {
     return {
@@ -82,6 +92,13 @@ export default {
           sortable: false,
         },
       ],
+      json_fields: {
+        Código: "id",
+        "Nome completo": "fullname",
+        CPF: "cpf",
+        "E-mail": "email",
+        Telefone: "preferredContact",
+      },
     };
   },
   mounted() {
@@ -89,6 +106,14 @@ export default {
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
+    filename: () => {
+      var advisorInput = document.getElementById("financialAdvisor-input")
+        .value;
+      var advisorName = document.querySelector(
+        "#advisors-list option[value='" + advisorInput + "']"
+      ).dataset.fullname;
+      return advisorName + ".xlsx";
+    },
   },
   methods: {
     showClientProfile(cpf) {
@@ -102,6 +127,7 @@ export default {
         .then((data) => {
           if (data.data.getAdvisors.advisorsList) {
             this.advisorsList = data.data.getAdvisors.advisorsList;
+            this.advisorsList.sort((a, b) => a.fullname.localeCompare(b.fullname));
             this.$forceUpdate();
           }
         })
