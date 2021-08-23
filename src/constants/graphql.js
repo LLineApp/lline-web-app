@@ -150,6 +150,7 @@ export const GET_PROFILE = gql`
           periods
           amount
         }
+      }  
       targets {
         responsibleCpf
         date
@@ -275,6 +276,7 @@ export const GET_CLIENT_PROFILE = gql`
           periods
           amount
         }
+      }
       targets {
         responsibleCpf
         date
@@ -541,19 +543,12 @@ export const GET_ADVISOR_PORTFOLIO_BY_CPF = gql`
         acceptFinancialAdvisorContact
         page
       }
-      advisors {
+      advisor {
         id
         fullname
         register
         company
         cpf
-        mainAdvisor
-      }
-      lifeLine {
-        masterLine {
-          periods
-          amount
-        }
       }
     }
   }
