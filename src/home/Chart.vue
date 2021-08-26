@@ -18,6 +18,7 @@ import { formatNumericField } from "../_helpers/formaters";
 
 export default {
   name: "chart",
+  props: ["lifeLineData"],
   data() {
     return {
       series: [],
@@ -60,16 +61,34 @@ export default {
     apexchart: VueApexCharts,
   },
   created() {
-    this.series.push({
-      name: "Linha Mestra",
-      data: this.profileData.lifeLine.masterLine.amount,
-    });
-    this.chartOptions.xaxis.categories.push(
-      ...this.profileData.lifeLine.masterLine.periods
-    );
+  const data = this.$route.params.clientCpf
+      ? this.lifeLineData
+      : this.profileData.lifeLine;
+    this.feedLifeLineData(data);
   },
   computed: {
     ...mapGetters("profileData", ["profileData"]),
+  },
+  watch: {
+    lifeLineData: {
+      immediate: true,
+      handler(newValue) {
+        if (newValue) {
+        this.feedLifeLineData(newValue);
+        }
+      },
+    },
+  },
+  methods: {
+    feedLifeLineData(data) {
+      this.series = [];
+      this.series.push({
+        name: "Linha Mestra",
+        data: data.masterLine.amount,
+      });
+      this.chartOptions.xaxis.categories = [];
+      this.chartOptions.xaxis.categories.push(...data.masterLine.periods);
+    },
   },
 };
 </script>

@@ -126,7 +126,12 @@
           v-on:done="feedProfileData"
           v-if="this.page == 14"
         />
-        <!-- <FixedIncomeSecurities v-on:setActiveComponent="setActiveComponent" v-bind:recordedData="profileData" v-if="this.page == 15"/> -->
+      <Targets
+        v-on:setActiveComponent="setActiveComponent"
+        v-bind:recordedData="profileData"
+        v-on:done="feedProfileData"
+        v-if="this.page == 15"
+      />
         <Knowledge
           v-on:setActiveComponent="setActiveComponent"
           v-bind:recordedData="profileData"
@@ -248,7 +253,7 @@ export default {
     PersonalPrivateSecurities: require("./PersonalPrivateSecurities").default,
     PlansAndProjects: require("./PlansAndProjects").default,
     InvestmentPortfolios: require("./InvestmentPortfolios").default,
-    // FixedIncomeSecurities: require("./FixedIncomeSecurities").default,
+    Targets: require("../targets/Targets.vue").default,
     Knowledge: require("./Knowledge.vue").default,
     AdditionalInformations: require("./AdditionalInformations").default,
     Advisors: require("./Advisors").default,
