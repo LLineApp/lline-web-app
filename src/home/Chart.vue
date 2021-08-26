@@ -2,7 +2,7 @@
   <div id="main">
     <div id="chart">
       <apexchart
-        type="line"
+        type="area"
         height="350"
         :options="chartOptions"
         :series="series"
@@ -83,7 +83,7 @@ export default {
     feedLifeLineData(data) {
       this.series = [];
       this.series.push({
-        name: "Linha Mestra",
+      name: "Projeção",
         data: data.masterLine.amount,
       });
       this.chartOptions.xaxis.categories = [];
