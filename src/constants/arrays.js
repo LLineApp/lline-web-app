@@ -64,11 +64,12 @@ export const SIDE_MENU_ITEMS = [
     style: "",
     page: 14,
   },
-  // {
-  //   text: "Títulos de Renda Fixa",
-  //   name: "fixedIncomeSecurities",
-  //   style: "", page:15,
-  // },
+  {
+    text: "Metas",
+    name: "targets",
+    style: "", 
+    page:15,
+  },
   { text: "Conhecimentos", name: "knowledge", style: "", page: 16 },
   {
     text: "Informações Adicionais",

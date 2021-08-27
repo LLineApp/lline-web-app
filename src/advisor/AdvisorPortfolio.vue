@@ -106,7 +106,7 @@ export default {
   },
   computed: {
     ...mapGetters("loginData", ["loginData"]),
-    filename: () => {
+    filename: function() {
       var advisorInput = document.getElementById("financialAdvisor-input")
         .value;
       var advisorName = document.querySelector(

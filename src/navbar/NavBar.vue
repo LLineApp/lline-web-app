@@ -7,17 +7,6 @@
     />
     <div class="topnav" id="main-top-nav">
       <router-link to="/home" id="home" class="a">Início</router-link>
-      <div id="client-div" class="dropdown">
-        <button id="client-btn" class="dropbtn">
-          Clientes
-          <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-          <router-link to="/targets"
-            ><i class="fa fa-bullseye"></i> Objetivos</router-link
-          >
-        </div>
-      </div>
       <div id="advisor-div" class="dropdown">
         <button
           id="advisor-btn"
