@@ -233,7 +233,7 @@ ul {
 }
 #main {
   margin-bottom: 5%;
-  padding-inline: 10%;
+  padding-inline: 5%;
   padding-top: 3%;
 }
 button,
