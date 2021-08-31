@@ -1,43 +1,79 @@
 <template>
   <div>
-    <NavBar />
     <div id="main">
-      <h1>Metas:</h1>
-
-      <p v-if="!addingNewTarget">
-        Clique
-        <b-button type="button" v-on:click="addNewTarget()" aria-hidden="true"
-          ><i class="fa fa-plus"></i
-        ></b-button>
-        para adicionar uma nova meta
-      </p>
-      <ul id="targets">
-        <li v-for="target in this.targets" :key="target.key">
-          <Target
-            v-bind:targetData="target"
-            v-on:apply="saveTarget()"
-            v-on:abort="abortTarget()"
-          />
-        </li>
-      </ul>
+      <b-card no-body id="tab">
+        <b-tabs pills card>
+          <b-tab title-item-class="target-tab" active>
+            <template #title
+              ><i class="fa fa-file-text-o" aria-hidden="true"></i>Metas
+            </template>
+            <p v-if="!addingNewTarget">
+              Clique
+              <b-button
+                type="button"
+                v-on:click="addNewTarget()"
+                aria-hidden="true"
+                ><i class="fa fa-plus"></i
+              ></b-button>
+              para adicionar uma nova meta
+            </p>
+            <ul id="targets">
+              <li v-for="target in this.targets" :key="target.key">
+                <Target
+                  v-bind:targetData="target"
+                  v-on:apply="saveTarget()"
+                  v-on:abort="abortTarget()"
+                />
+              </li>
+            </ul>
+            <b-button
+              id="success"
+              variant="primary"
+              v-if="showButtons"
+              v-on:click="doDone()"
+            >
+              Confirmar
+            </b-button>
+            <b-button
+              id="stop"
+              variant="secondary"
+              v-if="showButtons"
+              v-on:click="$emit('stop')"
+            >
+              Parar
+            </b-button>
+          </b-tab>
+          <b-tab title-item-class="target-tab" v-if="hasLifeLineData">
+            <template #title>
+              <i class="fa fa-area-chart" aria-hidden="true"></i>Gráfico
+            </template>
+            <Chart
+              v-bind:lifeLineData="lifeLineData"
+              :key="key"
+            />
+          </b-tab>
+        </b-tabs>
+      </b-card>
     </div>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import { addTarget } from "../../datasource/profile";
+import { addTarget, getProfile, handleError } from "../../datasource/profile";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "targets",
+  props: ["showButtons", "recordedData"],
   data() {
     return {
+      page: 15,
       key: 0,
       addingNewTarget: false,
       targets: [
         {
           key: 0,
-          incDate: null,
+          incDate: new Date(),
           presentValue: 0.0,
           monthlyInvestment: 0.0,
           suitability: 0,
@@ -45,38 +81,68 @@ export default {
           new: false,
         },
       ],
+      lifeLineData: {
+        masterLine: {
+          periods: [],
+          amount: [],
+        },
+      },
     };
   },
   computed: {
     ...mapGetters("profileData", ["profileData"]),
     ...mapGetters("loginData", ["loginData"]),
-    ...mapGetters("profileData", ["profileData"]),
+    hasLifeLineData: function() {
+      return this.lifeLineData.masterLine.periods.length > 0;
+    },
   },
   created() {
     this.fillTargets();
+    this.fillLifeLine();
+    this.$emit("setActiveComponent", this.$options.name);
   },
   components: {
     Target: require("../targets/Target").default,
-    NavBar: require("../navbar/NavBar").default,
+    Chart: require("../home/Chart").default,
   },
   methods: {
     ...mapActions("profileData", ["updateProfileData"]),
     fillTargets() {
+      const data = this.$route.params.clientCpf
+        ? this.recordedData
+        : this.profileData;
       this.targets = [];
-      this.profileData.targets.forEach((item, index) => {
-        const target = {
-          key: index,
-          incDate: new Date(item.date),
-          presentValue: item.presentValue,
-          monthlyInvestment: item.monthlyInvestment,
-          suitability: item.suitability,
-          yearToStartWithdraw: item.yearToStartWithdraw,
-          new: false,
-        };
-        Vue.set(this.targets, index, target);
-        this.key += 1;
-        this.$forceUpdate();
-      });
+      if (!data.targets.length == 0) {
+        data.targets.forEach((item, index) => {
+          const target = {
+            key: index,
+            incDate: new Date(item.date),
+            presentValue: item.presentValue,
+            monthlyInvestment: item.monthlyInvestment,
+            suitability: item.suitability,
+            yearToStartWithdraw: item.yearToStartWithdraw,
+            new: false,
+          };
+          Vue.set(this.targets, index, target);
+          this.key += 1;
+          this.$forceUpdate();
+        });
+      }
+    },
+    fillLifeLine() {
+      if (this.$route.params.clientCpf) {
+        Vue.set(
+          this.lifeLineData,
+          "masterLine",
+          this.recordedData.lifeLine.masterLine
+        );
+      } else {
+        Vue.set(
+          this.lifeLineData,
+          "masterLine",
+          this.profileData.lifeLine.masterLine
+        );
+      }
     },
     addNewTarget() {
       const newKey = this.targets.length;
@@ -93,24 +159,35 @@ export default {
       this.addingNewTarget = true;
     },
     saveTarget() {
+      const data = this.$route.params.clientCpf
+        ? this.recordedData
+        : this.profileData;
       this.targets.forEach((target) => {
         if (target.new) {
           addTarget(
             this.loginData.token,
-            this.profileData.cpf,
+            data.cpf,
             target.presentValue,
             target.suitability,
             target.monthlyInvestment,
             target.yearToStartWithdraw
           ).then((data) => {
-            this.updateProfileData({
-              updates: {
-                targets: data.data.addTarget.targets,
-              },
-            });
+            if (this.$route.params.clientCpf) {
+              this.recordedData.targets = [];
+              this.recordedData.targets.push(...data.data.addTarget.targets);
+              this.$emit("done", this.recordedData);
+            } else {
+              this.updateProfileData({
+                updates: {
+                  targets: data.data.addTarget.targets,
+                },
+              });
+            }
             this.$forceUpdate();
             this.fillTargets();
+            this.reloadLifeLineData();
             this.addingNewTarget = false;
+            this.key += 1;
           });
         }
       });
@@ -118,6 +195,26 @@ export default {
     abortTarget() {
       this.targets.pop();
       this.addingNewTarget = false;
+    },
+    doDone() {
+      this.$emit("done", { page: this.page });
+    },
+    reloadLifeLineData() {
+      getProfile(this.loginData.token, this.recordedData.cpf)
+        .then((data) => {
+          if (data.data.getProfile[0]) {
+            Vue.set(
+              this.lifeLineData,
+              "masterLine",
+              data.data.getProfile[0].lifeLine.masterLine
+            );
+            this.$forceUpdate();
+            this.key += 1;
+          }
+        })
+        .catch((error) => {
+          handleError(error.graphQLErrors[0].message);
+        });
     },
   },
 };
@@ -151,7 +248,6 @@ ul {
 }
 #main {
   margin-bottom: 5%;
-  padding-inline: 10%;
   padding-top: 3%;
 }
 button,
@@ -176,5 +272,21 @@ button:hover,
 #success {
   margin-left: 3.5%;
   padding: 2%, 2%;
+}
+#tab {
+  border-style: none;
+}
+</style>
+
+<style>
+.target-tab .nav-link:not(.active) {
+  background-color: #26fed5 !important;
+  color: black;
+  border-color: #26fed5;
+}
+.target-tab .nav-link {
+  color: #26fed5;
+  border-color: black;
+  background-color: black !important;
 }
 </style>

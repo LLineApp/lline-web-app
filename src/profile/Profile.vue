@@ -129,15 +129,14 @@
         v-bind:showButtons="true"
         v-bind:recordedData="profileData"
       />
-      <!-- <FixedIncomeSecurities
+      <Targets
         v-else-if="this.profileData.page == 14"
         v-on:done="feedProfileData"
         v-on:back="goBack"
-        v-on:stop="doStop('fixedIncomeSecurities')"
+        v-on:stop="doStop('targets')"
         v-on:setActiveComponent="setActiveComponent"
         v-bind:showButtons="true"
-        v-bind:recordedData="profileData"
-      /> -->
+      />
       <Knowledge
         v-else-if="this.profileData.page == 15"
         v-on:done="feedProfileData"
@@ -238,7 +237,7 @@ export default {
       .default,
     PlansAndProjects: require("../profile/PlansAndProjects").default,
     Health: require("../profile/Health").default,
-    // FixedIncomeSecurities: require("../profile/FixedIncomeSecurities").default,
+    Targets: require("../targets/Targets").default,
     InvestmentPortfolios: require("../profile/InvestmentPortfolios").default,
     Knowledge: require("./Knowledge.vue").default,
     AdditionalInformations: require("../profile/AdditionalInformations")
@@ -254,23 +253,23 @@ export default {
   methods: {
     ...mapActions("profileData", ["updateProfileData"]),
     feedProfileData(portionProfileData) {
-      if (!this.profileData.cpf) {
-        portionProfileData["cpf"] = this.profileData.cpf;
-      }
-      if (!portionProfileData["cpf"]) {
-        portionProfileData["cpf"] = this.loginData.cpf;
-      }
-      const data = { ...this.profileData, ...portionProfileData };
-      this.updateProfileData({
-        updates: data,
-      });
+      if (portionProfileData) {
+        if (!this.profileData.cpf) {
+          portionProfileData["cpf"] = this.profileData.cpf;
+        }
+        if (!portionProfileData["cpf"]) {
+          portionProfileData["cpf"] = this.loginData.cpf;
+        }
+        const data = { ...this.profileData, ...portionProfileData };
+        this.updateProfileData({
+          updates: data,
+        });
 
-      if (portionProfileData.financialAdvisor) {
-        delete portionProfileData.financialAdvisor["id"];
-        delete portionProfileData.financialAdvisor["__typename"];
-      }
-      setProfile(this.loginData.token, portionProfileData).then(
-        (data) => {
+        if (portionProfileData.financialAdvisor) {
+          delete portionProfileData.financialAdvisor["id"];
+          delete portionProfileData.financialAdvisor["__typename"];
+        }
+        setProfile(this.loginData.token, portionProfileData).then((data) => {
           if (!this.profileData.cpf) {
             this.updateProfileData({
               cpf: data.data.setProfile.profile.cpf,
@@ -279,8 +278,8 @@ export default {
           this.$emit("paging", this.profileData.page);
           this.key += 1;
           this.$forceUpdate();
-        }
-      );
+        });
+      }
     },
     setActiveComponent(name) {
       this.activeComponentName = name;
