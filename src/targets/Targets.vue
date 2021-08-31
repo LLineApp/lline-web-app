@@ -43,13 +43,12 @@
               Parar
             </b-button>
           </b-tab>
-          <b-tab title-item-class="target-tab">
+          <b-tab title-item-class="target-tab" v-if="hasLifeLineData">
             <template #title>
               <i class="fa fa-area-chart" aria-hidden="true"></i>Gráfico
             </template>
             <Chart
               v-bind:lifeLineData="lifeLineData"
-              v-if="hasLifeLineData"
               :key="key"
             />
           </b-tab>
