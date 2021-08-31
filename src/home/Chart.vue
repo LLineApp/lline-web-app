@@ -61,7 +61,7 @@ export default {
     apexchart: VueApexCharts,
   },
   created() {
-  const data = this.$route.params.clientCpf
+    const data = this.$route.params.clientCpf
       ? this.lifeLineData
       : this.profileData.lifeLine;
     this.feedLifeLineData(data);
@@ -74,7 +74,7 @@ export default {
       immediate: true,
       handler(newValue) {
         if (newValue) {
-        this.feedLifeLineData(newValue);
+          this.feedLifeLineData(newValue);
         }
       },
     },
@@ -83,7 +83,7 @@ export default {
     feedLifeLineData(data) {
       this.series = [];
       this.series.push({
-      name: "Projeção",
+        name: "Projeção",
         data: data.masterLine.amount,
       });
       this.chartOptions.xaxis.categories = [];
@@ -96,7 +96,8 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
-#chart {
-  margin: 5%;
+#chart,
+#main {
+  padding: 0;
 }
 </style>

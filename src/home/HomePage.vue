@@ -1,7 +1,9 @@
 <template>
   <div :key="this.key">
     <NavBar :key="this.keyNavBar" />
-    <Chart v-if="this.profileData.page == this.profilePages"/>
+    <div id="chart-div">
+      <Chart v-if="this.profileData.page == this.profilePages" />
+    </div>
     <Profile
       v-if="this.profileData.page < this.profilePages"
       v-bind:currentPage="profileData.page"
@@ -59,3 +61,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+#chart-div {
+  margin: 5%;
+}
+</style>
