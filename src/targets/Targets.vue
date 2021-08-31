@@ -1,44 +1,60 @@
 <template>
   <div>
     <div id="main">
-      <h1>Metas:</h1>
-      <Chart
-        v-bind:lifeLineData="lifeLineData"
-        v-if="hasLifeLineData"
-        :key="key"
-      />
-      <p v-if="!addingNewTarget">
-        Clique
-        <b-button type="button" v-on:click="addNewTarget()" aria-hidden="true"
-          ><i class="fa fa-plus"></i
-        ></b-button>
-        para adicionar uma nova meta
-      </p>
-      <ul id="targets">
-        <li v-for="target in this.targets" :key="target.key">
-          <Target
-            v-bind:targetData="target"
-            v-on:apply="saveTarget()"
-            v-on:abort="abortTarget()"
-          />
-        </li>
-      </ul>
-      <b-button
-        id="success"
-        variant="primary"
-        v-if="showButtons"
-        v-on:click="doDone()"
-      >
-        Confirmar
-      </b-button>
-      <b-button
-        id="stop"
-        variant="secondary"
-        v-if="showButtons"
-        v-on:click="$emit('stop')"
-      >
-        Parar
-      </b-button>
+      <b-card no-body id="tab">
+        <b-tabs pills card>
+          <b-tab active>
+            <template #title
+              ><i class="fa fa-file-text-o" aria-hidden="true"></i>Metas
+            </template>
+            <p v-if="!addingNewTarget">
+              Clique
+              <b-button
+                type="button"
+                v-on:click="addNewTarget()"
+                aria-hidden="true"
+                ><i class="fa fa-plus"></i
+              ></b-button>
+              para adicionar uma nova meta
+            </p>
+            <ul id="targets">
+              <li v-for="target in this.targets" :key="target.key">
+                <Target
+                  v-bind:targetData="target"
+                  v-on:apply="saveTarget()"
+                  v-on:abort="abortTarget()"
+                />
+              </li>
+            </ul>
+            <b-button
+              id="success"
+              variant="primary"
+              v-if="showButtons"
+              v-on:click="doDone()"
+            >
+              Confirmar
+            </b-button>
+            <b-button
+              id="stop"
+              variant="secondary"
+              v-if="showButtons"
+              v-on:click="$emit('stop')"
+            >
+              Parar
+            </b-button>
+          </b-tab>
+          <b-tab>
+            <template #title>
+              <i class="fa fa-area-chart" aria-hidden="true"></i>Gráfico
+            </template>
+            <Chart
+              v-bind:lifeLineData="lifeLineData"
+              v-if="hasLifeLineData"
+              :key="key"
+            />
+          </b-tab>
+        </b-tabs>
+      </b-card>
     </div>
   </div>
 </template>
@@ -233,7 +249,6 @@ ul {
 }
 #main {
   margin-bottom: 5%;
-  padding-inline: 5%;
   padding-top: 3%;
 }
 button,
