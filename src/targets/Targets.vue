@@ -3,7 +3,7 @@
     <div id="main">
       <b-card no-body id="tab">
         <b-tabs pills card>
-          <b-tab active>
+          <b-tab title-item-class="target-tab" active>
             <template #title
               ><i class="fa fa-file-text-o" aria-hidden="true"></i>Metas
             </template>
@@ -43,7 +43,7 @@
               Parar
             </b-button>
           </b-tab>
-          <b-tab>
+          <b-tab title-item-class="target-tab">
             <template #title>
               <i class="fa fa-area-chart" aria-hidden="true"></i>Gráfico
             </template>
@@ -273,5 +273,21 @@ button:hover,
 #success {
   margin-left: 3.5%;
   padding: 2%, 2%;
+}
+#tab {
+  border-style: none;
+}
+</style>
+
+<style>
+.target-tab .nav-link:not(.active) {
+  background-color: #26fed5 !important;
+  color: black;
+  border-color: #26fed5;
+}
+.target-tab .nav-link {
+  color: #26fed5;
+  border-color: black;
+  background-color: black !important;
 }
 </style>
