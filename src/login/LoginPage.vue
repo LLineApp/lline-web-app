@@ -89,11 +89,14 @@ export default {
     },
   },
   mounted() {
+    this.resetProfileData();
     localStorage.removeItem("vuex");
   },
   methods: {
     ...mapActions("advisorData", ["updateAdvisorData"]),
     ...mapActions("loginData", ["updateLoginData"]),
+    ...mapActions("profileData", ["resetProfileData"]),
+
     handleSubmit(e) {
       this.submitted = true;
       const { cpf, password } = this;
