@@ -4,8 +4,8 @@
       <apexchart
         type="area"
         height="350"
-        :options="chartOptions"
         :series="series"
+        :options="chartOptions"
       ></apexchart>
     </div>
   </div>
@@ -23,36 +23,55 @@ export default {
     return {
       series: [],
       chartOptions: {
+        colors: ["#009900"],
         chart: {
           zoom: {
-            enabled: false,
+            enabled: true,
           },
         },
         xaxis: {
           categories: [],
+          labels: {
+            style: {
+              fontSize: "15px",
+              fontFamily: "Raleway",
+            },
+          },
         },
         yaxis: {
           labels: {
             formatter: function(val) {
               return formatNumericField(val);
             },
+            style: {
+              fontSize: "15px",
+              fontFamily: "Raleway",
+            },
           },
         },
-      },
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: "straight",
-      },
-      title: {
-        text: "Product Trends by Month",
-        align: "left",
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"],
-          opacity: 0.5,
+        dataLabels: {
+          enabled: true,
+          style: {
+            fontSize: "13px",
+            fontFamily: "Raleway",
+          },
+        },
+        stroke: {
+          curve: "straight",
+        },
+        title: {
+          text: "Linha da Vida",
+          align: "left",
+          style: {
+            fontSize: "13pt",
+            fontFamily: "Raleway",
+          },
+        },
+        grid: {
+          row: {
+            colors: ["#f3f3f3", "transparent"],
+            opacity: 0.5,
+          },
         },
       },
     };
@@ -96,8 +115,13 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
-#chart,
+#chart {
+  padding: 2%;
+}
+
 #main {
   padding: 0;
+  background-color: #e0e0e0;
+  border-radius: 10px;
 }
 </style>
