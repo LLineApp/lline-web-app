@@ -23,6 +23,9 @@ export default {
     return {
       series: [],
       chartOptions: {
+        annotations: {
+          points: [],
+        },
         colors: ["#009900"],
         chart: {
           zoom: {
@@ -50,7 +53,7 @@ export default {
           },
         },
         dataLabels: {
-          enabled: true,
+          enabled: false,
           style: {
             fontSize: "13px",
             fontFamily: "Raleway",
@@ -100,13 +103,32 @@ export default {
   },
   methods: {
     feedLifeLineData(data) {
-      this.series = [];
       this.series.push({
         name: "Projeção",
         data: data.masterLine.amount,
       });
-      this.chartOptions.xaxis.categories = [];
       this.chartOptions.xaxis.categories.push(...data.masterLine.periods);
+
+      this.setLabelToLastAmount(data.masterLine.amount);
+    },
+    setLabelToLastAmount(amounts) {
+      const lastAmount = amounts[amounts.length - 1];
+      this.chartOptions.annotations.points.push({
+        y: lastAmount,
+        x: amounts.length,
+        marker: {
+          size: 0,
+        },
+        label: {
+          textAnchor: "end",
+          style: {
+            ...this.chartOptions.dataLabels.style,
+            background: this.chartOptions.colors[0],
+            fontWeight: 800,
+          },
+          text: lastAmount.toString(),
+        },
+      });
     },
   },
 };
