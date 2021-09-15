@@ -47,10 +47,7 @@
             <template #title>
               <i class="fa fa-area-chart" aria-hidden="true"></i>Gráfico
             </template>
-            <Chart
-              v-bind:lifeLineData="lifeLineData"
-              :key="key"
-            />
+            <Chart v-bind:lifeLineData="lifeLineData" :key="key" />
           </b-tab>
         </b-tabs>
       </b-card>
@@ -283,10 +280,12 @@ button:hover,
   background-color: #26fed5 !important;
   color: black;
   border-color: #26fed5;
+  margin-left: 5px;
 }
 .target-tab .nav-link {
   color: #26fed5;
   border-color: black;
   background-color: black !important;
+  margin-left: 5px;
 }
 </style>
