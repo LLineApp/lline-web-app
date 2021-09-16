@@ -83,10 +83,9 @@ export default {
     apexchart: VueApexCharts,
   },
   created() {
-    const data = this.$route.params.clientCpf
+    this.$route.params.clientCpf
       ? this.lifeLineData
-      : this.profileData.lifeLine;
-    this.feedLifeLineData(data);
+      : this.feedLifeLineData(this.profileData.lifeLine);
   },
   computed: {
     ...mapGetters("profileData", ["profileData"]),
