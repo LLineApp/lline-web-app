@@ -15,6 +15,7 @@
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import { formatNumericField } from "../_helpers/formaters";
+import ptbr from "apexcharts/dist/locales/pt-br.json";
 
 export default {
   name: "chart",
@@ -28,6 +29,8 @@ export default {
         },
         colors: ["#009900"],
         chart: {
+          locales: [ptbr],
+          defaultLocale: 'pt-br',
           zoom: {
             enabled: true,
           },
