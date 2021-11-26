@@ -10,28 +10,28 @@
     </b-form-group>
     <b-form-group label="É empresarial?">
       <b-form-radio-group
-        id="enterprise-radio-group"
+        class="enterprise-radio-group"
         v-model="personalPrivateSecurityData.enterprise"
         :options="yesNo"
       />
     </b-form-group>
     <b-form-group label="É cooperativo?">
       <b-form-radio-group
-        id="cooperative-radio-group"
+        class="cooperative-radio-group"
         v-model="personalPrivateSecurityData.cooperative"
         :options="yesNo"
       />
     </b-form-group>
     <b-form-group label="Qual plano?">
       <b-form-radio-group
-        id="survival-radio-group"
+        class="survival-radio-group"
         v-model="personalPrivateSecurityData.survival"
         :options="survivalOptions"
       />
     </b-form-group>
     <b-form-group label="Qual tabela?">
       <b-form-radio-group
-        id="table-radio-group"
+        class="table-radio-group"
         v-model="personalPrivateSecurityData.table"
         :options="tableOptions"
       />

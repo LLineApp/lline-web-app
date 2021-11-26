@@ -11,14 +11,14 @@
     />
     <b-form-group label="Acompanha noticiário econômico?">
       <b-form-radio-group
-        id="followEconomicNews-radio-group"
+        class="followEconomicNews-radio-group"
         v-model="profileData.followEconomicNews"
         :options="yesNo"
       />
     </b-form-group>
     <b-form-group label="Gostaria de ser informado sobre cursos e palestras?">
       <b-form-radio-group
-        id="acceptsInfoAboutCourses-radio-group"
+        class="acceptsInfoAboutCourses-radio-group"
         v-model="profileData.acceptsInfoAboutCourses"
         :options="yesNo"
       />

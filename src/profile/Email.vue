@@ -83,7 +83,7 @@
       v-slot="{ ariaDescribedby }"
     >
       <b-form-radio-group
-        id="phone-radio-slots"
+        class="phone-radio-slots"
         v-model="profileData.preferredContact"
         :options="profileData.phones"
         :aria-describedby="ariaDescribedby"

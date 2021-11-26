@@ -42,7 +42,7 @@
     </b-form-group>
     <b-form-group label="Que tipo é a empresa?">
       <b-form-radio-group
-        id="businessKind-radio-group"
+        class="businessKind-radio-group"
         v-model="profileData.businessKind"
         :options="businessKind"
       />
@@ -59,14 +59,14 @@
     </b-form-group>
     <b-form-group label="Qual o tipo da sua declaração de Imposto de Renda?">
       <b-form-radio-group
-        id="incomeTaxDeclarationType-select"
+        class="incomeTaxDeclarationType-select"
         v-model="profileData.incomeTaxDeclarationType"
         :options="incomeTaxDeclarationType"
       />
     </b-form-group>
     <b-form-group label="A empresa tem seguro Empresarial?">
       <b-form-radio-group
-        id="companyHasPrivateInsurance-select"
+        class="companyHasPrivateInsurance-select"
         v-model="profileData.companyHasPrivateInsurance"
         :options="yesNo"
       />
@@ -89,7 +89,7 @@
     </b-form-group>
     <b-form-group label="A empresa tem previdência corporativa?">
       <b-form-radio-group
-        id="companyHasPrivateSecurity-select"
+        class="companyHasPrivateSecurity-select"
         v-model="companyHasPrivateSecurity"
         :options="yesNo"
       />
