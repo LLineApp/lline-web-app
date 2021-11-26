@@ -6,7 +6,7 @@
       v-if="!this.alreadyHasFinancialAdvisor"
     >
       <b-form-radio-group
-        id="doYouHaveFinancialAdvisor-radio"
+        class="doYouHaveFinancialAdvisor-radio"
         v-model="doYouHaveFinancialAdvisor"
         :options="yesNo"
       />
@@ -65,7 +65,7 @@
       v-if="!this.alreadyHasFinancialAdvisor"
     >
       <b-form-radio-group
-        id="doYouAcceptAFinancialAdvisorContact-radio"
+        class="doYouAcceptAFinancialAdvisorContact-radio"
         v-model="profileData.acceptFinancialAdvisorContact"
         :options="yesNo"
       />
