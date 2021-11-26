@@ -4,7 +4,7 @@
 
     <b-form-group label="Seus pais são dependentes de você?">
       <b-form-radio-group
-        id="parentsAreThemSupportedByYou-radio"
+        class="parentsAreThemSupportedByYou-radio"
         v-model="profileData.parentsAreThemSupportedByYou"
         :options="yesNo"
       />
@@ -28,7 +28,7 @@
     </b-form-group>
     <b-form-group label="Há possiblidade de herança?">
       <b-form-radio-group
-        id="parentsIsThereAPossibilityOfInheritance-radio"
+        class="parentsIsThereAPossibilityOfInheritance-radio"
         v-model="profileData.parentsIsThereAPossibilityOfInheritance"
         :options="yesNo"
       />
