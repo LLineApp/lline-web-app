@@ -28,7 +28,7 @@
 
     <b-form-group label="É alugado?">
       <b-form-radio-group
-        id="rented-radio-group"
+        class="rented-radio-group"
         v-model="immovablePropertyData.rented"
         :options="yesNo"
       />
@@ -36,7 +36,7 @@
 
     <b-form-group label="É financiado?">
       <b-form-radio-group
-        id="funded-radio-group"
+        class="funded-radio-group"
         v-model="immovablePropertyData.funded"
         :options="yesNo"
       />
